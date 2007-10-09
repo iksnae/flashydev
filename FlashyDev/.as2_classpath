@@ -2,4 +2,5 @@
 <AS2Classpathes>
 <AS2Classpath type="source">core</AS2Classpath>
 <AS2Classpath type="source">source</AS2Classpath>
+<AS2Classpath type="source">fla</AS2Classpath>
 </AS2Classpathes>
