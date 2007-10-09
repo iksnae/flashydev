@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shell>
+	<sectionType type="Main">
+		<section swfURL="floorplans.swf">
+		</section>
+		<section swfURL="ReflectionGalleryAPI.swf">
+		</section>
+		<section swfURL="building.swf">
+		</section>
+		<section swfURL="indulge.swf">
+		</section>
+		<section swfURL="neighborhood.swf">
+		</section>
+		<section swfURL="trap6.swf">
+		</section>
+		<section swfURL="trap7.swf">
+		</section>
+		<section swfURL="trap8.swf">
+		</section>
+	</sectionType>
+	<sectionType type="Top_Nav">
+		<section swfURL="team.swf">
+		</section>
+		<section swfURL="contact.swf">
+		</section>
+		<section swfURL="broker.swf">
+		</section>
+		<section swfURL="legal.swf">
+		</section>
+		<section swfURL="downloads.swf">
+		</section>
+	</sectionType>
+</shell>

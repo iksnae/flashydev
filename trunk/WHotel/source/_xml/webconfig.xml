@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<configuration>
+	<webService>
+		<BuildingID><![CDATA[31]]></BuildingID>
+		<ProjectID><![CDATA[9]]></ProjectID>
+		<KioskID><![CDATA[7]]></KioskID>
+		<DevelopmentID><![CDATA[6]]></DevelopmentID>
+		<RootDirectory><![CDATA[]]></RootDirectory>
+		<AuthURI><![CDATA[http://shvotouchscreen.dev6.team5.com/XML/WebServices/WSAuth.asmx?WSDL]]></AuthURI>
+		<UnitURI><![CDATA[http://shvotouchscreen.dev6.team5.com/XML/WebServices/WSUnits.asmx?WSDL]]></UnitURI>
+		<PolicyURI><![CDATA[http://shvotouchscreen.dev6.team5.com/XML/crossdomain.xml]]></PolicyURI>
+	</webService>
+	<contactForm>
+		<emailURI><![CDATA[http://shvotouchscreen.dev6.team5.com/whotel/contact.aspx]]></emailURI>
+		<emailHost><![CDATA[localhost]]></emailHost>
+		<emailHostAuthentication><![CDATA[false]]></emailHostAuthentication>
+		<emailHostUID><![CDATA[]]></emailHostUID>
+		<emailHostPWD><![CDATA[]]></emailHostPWD>
+		<allowDomain><![CDATA[*]]></allowDomain>
+	</contactForm>
+</configuration>

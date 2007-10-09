@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<shell>
+	<sectionType type="Residences">
+		<section imageURL="photos/ExtLiving_HighresABP.jpg">
+			<description><![CDATA[Bask in the light let in by your generous windows, be it from sun, stars or skyline.]]></description>
+		</section>
+		<section imageURL="photos/02_L-Shape-KitchenV02.jpg">
+			<description><![CDATA[What's the difference between ordinary and extraordinary? The word "extra." And this kitchen has lots of extras.]]></description>
+		</section>
+		<section imageURL="photos/bedroom55th_highresABP.jpg">
+			<description><![CDATA[With a bedroom as stunning as this, you'll think you're dreaming with your eyes open. ]]></description>
+		</section>
+		<section imageURL="photos/01_Peek-A-Boo-BathroomV02.jpg">
+			<description><![CDATA[You'll be experiencing a room with an exceptional view – both inside and out – which includes a flirty, translucent-walled Peek-a-Boo Loo.]]></description>
+		</section>
+		<section imageURL="photos/04_Master-BathroomV02.jpg">
+			<description><![CDATA[We've showered your bathroom with every indulgent detail you can dream up.]]></description>
+		</section>
+		<section imageURL="photos/04b_Bathroom-Detail-Option-2.jpg">
+			<description><![CDATA[Custom-designed Graft mirror and medicine cabinet. Edge-lit mirror.]]></description>
+		</section>
+		<section imageURL="photos/kitcen55_highresABP.jpg">
+			<description><![CDATA[One of the hottest places for entertainment in New York is now right in your home.]]></description>
+		</section>
+	</sectionType>
+	<sectionType type="FloorPlans">
+		<section imageURL="photos/kitchen.jpg">
+			<description><![CDATA[This is a test description for a FloorPlans Picture.1]]></description>
+		</section>
+		<section imageURL="test.jpg">
+			<description><![CDATA[This is a test description for a FloorPlans Picture.2]]></description>
+		</section>
+		<section imageURL="test.jpg">
+			<description><![CDATA[This is a test description for a FloorPlans Picture.3]]></description>
+		</section>
+		<section imageURL="test.jpg">
+			<description><![CDATA[This is a test description for a FloorPlans Picture.4]]></description>
+		</section>
+		<section imageURL="test.jpg">
+			<description><![CDATA[This is a test description for a FloorPlans Picture.]]></description>
+		</section>
+	</sectionType>
+</shell>

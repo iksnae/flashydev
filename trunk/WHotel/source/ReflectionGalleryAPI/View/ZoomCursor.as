@@ -1,0 +1,1 @@
+package ReflectionGalleryAPI.View {import flash.display.*;		/** * @author andrehines */public class ZoomCursor extends MovieClip{	function ZoomCursor(){		trace("ZoomCursor class instantiated");	}			}}

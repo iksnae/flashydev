@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shell>
+	<sectionType type="Carousel">
+		<section swfURL="C:\Documents and Settings\andrehines\Desktop\eclipseWorkspace\New Web Stuff\Mammoth NYC\Saw IV\Assets\Round 6\Magnum Eyehole\magnum.swf">
+		</section>
+		<section swfURL="trap2.swf">
+		</section>
+		<section swfURL="trap3.swf">
+		</section>
+		<section swfURL="trap4.swf">
+		</section>
+		<section swfURL="trap5.swf">
+		</section>
+		<section swfURL="trap6.swf">
+		</section>
+		<section swfURL="trap7.swf">
+		</section>
+		<section swfURL="trap8.swf">
+		</section>
+	</sectionType>
+	<sectionType type="EPK">
+		<section swfURL="synopsis.swf">
+		</section>
+		<section swfURL="cast.swf">
+		</section>
+		<section swfURL="tickets.swf">
+		</section>
+		<section swfURL="trailer.swf">
+		</section>
+		<section swfURL="downloads.swf">
+		</section>
+	</sectionType>
+</shell>
