@@ -1,0 +1,1 @@
+package ReflectionGalleryAPI.Model {import ReflectionGalleryAPI.Model.GalleryModelAbstract;	/** * @author andrehines */public class GalleryModel extends GalleryModelAbstract {		function GalleryModel(){		trace("GalleryModel class instantiated");		}}}

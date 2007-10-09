@@ -1,0 +1,1 @@
+package ShellAPI.Model {	import ShellAPI.Model.ShellModelAbstract;	/** * @author andrehines */public class ShellModel extends ShellModelAbstract {		function ShellModel(){		trace("ShellModel class instantiated");		}}}

@@ -1,0 +1,81 @@
+﻿<flash_project name="WHotel" version="1">
+    <project_folder name="classes" expanded="true">
+        <project_folder name="_xml" expanded="false">
+        </project_folder>
+        <project_folder name="ReflectionGalleryAPI" expanded="false">
+            <project_folder name="Model" expanded="false">
+                <project_file path=".:ReflectionGalleryAPI/Model/GalleryModel.as" filetype="as" />
+                <project_file path=".:ReflectionGalleryAPI/Model/GalleryModelAbstract.as" filetype="as" />
+            </project_folder>
+            <project_folder name="Controller" expanded="false">
+                <project_file path=".:ReflectionGalleryAPI/Controller/GalleryController.as" filetype="as" />
+                <project_file path=".:ReflectionGalleryAPI/Controller/GalleryControllerAbstract.as" filetype="as" />
+            </project_folder>
+            <project_folder name="Behaviors" expanded="false">
+                <project_file path=".:ReflectionGalleryAPI/Behaviors/WGalleryXML.as" filetype="as" />
+                <project_file path=".:ReflectionGalleryAPI/Behaviors/XMLBehaviorAbstract.as" filetype="as" />
+            </project_folder>
+            <project_folder name="Decorators" expanded="false">
+                <project_file path=".:ReflectionGalleryAPI/Decorators/DecoratorViewAbstract.as" filetype="as" />
+                <project_file path=".:ReflectionGalleryAPI/Decorators/WGalleryDecorator.as" filetype="as" />
+            </project_folder>
+            <project_folder name="Factories" expanded="false">
+                <project_file path=".:ReflectionGalleryAPI/Factories/DecoratorSimpleFactory.as" filetype="as" />
+                <project_file path=".:ReflectionGalleryAPI/Factories/XMLSimpleFactory.as" filetype="as" />
+            </project_folder>
+            <project_folder name="Events" expanded="false">
+                <project_file path=".:ReflectionGalleryAPI/Events/GalleryEvent.as" filetype="as" />
+                <project_file path=".:ReflectionGalleryAPI/Events/ViewEvent.as" filetype="as" />
+            </project_folder>
+            <project_folder name="View" expanded="false">
+                <project_file path=".:ReflectionGalleryAPI/View/ZoomCursor.as" filetype="as" />
+                <project_file path=".:ReflectionGalleryAPI/View/GalleryViewAbstract.as" filetype="as" />
+                <project_file path=".:ReflectionGalleryAPI/View/GalleryView.as" filetype="as" />
+            </project_folder>
+            <project_file path=".:ReflectionGalleryAPI/Main.as" filetype="as" />
+        </project_folder>
+        <project_folder name="ReflectionAPI" expanded="true">
+            <project_file path=".:ReflectionAPI/Reflection.as" filetype="as" />
+        </project_folder>
+        <project_folder name="ReflectionLinkAPI" expanded="true">
+            <project_folder name="Decorators" expanded="false">
+                <project_file path=".:ReflectionLinkAPI/Decorators/WLinkDecorator.as" filetype="as" />
+                <project_file path=".:ReflectionLinkAPI/Decorators/DecoratorAbstract.as" filetype="as" />
+            </project_folder>
+            <project_folder name="View" expanded="false">
+                <project_file path=".:ReflectionLinkAPI/View/LinkView.as" filetype="as" />
+                <project_file path=".:ReflectionLinkAPI/View/LinkViewAbstract.as" filetype="as" />
+            </project_folder>
+            <project_folder name="Controller" expanded="false">
+                <project_file path=".:ReflectionLinkAPI/Controller/LinkController.as" filetype="as" />
+                <project_file path=".:ReflectionLinkAPI/Controller/LinkControllerAbstract.as" filetype="as" />
+            </project_folder>
+            <project_folder name="Events" expanded="false">
+                <project_file path=".:ReflectionLinkAPI/Events/LinkEvent.as" filetype="as" />
+                <project_file path=".:ReflectionLinkAPI/Events/ViewEvent.as" filetype="as" />
+            </project_folder>
+        </project_folder>
+        <project_folder name="utils" expanded="true">
+            <project_folder name="Mouse" expanded="true">
+                <project_file path=".:utils/Mouse/DistanceNotch.as" filetype="as" />
+            </project_folder>
+        </project_folder>
+        <project_file path=".:UnitType.as" filetype="as" />
+        <project_file path=".:Units.as" filetype="as" />
+        <project_file path=".:UnitPrice.as" filetype="as" />
+        <project_file path=".:MoneyFormat.as" filetype="as" />
+        <project_file path=".:SearchType.as" filetype="as" />
+        <project_file path=".:searchreplace.as" filetype="as" />
+        <project_file path=".:WHotelMain.as" filetype="as" />
+        <project_file path=".:WebConfig.as" filetype="as" />
+        <project_file path=".:UnitFurnished.as" filetype="as" />
+        <project_file path=".:UnitFloor.as" filetype="as" />
+        <project_file path=".:currencyFormat.as" filetype="as" />
+        <project_file path=".:Pause.as" filetype="as" />
+        <project_file path=".:Auth.as" filetype="as" />
+        <project_file path=".:lmc_tween.as" filetype="as" />
+    </project_folder>
+    <project_folder name="fla" expanded="false">
+        <project_file path=".:mainAS3.fla" filetype="fla" profile="" def_file="true" />
+    </project_folder>
+</flash_project>

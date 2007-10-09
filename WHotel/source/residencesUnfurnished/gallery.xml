@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<shell>
+	<sectionType type="Residences">
+		<section imageURL="photos/living29th_hiresABP.jpg">
+			<description><![CDATA[High style meets the high life in a living room with space to spare and sights to sigh over.]]></description>
+		</section>
+		<section imageURL="photos/livingkitchen29_highresABP.jpg">
+			<description><![CDATA[Living in the now is good. Living in the wow is even better.]]></description>
+		</section>
+		<section imageURL="photos/08_Furnished-Bedroom-Bathroom.jpg">
+			<description><![CDATA[Your bedroom comes with lots of built-in secrets. ]]></description>
+		</section>
+	</sectionType>
+</shell>

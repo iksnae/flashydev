@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<configuration>
+	<webService>
+		<BuildingID><![CDATA[31]]></BuildingID>
+		<ProjectID><![CDATA[9]]></ProjectID>
+		<KioskID><![CDATA[7]]></KioskID>
+		<DevelopmentID><![CDATA[6]]></DevelopmentID>
+		<RootDirectory><![CDATA[]]></RootDirectory>
+		<AuthURI><![CDATA[http://shvotouchscreen.dev6.team5.com/XML/WebServices/Auth.aspx]]></AuthURI>
+		<UnitURI><![CDATA[http://shvotouchscreen.dev6.team5.com/XML/WebServices/WSUnits.asmx?WSDL]]></UnitURI>
+		<PolicyURI><![CDATA[http://shvotouchscreen.dev6.team5.com/XML/crossdomain.xml]]></PolicyURI>
+	</webService>
+	<contactForm>
+		<contactURI><![CDATA[http://shvotouchscreen.dev6.team5.com/XML/WebServices/Auth.aspx]]></contactURI>
+		<emailHost><![CDATA[localhost]]></emailHost>
+		<emailFrom>braulio@team5.com</emailFrom>
+		<emailFromName>W Hotel</emailFromName>
+		<emailTo>yenal@team5.com</emailTo>
+		<emailSubject>Test Confirmation Email</emailSubject>
+		<emailHostAuthentication><![CDATA[false]]></emailHostAuthentication>
+		<emailHostUID><![CDATA[]]></emailHostUID>
+		<emailHostPWD><![CDATA[]]></emailHostPWD>
+		<emailAllowDomain><![CDATA[*]]></emailAllowDomain>
+	</contactForm>
+</configuration>
