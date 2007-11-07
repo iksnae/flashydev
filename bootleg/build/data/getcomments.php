@@ -1,0 +1,1 @@
+<?phprequire_once("db.inc.php");$DB = new DB;echo $DB->GetXML("SELECT * FROM Comments ORDER BY postedOn");?>

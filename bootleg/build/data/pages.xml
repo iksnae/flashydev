@@ -1,0 +1,1 @@
+﻿<pages>	<page id='Home' url='swf/Profile'/>	<page id='News' url='swf/Search.swf'/>	<page id='Shows' url='swf/Galleries.swf'/>	<page id='Media' url='swf/Artists.swf'/>	<page id='NoDisrespect' url='swf/Shops.swf'/>	<page id='Contact' url='swf/Auctions.swf'/></pages>
