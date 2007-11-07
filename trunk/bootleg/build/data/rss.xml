@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xml:base="http://flashgameu.com" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+ <title>Flash Game University - </title>
+ <link>http://flashgameu.com</link>
+ <description></description>
+ <language>en</language>
+<item>
+ <title>Ask Gary: AS3 Capitalization</title>
+ <link>http://flashgameu.com/ask_gary/ask_gary_as3_capitalization.html</link>
+ <description>&lt;div class=askgaryq&gt;
+Gary,&lt;/p&gt;
+&lt;p&gt; Is there a rule for knowing when a built in function, property, etc&lt;br /&gt;
+will start with a capital, be all caps, or start lower case?  For example,&lt;br /&gt;
+addEventListener starts lower case, MouseEvent start upper case, and&lt;br /&gt;
+ROLL_OVER is all caps.  I am coming out of ASP programming and just&lt;br /&gt;
+keeping my variables the right case and remembering all the new commands&lt;br /&gt;
+is hard enough - but having to remember which commands are which case is a&lt;br /&gt;
+bit much.  Let me know if there is a good rule to remember these by.&lt;/p&gt;
+&lt;p&gt;Thanks.&lt;br /&gt;
+Brandon
+&lt;/div&gt;
+&lt;p&gt;Good question. This is especially important when you consider that AS3 is case sensitive. So addEventListener is a function, but AddEventListener is nothing.&lt;br /&gt;
+It seems the convention is that functions start with lowercase, then capitalize each word after that. Like gotoAndStop. Classes start with capital letters, like the Math in Math.random(). Constants use all caps and underlines between words, like ENTER_FRAME.&lt;br /&gt;
+But I wouldn&#039;t take that for granted. And it doesn&#039;t really matter too much because the auto-completion in the AS3 programming windows will list the command for you as you type.&lt;br /&gt;
+What I would avoid though is using capitalization to differentiate between functions or functions and variables. For instance, I wouldn&#039;t use moveObject as a function and then moveobject as a variable. It works, but I wouldn&#039;t do it.&lt;br /&gt;
+I do kinda break that rule sometimes when I have a movie clip that by its nature will only be on the stage once. For instance, the space ship in an asteroids game. I might call that SpaceShip in the library and as a class, and then spaceShip will be the instance name. It makes it easier for me to find the movie clip in the Library based on the instance name I&#039;m using in the code.&lt;/p&gt;
+</description>
+ <comments>http://flashgameu.com/ask_gary/ask_gary_as3_capitalization.html#comments</comments>
+ <category domain="http://flashgameu.com/topic/ask_gary">Ask Gary</category>
+ <pubDate>Tue, 30 Oct 2007 15:35:01 -0700</pubDate>
+ <dc:creator>rosenz</dc:creator>
+ <guid isPermaLink="false">67 at http://flashgameu.com</guid>
+</item>
+<item>
+ <title>FlashGameU.com Video Tutorial: Matching Game with Card Pairs</title>
+ <link>http://flashgameu.com/podcast/flashgameu_com_video_tutorial_matching_game_card_pairs.html</link>
+ <description>&lt;p&gt;This tutorial shows you how to alter the matching game in the book ActionScript 3.0 Game Programming University to use pairs of cards instead of identical cards.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://blip.tv/file/419993&quot;&gt;View video in your browser&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://blip.tv/file/get/Flashgameu-MatchingGameWithCardPairs341.mov&quot;&gt;Download QuickTime Movie&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://flashgameu.com/files/MatchingGame11.zip&quot;&gt;Download the source files&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=261154936&quot;&gt;Subscribe via iTunes&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+</description>
+ <comments>http://flashgameu.com/podcast/flashgameu_com_video_tutorial_matching_game_card_pairs.html#comments</comments>
+ <category domain="http://flashgameu.com/topic/podcast">Podcast</category>
+ <pubDate>Wed, 10 Oct 2007 10:43:40 -0600</pubDate>
+ <dc:creator>rosenz</dc:creator>
+ <guid isPermaLink="false">59 at http://flashgameu.com</guid>
+</item>
+<item>
+ <title>FlashGameU.com Video Tutorial: Dynamic Buttons</title>
+ <link>http://flashgameu.com/podcast/flashgameu_com_video_tutorial_dynamic_buttons.html</link>
+ <description>&lt;p&gt;How to create simple dynamic buttons that allow you to create identical buttons with different labels. The buttons also behave like buttons, with rollover and down states.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://blip.tv/file/418880&quot;&gt;View video in your browser&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://blip.tv/file/get/Flashgameu-DynamicButtons946.mov&quot;&gt;Download QuickTime Movie&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://flashgameu.com/files/DynamicButton.zip&quot;&gt;Download the source files&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=261154936&quot;&gt;Subscribe via iTunes&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+</description>
+ <comments>http://flashgameu.com/podcast/flashgameu_com_video_tutorial_dynamic_buttons.html#comments</comments>
+ <category domain="http://flashgameu.com/topic/podcast">Podcast</category>
+ <pubDate>Tue, 09 Oct 2007 17:25:44 -0600</pubDate>
+ <dc:creator>rosenz</dc:creator>
+ <guid isPermaLink="false">58 at http://flashgameu.com</guid>
+</item>
+<item>
+ <title>FlashGameU.com Video Tutorial: Saving Local Data</title>
+ <link>http://flashgameu.com/podcast/flashgameu_com_video_tutorial_saving_local_data.html_0</link>
+ <description>&lt;p&gt;How to use the SharedObject to save bits of data to the local hard drive for use at another time.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://blip.tv/file/394821&quot;&gt;View video in your browser&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://blip.tv/file/get/Flashgameu-SavingLocalData470.mov&quot;&gt;Download QuickTime Movie&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=261154936&quot;&gt;Subscribe via iTunes&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+</description>
+ <comments>http://flashgameu.com/podcast/flashgameu_com_video_tutorial_saving_local_data.html_0#comments</comments>
+ <category domain="http://flashgameu.com/topic/podcast">Podcast</category>
+ <pubDate>Mon, 24 Sep 2007 16:43:48 -0600</pubDate>
+ <dc:creator>rosenz</dc:creator>
+ <guid isPermaLink="false">42 at http://flashgameu.com</guid>
+</item>
+<item>
+ <title>FlashGameU.com Video Tutorial: Saving Local Data</title>
+ <link>http://flashgameu.com/podcast/flashgameu_com_video_tutorial_saving_local_data.html</link>
+ <description>&lt;p&gt;How to use the SharedObject to save bits of data to the local hard drive for use at another time.&lt;/p&gt;
+&lt;p&gt;&lt;A href=&quot;http://blip.tv/file/394821&quot;&gt;View video in your browser&lt;/A&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;A href=&quot;http://blip.tv/file/get/Flashgameu-SavingLocalData470.mov&quot;&gt;Download QuickTime Movie&lt;/A&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;A href=&quot;http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=261154936&quot;&gt;Subscribe via iTunes&lt;/A&gt;.&lt;/p&gt;
+</description>
+ <comments>http://flashgameu.com/podcast/flashgameu_com_video_tutorial_saving_local_data.html#comments</comments>
+ <category domain="http://flashgameu.com/topic/podcast">Podcast</category>
+ <pubDate>Mon, 24 Sep 2007 16:43:39 -0600</pubDate>
+ <dc:creator>rosenz</dc:creator>
+ <guid isPermaLink="false">41 at http://flashgameu.com</guid>
+</item>
+<item>
+ <title>Ask Gary: Repositioning Word Search</title>
+ <link>http://flashgameu.com/ask_gary/ask_gary_repositioning_word_search.html</link>
+ <description>&lt;div class=askgaryq&gt;
+hi Gary,&lt;/p&gt;
+&lt;p&gt;enjoying the book, and probably ahead of myself BUT, how can I change&lt;br /&gt;
+where the wordsearch grid and wordlist appear on the stage if I change the&lt;br /&gt;
+size of the stage?&lt;/p&gt;
+&lt;p&gt;I&#039;ve made the stage larger, and I would like to put the grid and wordlist&lt;br /&gt;
+in the center - how do I change the X/Y?&lt;/p&gt;
+&lt;p&gt;thanks...&lt;br /&gt;
+skillspider
+&lt;/div&gt;
+&lt;p&gt;There are many ways to do this. One would be to change some constants in the code. If you look at the start of the script, you will see an offset for the letter grid.&lt;/p&gt;
+&lt;div class=aaskgarycode&gt;
+static const offset:Point = new Point(15,15);
+&lt;/div&gt;
+&lt;p&gt;You can simply change this to 115,115 to move the grid to the right 100 pixels and down 100 pixels.&lt;br /&gt;
+Similarly, you can move the word list over by changing this line:&lt;/p&gt;
+&lt;div class=askgarycode&gt;
+newWord.x = 400;
+&lt;/div&gt;
+&lt;p&gt;What I would do first, is to make it dependent on the same offset constant. So change it to this:&lt;/p&gt;
+&lt;div class=askgarycode&gt;
+newWord.x = offset.x + 385;
+&lt;/div&gt;
+&lt;p&gt;Now it will always be to the right of the letter grid. All you need to do is change the offset constant to move both elements.&lt;br /&gt;
+Another way to do this would be to simply move the gameDprite. Every game element is in the gameSprite, which is at position 0,0 by default. So moving it to 100,100 will have the same effect as the other changes. Here is that code inserted into the startWordSearch function.&lt;/p&gt;
+&lt;div class=askgarycode&gt;
+// set up the sprites&lt;br /&gt;
+gameSprite = new Sprite();&lt;br /&gt;
+gameSprite.x = 100;&lt;br /&gt;
+gameSprite.y = 100;&lt;br /&gt;
+addChild(gameSprite);
+&lt;/div&gt;
+</description>
+ <comments>http://flashgameu.com/ask_gary/ask_gary_repositioning_word_search.html#comments</comments>
+ <category domain="http://flashgameu.com/topic/ask_gary">Ask Gary</category>
+ <pubDate>Tue, 18 Sep 2007 10:39:34 -0600</pubDate>
+ <dc:creator>rosenz</dc:creator>
+ <guid isPermaLink="false">37 at http://flashgameu.com</guid>
+</item>
+<item>
+ <title>FlashGameU.com Video Tutorial: Physics in Animation</title>
+ <link>http://flashgameu.com/podcast/flashgameu_com_video_tutorial_physics_animation.html</link>
+ <description>&lt;p&gt;A look at simple animation in ActionScript 3.0 that uses physics and gravity.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://blip.tv/file/378527&quot;&gt;View video in your browser&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://blip.tv/file/get/Flashgameu-AnimationInPhysics320.mov&quot;&gt;Download QuickTime Movie&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=261154936&quot;&gt;Subscribe via iTunes&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+</description>
+ <comments>http://flashgameu.com/podcast/flashgameu_com_video_tutorial_physics_animation.html#comments</comments>
+ <category domain="http://flashgameu.com/topic/podcast">Podcast</category>
+ <pubDate>Fri, 14 Sep 2007 13:59:00 -0600</pubDate>
+ <dc:creator>rosenz</dc:creator>
+ <guid isPermaLink="false">35 at http://flashgameu.com</guid>
+</item>
+<item>
+ <title>FlashGameU.com Video Tutorial: Collision Detection</title>
+ <link>http://flashgameu.com/podcast/flashgameu_com_video_tutorial_collision_detection.html</link>
+ <description>&lt;p&gt;Take a look at the two main collision detection functions in Flash AS3 and how they work.&lt;/p&gt;
+&lt;p&gt;&lt;A href=&quot;http://blip.tv/file/373840&quot;&gt;View video in your browser&lt;/A&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;A href=&quot;http://blip.tv/file/get/Flashgameu-ALookAtCollisionDetection325.mov&quot;&gt;Download QuickTime Movie&lt;/A&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;A href=&quot;http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=261154936&quot;&gt;Subscribe via iTunes&lt;/A&gt;.&lt;/p&gt;
+</description>
+ <comments>http://flashgameu.com/podcast/flashgameu_com_video_tutorial_collision_detection.html#comments</comments>
+ <category domain="http://flashgameu.com/topic/podcast">Podcast</category>
+ <pubDate>Tue, 11 Sep 2007 10:37:33 -0600</pubDate>
+ <dc:creator>rosenz</dc:creator>
+ <guid isPermaLink="false">32 at http://flashgameu.com</guid>
+</item>
+<item>
+ <title>FlashGameU.com Video Tutorial: Matching Game</title>
+ <link>http://flashgameu.com/podcast/flashgameu_com_video_tutorial_matching_game.html</link>
+ <description>&lt;p&gt;This video tutorial shows you the AS3 Matching Game from the ActionScript 3.0 Game Programming University book, and walks you through the steps of creating the basic game.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://blip.tv/file/366309&quot;&gt;View video in your browser&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://blip.tv/file/get/Flashgameu-BuildingAMatchingGame865.mov&quot;&gt;Download QuickTime Movie&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+&lt;p&gt;&lt;A HREF=&quot;http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewPodcast?id=261154936&quot;&gt;Subscribe via iTunes&lt;/A&gt;.&lt;BR&gt;&lt;/p&gt;
+</description>
+ <comments>http://flashgameu.com/podcast/flashgameu_com_video_tutorial_matching_game.html#comments</comments>
+ <category domain="http://flashgameu.com/topic/podcast">Podcast</category>
+ <pubDate>Wed, 05 Sep 2007 13:34:56 -0600</pubDate>
+ <dc:creator>rosenz</dc:creator>
+ <guid isPermaLink="false">31 at http://flashgameu.com</guid>
+</item>
+<item>
+ <title>The Book Has Arrived!</title>
+ <link>http://flashgameu.com/book_has_arrived.html</link>
+ <description>&lt;p&gt;&lt;img src=/images/mewithbook.jpg width=240 height=180 align=right&gt;&lt;br /&gt;
+I just got my copy by FedEx! So it should be appearing in stores in the next few days.&lt;/p&gt;
+</description>
+ <comments>http://flashgameu.com/book_has_arrived.html#comments</comments>
+ <pubDate>Fri, 31 Aug 2007 12:34:32 -0600</pubDate>
+ <dc:creator>rosenz</dc:creator>
+ <guid isPermaLink="false">30 at http://flashgameu.com</guid>
+</item>
+</channel>
+</rss>

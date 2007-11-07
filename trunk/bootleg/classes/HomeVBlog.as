@@ -1,0 +1,1 @@
+﻿import mx.controls.Button;import mx.video.FLVPlayback;class HomeVBlog extends MovieClip{	private var firstPlay:String = 'media/vblog/podcast.flv';	private var vblog_player:MovieClip;	private var vplayer:FLVPlayback;	function HomeVBlog(){		vplayer =vblog_player.my_video;		init();	}	private function init(){		vplayer.contentPath=firstPlay;	}	}

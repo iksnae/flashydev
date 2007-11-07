@@ -1,0 +1,1 @@
+﻿class Hinter extends MovieClip{	function Hinter(){		init();	}}

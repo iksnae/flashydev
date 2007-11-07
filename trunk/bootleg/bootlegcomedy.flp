@@ -1,0 +1,32 @@
+﻿<flash_project name="bootlegcomedy" version="1">
+    <project_folder name="classes" expanded="true">
+        <project_file path=".:classes/TopNav.as" filetype="as" />
+        <project_file path=".:classes/Shell.as" filetype="as" />
+        <project_file path=".:classes/NavButton.as" filetype="as" />
+        <project_file path=".:classes/Loader.as" filetype="as" />
+        <project_file path=".:classes/HomePageModules.as" filetype="as" />
+        <project_file path=".:classes/Home_VBlog.as" filetype="as" />
+        <project_file path=".:classes/GridItem.as" filetype="as" />
+        <project_file path=".:classes/Grid.as" filetype="as" />
+        <project_file path=".:classes/Content.as" filetype="as" />
+        <project_file path=".:classes/NewsPage.as" filetype="as" />
+        <project_file path=".:classes/NewsModules.as" filetype="as" />
+        <project_file path=".:classes/MediaPage.as" filetype="as" />
+        <project_file path=".:classes/MediaModules.as" filetype="as" />
+        <project_file path=".:classes/ShowsModules.as" filetype="as" />
+        <project_file path=".:classes/ShowsPage.as" filetype="as" />
+    </project_folder>
+    <project_folder name="fla" expanded="false">
+        <project_file path=".:fla/bootleg3.fla" filetype="fla" profile="" def_file="true" />
+        <project_file path=".:fla/jod_phone.fla" filetype="fla" profile="" />
+        <project_file path=".:fla/jod_email.fla" filetype="fla" profile="" />
+    </project_folder>
+    <project_folder name="build" expanded="false">
+        <project_folder name="data" expanded="false">
+            <project_file path=".:build/data/profile.xml" filetype="xml" />
+            <project_file path=".:build/data/artists.xml" filetype="xml" />
+            <project_file path=".:build/data/pages.xml" filetype="xml" />
+            <project_file path=".:build/data/news.xml" filetype="xml" />
+        </project_folder>
+    </project_folder>
+</flash_project>
