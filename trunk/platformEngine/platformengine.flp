@@ -1,0 +1,11 @@
+﻿<flash_project name="platformengine" version="1">
+    <project_folder name="classes" expanded="true">
+        <project_file path=".:classes/Enemy.as" filetype="as" />
+        <project_file path=".:classes/Hero.as" filetype="as" />
+        <project_file path=".:classes/Pickup.as" filetype="as" />
+        <project_file path=".:classes/Engine.as" filetype="as" />
+        <project_file path=".:classes/PointBurst.as" filetype="as" />
+    </project_folder>
+    <project_folder name="levels" expanded="false">
+    </project_folder>
+</flash_project>
