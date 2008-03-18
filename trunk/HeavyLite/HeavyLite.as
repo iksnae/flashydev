@@ -35,6 +35,7 @@ package {
 		private var __youTubePlayer:FLVPlayer = new FLVPlayer(__videoPlayer);
 		private var __videoHolder:Sprite	= new Sprite();
 		
+		private var __playButton:Sprite;
 		
 		
 		
@@ -62,10 +63,14 @@ package {
 		}
 		private function createControls():void{
 			var spr:Sprite = new Sprite();
-			spr.graphics.beginFill(0x666666);
+			spr.graphics.beginFill(0x666666,.5);
 			spr.graphics.drawRoundRect(5,5,310,25,5);
 			spr.graphics.endFill();
 			spr.y=205;
+			
+			__playButton = playButton();
+			spr.addChild(__playButton);
+			
 			__videoHolder.addChild(spr);
 		}
 		private function ytLoaded(e:YouTubeEvent):void{
@@ -83,9 +88,56 @@ package {
 		private function ytError(e:YouTubeEvent):void{
 			trace('error loading youtube video');
 		}
+		
 		private function getThumbnail(str:String):String{
 			var thumbURL:String = 'http://i.ytimg.com/vi/'+str+'/default.jpg';
 			return thumbURL;
+		}
+		private function playButton():Sprite{
+			var btn:Sprite = new Sprite();
+			var btnOver:Sprite = new Sprite();
+			var btnOff:Sprite = new Sprite();
+			
+			btn.graphics.beginFill(0xffffff,0);
+			btn.graphics.drawRect(7.5,7.5,20,20);
+			btn.graphics.endFill();
+			
+			btnOver.name = 'playButtonOff';
+			btnOver.name = 'playButtonOver';
+			btnOver.graphics.beginFill(0xffffff);
+			btnOver.graphics.lineTo(0,0);
+			btnOver.graphics.lineTo(15,7.5);
+			btnOver.graphics.lineTo(0,15);
+			btnOver.graphics.endFill();
+			btnOver.x = 10;
+			btnOver.y = 10;
+			btnOver.alpha=0;
+			
+			btnOff.name = 'playButtonOff';
+			btnOff.name = 'playButtonOver';
+			btnOff.graphics.beginFill(0xffffff,.5);
+			btnOff.graphics.lineTo(0,0);
+			btnOff.graphics.lineTo(15,7.5);
+			btnOff.graphics.lineTo(0,15);
+			btnOff.graphics.endFill();
+			btnOff.x = 10;
+			btnOff.y = 10;
+			
+			btn.addEventListener(MouseEvent.MOUSE_OVER, pOver);
+			btn.addEventListener(MouseEvent.MOUSE_OUT, pOff);
+			
+			btn.addChild(btnOver);
+			btn.addChild(btnOff);
+			
+			function pOver(e:MouseEvent):void{
+				btnOver.alpha=1;
+			}
+			function pOff(e:MouseEvent):void{
+				btnOver.alpha=0;
+			}
+			return btn;
+			
+				
 		}
 	}
 }
