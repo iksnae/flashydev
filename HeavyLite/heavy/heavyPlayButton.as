@@ -43,9 +43,8 @@ package heavy
 			
 			btn.addChild(btnOver);
 			btn.addChild(btnOff);
-			
-			
 			function pOver(e:MouseEvent):void{
+				trace('over')
 				btnOver.alpha=1;
 			}
 			function pOff(e:MouseEvent):void{
