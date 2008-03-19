@@ -64,7 +64,7 @@ package {
 			__adViewer = new AdViewController(this);
 			//draw video bg
 			__videoHolder.graphics.beginFill(0xffffff);
-			__videoHolder.graphics.drawRect(0,0,320,240);
+			__videoHolder.graphics.drawRect(-10,-10,340,260);
 			__videoHolder.graphics.endFill();
 			
 			
@@ -251,7 +251,7 @@ package {
 		}
 		
 		private function getVideos():void{
-			yt.videosbyTag('heavy weapon');
+			yt.videosbyTag('heavy funny');
 		}
 		private function getVideo(id:String):void{
 			try{
