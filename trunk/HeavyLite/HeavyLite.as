@@ -233,7 +233,7 @@ package {
 				if(__allThumbs[i][0]==e.target){
 					showVideoPlayer();
 					__currentTrack = __allVideos[i];
-					__adViewer.showAd(10);
+					__adViewer.showAd(4);
 					kontrol.visible=false;
 				}
 			}
