@@ -138,7 +138,7 @@ package {
 			createControls();
 		}
 		private function flvUpdate(e:FLVPlayerEvent):void {
-			 d__hider.alpha=0;
+			 __hider.alpha=0;
 			trace('phase: '+e)
 		}
 		
