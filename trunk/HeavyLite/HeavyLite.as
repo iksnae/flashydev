@@ -43,6 +43,7 @@ package {
 		private var __youTubePlayer:FLVPlayer = new FLVPlayer(__videoPlayer);
 		private var __centeredHolder:Sprite = new Sprite();
 		private var __videoHolder:Sprite	= new Sprite();
+		private var __hider:Sprite= new Sprite();
 		private var __dimmer:Sprite=new Sprite();
 		private var __bg:Sprite=new Sprite();
 		private var __thumbHolder:Sprite=new Sprite();
@@ -68,9 +69,14 @@ package {
 			__videoHolder.graphics.drawRect(-10,-10,340,260);
 			__videoHolder.graphics.endFill();
 			
+			__hider.graphics.beginFill(0x000000);
+			__hider.graphics.drawRect(0,0,320,240);
+			__hider.graphics.endFill();
+			
 			
 			// add videoplayer to holder
 			__videoHolder.addChild(__videoPlayer);
+			__videoHolder.addChild(__hider);
 			__videoHolder.addChild(__adViewer);
 			__videoHolder.addChild(__closeButton);
 			__videoHolder.x=-160;
@@ -111,6 +117,7 @@ package {
 		public function closePlayer(e=null):void{
 			trace('showVideoPlayer')
 			__adViewer.closeAd();
+			__hider.alpha=1;
 			if(__playingVideo){
 				__playingVideo=true;
 				__youTubePlayer.stop();
@@ -125,8 +132,14 @@ package {
 			yt.addEventListener(YouTubeEvent.COMPLETE,	ytLoaded);
 			yt.addEventListener(YouTubeEvent.ERROR,		ytError);
 			__youTubePlayer.addEventListener(FLVPlayerEvent.COMPLETE,closePlayer);
+			__youTubePlayer.addEventListener(FLVPlayerEvent.UPDATE,flvUpdate);
+			
 
 			createControls();
+		}
+		private function flvUpdate(e:FLVPlayerEvent):void {
+			 d__hider.alpha=0;
+			trace('phase: '+e)
 		}
 		
 		private function showVideoPlayer():void{
@@ -140,13 +153,14 @@ package {
 		}
 		private function hideVideoPlayer():void{
 			trace('hideVideoPlayer');
-			
 			TweenLite.to(__dimmer,1,{alpha:.5});
+			
 			TweenLite.to(__centeredHolder,.3,{alpha:0,scaleX:1,scaleY:1,onComplete:disableVPlayer});
 		}
 		private function disableVPlayer():void{
 			__centeredHolder.visible=false;
 			__dimmer.visible=false;
+			
 		}
 		
 	
