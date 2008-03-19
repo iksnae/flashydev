@@ -40,7 +40,7 @@ package heavy
 		}		
 		
 		private function closeAd():void{
-			hit.visible=fasle;
+			hit.visible=false;
 			openPanels();
 		}
 		private function closePanels():void{
