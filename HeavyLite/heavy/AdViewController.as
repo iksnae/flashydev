@@ -13,11 +13,11 @@ package heavy
 		
 		private var hit:Sprite=new Sprite();
 		
-		private var rightPanel:Sprite	=new Sprite();
-		private var leftPanel:Sprite	=new Sprite();
+		private var rightPanel:Sprite = new Sprite();
+		private var leftPanel:Sprite = new Sprite();
 	
 		private var adTimer:Timer;
-		private var adURLS:Array		=new Array();
+		private var adURLS:Array = new Array();
 		private var myShell:Sprite;
 		
 		
@@ -25,7 +25,7 @@ package heavy
 		public function showAd(secs:Number):void{
 			hit.visible=true;
 			//closePanels();
-			adTimer = new Timer(secs*1000,0);
+			adTimer = new Timer(secs);
 			
 			trace('timer set for '+secs+' seconds.')
 			adTimer.addEventListener(TimerEvent.TIMER_COMPLETE,adFinished);
@@ -35,9 +35,9 @@ package heavy
 		
 		public function adFinished(e=null):void{
 			//openPanels();
-			trace('timer finised.')
-			adTimer.stop();
-			closeAd()
+			trace('timer finished.')
+		
+			closeAd();
 			
 		}
 		
@@ -48,6 +48,8 @@ package heavy
 			hit.graphics.drawRect(0,0,320,240);
 			hit.graphics.endFill();
 			hit.visible=false;
+			hit.buttonMode=true;
+			hit.useHandCursor=true;
 			addChild(hit)
 			init(shell);
 		}
