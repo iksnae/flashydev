@@ -67,12 +67,12 @@ package {
 			__videoHolder.addChild(__closeButton);
 			__videoHolder.x=-160;
 			__videoHolder.y=-120;
-			__centeredHolder.x=200;
+			__centeredHolder.x=210;
 			__centeredHolder.y=180;
 			__centeredHolder.visible=false;
 			
 			// draw bg
-			__bg.graphics.beginFill(0xffffff);
+			__bg.graphics.beginFill(0x000000);
 			__bg.graphics.drawRect(-200,-200,3000,2000);
 			__bg.graphics.endFill();
 			
@@ -191,6 +191,7 @@ package {
 		}
 		private var row:Number=0;
 		private var col:Number=0;
+		
 		private function getThumbnail(str:String):String{
 			var thumbURL:String = 'http://i.ytimg.com/vi/'+str+'/default.jpg';
 			var thumbLoader:Loader=new Loader();
@@ -199,12 +200,12 @@ package {
 			
 			thumbLoader.x = col*60;
 			thumbLoader.y = row*30;
-			
+			col++;
 			if( col>=7){
 				col=0;
 				row++;
 			}
-			col++;
+			
 			thumbLoader.scaleX=.5;
 			thumbLoader.scaleY=.5;
 			
