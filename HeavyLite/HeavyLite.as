@@ -54,6 +54,7 @@ package {
 		private var __allVideos:Array= new Array();
 		private var __allThumbs:Array= new Array();
 		private var kontrol:Sprite = new Sprite();
+		private var __playingVideo:Boolean=false;
 		
 		
 		
@@ -102,11 +103,17 @@ package {
 		
 		public function playVideo():void{
 			trace('play video: '+__currentTrack);
-			kontrol.visible=false;
+			kontrol.visible=true;
 			getVideo(__currentTrack);
 		}
 		
 		public function closePlayer(e:MouseEvent=null):void{
+			trace('showVideoPlayer')
+			__adViewer.closeAd();
+			if(__playingVideo){
+				__playingVideo=true;
+				__youTubePlayer.stop();
+			}
 			hideVideoPlayer();
 		}
 		
@@ -116,11 +123,12 @@ package {
 			//addlisteners
 			yt.addEventListener(YouTubeEvent.COMPLETE,	ytLoaded);
 			yt.addEventListener(YouTubeEvent.ERROR,		ytError);
-			
+
 			createControls();
 		}
 		
 		private function showVideoPlayer():void{
+			trace('showVideoPlayer')
 			__centeredHolder.alpha=0;
 			__centeredHolder.visible=true;
 			__dimmer.alpha=0;
@@ -129,7 +137,8 @@ package {
 			TweenLite.to(__centeredHolder,.3,{alpha:1,scaleX:1.2,scaleY:1.2,delay:.5});
 		}
 		private function hideVideoPlayer():void{
-			__youTubePlayer.stop();
+			trace('hideVideoPlayer');
+			
 			TweenLite.to(__dimmer,1,{alpha:.5});
 			TweenLite.to(__centeredHolder,.3,{alpha:0,scaleX:1,scaleY:1,onComplete:disableVPlayer});
 		}
@@ -144,6 +153,7 @@ package {
 			kontrol.graphics.beginFill(0x666666,.5);
 			kontrol.graphics.drawRoundRect(5,5,630,25,5);
 			kontrol.graphics.endFill();
+			
 			kontrol.y=220;
 			kontrol.scaleX=.5;
 			kontrol.scaleY=.5;
@@ -151,7 +161,7 @@ package {
 			// add the kids
 			kontrol.addChild(__playButton);
 			kontrol.addChild(__stopButton);
-		
+			__stopButton.visible=false;
 			
 			__videoHolder.addChild(kontrol);
 			// add listeners
@@ -244,8 +254,15 @@ package {
 			yt.videosbyTag('heavy weapon');
 		}
 		private function getVideo(id:String):void{
-			yt.getVideoId(id);
-			yt.videoIdDetails(id);
+			try{
+				__playingVideo=true;
+				trace('video loaded')
+				yt.getVideoId(id);
+				yt.videoIdDetails(id);
+				
+			}catch(e:ArgumentError){
+				trace('video failed to load')
+			}
 		}
 	}
 }
