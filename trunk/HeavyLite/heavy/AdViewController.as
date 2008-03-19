@@ -6,6 +6,10 @@ package heavy
 	import lt.uza.utils.Global;
 	import flash.events.Event;
 	import gs.TweenLite;
+	import flash.display.Loader;
+	import flash.display.BitmapData;
+	import flash.geom.Matrix;
+	import flash.net.URLRequest;
 
 	public class AdViewController extends Sprite
 	{
@@ -23,6 +27,7 @@ package heavy
 		private var adURLS:Array = new Array();
 		private var myShell:Sprite;
 		
+		private var imageLoader:Loader= new Loader();
 		
 		
 		public function showAd(secs:Number):void{
@@ -45,6 +50,8 @@ package heavy
 		
 		public function AdViewController(shell:Sprite)
 		{
+			imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,adLoaded);
+			imageLoader.load(new URLRequest('ad1.png'));
 			//TODO: implement function
 			hit.graphics.beginFill(0xccff33,0);
 			hit.graphics.drawRect(0,0,320,240);
@@ -59,13 +66,7 @@ package heavy
 			hit.buttonMode=true;
 			hit.useHandCursor=true;
 			
-			rightPanel.graphics.beginFill(0x666);
-			rightPanel.graphics.drawRect(0,0,160,240);
-			rightPanel.graphics.endFill();
 			
-			leftPanel.graphics.beginFill(0x666);
-			leftPanel.graphics.drawRect(0,0,160,240);
-			leftPanel.graphics.endFill();
 			
 			addChild(adMask);
 			addChild(adMask1);
@@ -73,7 +74,7 @@ package heavy
 			rightPanel.mask=adMask;
 			leftPanel.mask=adMask1;
 			
-			rightPanel.x=160;
+		//	rightPanel.x=600;
 			
 			rightPanel.mouseEnabled=false;
 			leftPanel.mouseEnabled=false;
@@ -94,14 +95,30 @@ package heavy
 			
 		}
 		private function closePanels():void{
-			TweenLite.to(rightPanel,.3,{x:160});
+			TweenLite.to(rightPanel,.3,{x:0});
 			TweenLite.to(leftPanel,.3,{x:0});
 		}
 		private function openPanels():void{
-			TweenLite.to(rightPanel,.3,{x:320});
+			TweenLite.to(rightPanel,.3,{x:160});
 			TweenLite.to(leftPanel,.3,{x:-160});
 		}
 		private function loadAds():void{
+			
+		}
+		private function adLoaded(e:Event):void{
+			trace(' ad image loaded');
+			
+			var myBitmap:BitmapData=new BitmapData(imageLoader.width,imageLoader.height);			
+			var mtx:Matrix = new Matrix();
+			myBitmap.draw(imageLoader,mtx);
+			
+			rightPanel.graphics.beginBitmapFill(myBitmap,mtx,false,true);
+			rightPanel.graphics.drawRect(160,0,160,240);
+			rightPanel.graphics.endFill();
+			
+			leftPanel.graphics.beginBitmapFill(myBitmap,mtx,false,true);
+			leftPanel.graphics.drawRect(0,0,160,240);
+			leftPanel.graphics.endFill();
 			
 		}
 		
