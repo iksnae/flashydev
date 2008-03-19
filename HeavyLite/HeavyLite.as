@@ -22,19 +22,22 @@ package {
 	
 	import com.FlashDynamix.services.YouTube;
 	import com.FlashDynamix.events.YouTubeEvent;
-	import com.FlashDynamix.controls.ui.VideoController;
+	//import com.FlashDynamix.controls.ui.VideoController;
 	import com.FlashDynamix.media.FLVPlayer;
 	import heavy.heavyPlayButton;
 	import heavy.heavyStopButton;
 	import heavy.AdViewController;
 	import heavy.HeavyCloseButton;
+	import lt.uza.utils.Global;
 	
 
 	public class HeavyLite extends Sprite
 	{
 		public var yt:YouTube;
+	
+		private var global:Global = Global.getInstance();
 		
-		private var __youtubeDevID:String 	= 'fqvXEj7gYlo';
+		private var __currentTrack:String;
 		private var __videoPlayer:Video 	= new Video();
 		private var __youTubePlayer:FLVPlayer = new FLVPlayer(__videoPlayer);
 		private var __centeredHolder:Sprite = new Sprite();
@@ -47,16 +50,19 @@ package {
 		private var __stopButton:heavyStopButton = new heavyStopButton();
 		private var __closeButton:HeavyCloseButton = new HeavyCloseButton();
 		
-		private var __adViewer:AdViewController = new AdViewController();
+		private var __adViewer:AdViewController;
 		private var __allVideos:Array= new Array();
 		private var __allThumbs:Array= new Array();
+		private var kontrol:Sprite = new Sprite();
 		
 		
 		
 		public function HeavyLite()
 		{
+			global.playVideo=playVideo;
+			__adViewer = new AdViewController(this);
 			//draw video bg
-			__videoHolder.graphics.beginFill(0x000000);
+			__videoHolder.graphics.beginFill(0xffffff);
 			__videoHolder.graphics.drawRect(0,0,320,240);
 			__videoHolder.graphics.endFill();
 			
@@ -77,7 +83,7 @@ package {
 			__bg.graphics.endFill();
 			
 			//draw dimmer..
-			__dimmer.graphics.beginFill(0x000000,.6);
+			__dimmer.graphics.beginFill(0x000000,.8);
 			__dimmer.graphics.drawRect(-200,-200,3000,2000);
 			__dimmer.graphics.endFill();
 			__dimmer.visible=false;
@@ -94,10 +100,10 @@ package {
 			init();
 		}
 		
-		
-		
-		public function playVideo(id:String):void{
-			getVideo(id);
+		public function playVideo():void{
+			trace('play video: '+__currentTrack);
+			kontrol.visible=false;
+			getVideo(__currentTrack);
 		}
 		
 		public function closePlayer(e:MouseEvent=null):void{
@@ -120,12 +126,12 @@ package {
 			__dimmer.alpha=0;
 			__dimmer.visible=true;
 			TweenLite.to(__dimmer,.5,{alpha:1});
-			TweenLite.to(__centeredHolder,.7,{alpha:1,scaleX:1.2,scaleY:1.2,delay:1});
+			TweenLite.to(__centeredHolder,.3,{alpha:1,scaleX:1.2,scaleY:1.2,delay:.5});
 		}
 		private function hideVideoPlayer():void{
 			__youTubePlayer.stop();
-			TweenLite.to(__dimmer,1,{alpha:.5,delay:1});
-			TweenLite.to(__centeredHolder,.7,{alpha:0,scaleX:1,scaleY:1,onComplete:disableVPlayer});
+			TweenLite.to(__dimmer,1,{alpha:.5});
+			TweenLite.to(__centeredHolder,.3,{alpha:0,scaleX:1,scaleY:1,onComplete:disableVPlayer});
 		}
 		private function disableVPlayer():void{
 			__centeredHolder.visible=false;
@@ -134,28 +140,34 @@ package {
 		
 	
 		private function createControls():void{
-			var spr:Sprite = new Sprite();
-			spr.graphics.beginFill(0x666666,.5);
-			spr.graphics.drawRoundRect(5,5,630,25,5);
-			spr.graphics.endFill();
-			spr.y=220;
-			spr.scaleX=.5;
-			spr.scaleY=.5;
+		
+			kontrol.graphics.beginFill(0x666666,.5);
+			kontrol.graphics.drawRoundRect(5,5,630,25,5);
+			kontrol.graphics.endFill();
+			kontrol.y=220;
+			kontrol.scaleX=.5;
+			kontrol.scaleY=.5;
 			
 			// add the kids
-			spr.addChild(__playButton);
-			spr.addChild(__stopButton);
+			kontrol.addChild(__playButton);
+			kontrol.addChild(__stopButton);
 		
 			
-			__videoHolder.addChild(spr);
+			__videoHolder.addChild(kontrol);
 			// add listeners
 			__closeButton.addEventListener(MouseEvent.CLICK, closePlayer);
 			__playButton.addEventListener(MouseEvent.CLICK,playButtonClicked);
+			__stopButton.addEventListener(MouseEvent.CLICK,playButtonClicked);
+			
+			//load the video thumbs/IDs
 			getVideos();
 		}
 		
 		private function playButtonClicked(e:MouseEvent):void{
-			playVideo('84zv1odQwjo');
+			__youTubePlayer.pause();
+		}
+		private function stopButtonClicked(e:MouseEvent):void{
+			__youTubePlayer.stop();
 		}
 		
 		private function ytLoaded(e:YouTubeEvent):void{
@@ -220,11 +232,14 @@ package {
 			for(var i in __allThumbs){
 				if(__allThumbs[i][0]==e.target){
 					showVideoPlayer();
-					playVideo(__allVideos[i]);
+					__currentTrack = __allVideos[i];
+					__adViewer.showAd(10);
+					kontrol.visible=false;
 				}
 			}
 			
 		}
+		
 		private function getVideos():void{
 			yt.videosbyTag('heavy weapon');
 		}
