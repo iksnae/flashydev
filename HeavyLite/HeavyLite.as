@@ -24,6 +24,7 @@ package {
 	import com.FlashDynamix.events.YouTubeEvent;
 	//import com.FlashDynamix.controls.ui.VideoController;
 	import com.FlashDynamix.media.FLVPlayer;
+	import com.FlashDynamix.events.FLVPlayerEvent;
 	import heavy.heavyPlayButton;
 	import heavy.heavyStopButton;
 	import heavy.AdViewController;
@@ -107,7 +108,7 @@ package {
 			getVideo(__currentTrack);
 		}
 		
-		public function closePlayer(e:MouseEvent=null):void{
+		public function closePlayer(e=null):void{
 			trace('showVideoPlayer')
 			__adViewer.closeAd();
 			if(__playingVideo){
@@ -123,6 +124,7 @@ package {
 			//addlisteners
 			yt.addEventListener(YouTubeEvent.COMPLETE,	ytLoaded);
 			yt.addEventListener(YouTubeEvent.ERROR,		ytError);
+			__youTubePlayer.addEventListener(FLVPlayerEvent.COMPLETE,closePlayer);
 
 			createControls();
 		}
@@ -219,6 +221,7 @@ package {
 			var thumbLoader:Loader=new Loader();
 		
 			thumbLoader.load(new URLRequest(thumbURL));
+			
 			
 			thumbLoader.x = col*60;
 			thumbLoader.y = row*30;
