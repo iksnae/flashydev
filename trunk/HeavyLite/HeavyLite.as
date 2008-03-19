@@ -55,8 +55,11 @@ package {
 			// add videoplayer to holder
 			//__videoHolder.scaleX=1.5;
 			//__videoHolder.scaleY=1.5;
+			
 			__videoHolder.addChild(__videoPlayer);
+			__videoHolder.addChild(__adViewer);
 			__videoHolder.addChild(__closeButton);
+			__videoHolder.y=20;
 			trace('heavy light')
 		
 			// add holder to stage...
