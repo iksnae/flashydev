@@ -189,16 +189,25 @@ package {
 		private function ytError(e:YouTubeEvent):void{
 			trace('error loading youtube video');
 		}
-		
+		private var row:Number=0;
+		private var col:Number=0;
 		private function getThumbnail(str:String):String{
 			var thumbURL:String = 'http://i.ytimg.com/vi/'+str+'/default.jpg';
 			var thumbLoader:Loader=new Loader();
 		
 			thumbLoader.load(new URLRequest(thumbURL));
 			
-			thumbLoader.x = __allThumbs.length*60;
+			thumbLoader.x = col*60;
+			thumbLoader.y = row*30;
+			
+			if( col>=7){
+				col=0;
+				row++;
+			}
+			col++;
 			thumbLoader.scaleX=.5;
 			thumbLoader.scaleY=.5;
+			
 			thumbLoader.addEventListener(MouseEvent.CLICK,thumbClicked);
 			__thumbHolder.addChild(thumbLoader);
 			trace(thumbURL);
