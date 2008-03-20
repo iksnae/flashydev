@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<marriot>
+	<lobby still="images/lobbyStill.jpg" detailBtn1="EASY CHECK?IN / CHECKOUT" detailBtn2="FREE WI-FI" detailBtn3="BREAKFAST MADE TO ORDER" detailBtn4="BAR AND LOUNGE AREA" detailBtn5="COMPLIMENTARY COFFEE" detailImg1="images/free_wifi.jpg" detailImg2="images/complimentary_coffee.jpg" detailImg3="images/breakfast.jpg" detailImg4="images/casual_meeting.jpg" detailImg5="images/easy_check_in.jpg" detailText1="Headline|Test Test Test">flv/LOBBY_HD_CROPPED_CD_1200.flv</lobby>
+	<market still="images/marketStill.jpg" detailBtn1="ALWAYS OPEN" detailBtn2="EVERYTHING YOU NEED" detailImg1="images/always_open.jpg" detailImg2="images/everything_needs.jpg">flv/MARKET_HD_CROP.flv</market>
+	<businesslibrary still="images/buslibStill.jpg" detailBtn1="RELAXED WORKSPACE" detailBtn2="FREE WIFI AND HIGH SPEED INTERNET ACCESS" detailBtn3="DESKTOP WORKSTATIONS" detailBtn4="FREE NEWSPAPERS AND MAGAZINES" detailImg1="images/relaxed_work_space.jpg" detailImg2="images/library_wifi.jpg" detailImg3="images/desktop_workstation.jpg" detailImg4="images/free_newspaper.jpg">flv/BUSINESS_HD_CROPPED_1200.flv</businesslibrary>
+	<guestroom still="images/guestroomStill.jpg" detailBtn1="SMARTLY REDESIGNED" detailBtn2="FLEXIBLE WORKSPACE" detailBtn3="COMFY BEDS" detailBtn4="FREE HIGH-SPEED INTERNET" detailImg1="images/smartly_design.jpg" detailImg2="images/flexible_workspace.jpg" detailImg3="images/comfy_beds.jpg" detailImg4="images/free_highspeed.jpg">flv/ROOM_HD_CROPPED_1200.flv</guestroom>
+	<fitnesscenter still="images/fitcenterStill.jpg" detailBtn1="POOL" detailBtn2="HOT TUB" detailBtn3="EXERCISE EQUIPMENT" detailBtn4="TOWEL SERVICE" detailImg1="images/temp_controlled.jpg" detailImg2="images/hot_tub.jpg" detailImg3="images/exercise_equip.jpg" detailImg4="images/towel_service.jpg">flv/FITNESS_HD_CROPPED_1200.flv</fitnesscenter>
+	<outdoor still="images/outdoorStill.jpg" detailBtn1="PLACEHOLDER" detailBtn2="PLACEHOLDER"  detailImg1="images/outdoorwifi.jpg" detailImg2="images/outdoormeeting.jpg">null</outdoor>
+	<cuePoints>
+		<cue id="STAYENERGIZED">Test copy goes here</cue>
+		<cue id="SNACK/REFRESHMENTS">Test copy #2 goes here</cue>
+	</cuePoints>
+</marriot>
