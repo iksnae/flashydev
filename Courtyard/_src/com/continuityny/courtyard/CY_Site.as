@@ -58,7 +58,7 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 			
 			
 			// Code to make Compnents work
-			//this._lockroot = true;
+			// this._lockroot = true;
 			
 			
 			XMLToObjectDeserializer.DESERIALIZE_ATTRIBUTES 				= true;
@@ -95,39 +95,39 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 	
 	private function _loadConfXML( Void ) : Void {
 		Logger.LOG( "Application :: _loadConf" );
-	//	creating the object holding the result for a map
+		//	creating the object holding the result for a map
 		_config = new Object();
-	//	creating the config loader
+		//	creating the config loader
 		var _cfLoader : ConfigLoader = new ConfigLoader( _config );
-	//	define the callback once the xml is loaded
+		//	define the callback once the xml is loaded
 		_cfLoader.addEventListener( ConfigLoader.onLoadInitEVENT, this, _loadConnectonsXML );
-	//	load by default the "config.xml" file 
+		//	load by default the "config.xml" file 
 		_cfLoader.load(_config_path);
 		
 	}
 	
 	private function _loadConnectonsXML( Void ) : Void {
 		trace( "Application :: _loadConnectonsXML" );
-	//	creating the object holding the result for a map
+		//	creating the object holding the result for a map
 		_nodes = new Object();
-	//	creating the config loader
+		//	creating the config loader
 		var _cfLoader : ConfigLoader = new ConfigLoader( _nodes);
-	//	define the callback once the xml is loaded
+		//	define the callback once the xml is loaded
 		_cfLoader.addEventListener( ConfigLoader.onLoadInitEVENT, this, _loadAthleteData );
-	//	load by default the "config.xml" file 
+		//	load by default the "config.xml" file 
 		_cfLoader.load(_config.query.connections);
 	}
 	
 	private function _loadAthleteData( Void ) : Void {
 		trace("nodes:"+_nodes.nodes);
 		trace( "Application :: _loadAthletesData: "+_config.paths.athlete_data );
-	//	creating the object holding the result for a map
+		//	creating the object holding the result for a map
 		_athlete = new Object();
-	//	creating the config loader
+		//	creating the config loader
 		var _cfLoader : ConfigLoader = new ConfigLoader( _athlete );
-	//	define the callback once the xml is loaded
+		//	define the callback once the xml is loaded
 		_cfLoader.addEventListener( ConfigLoader.onLoadInitEVENT, this, _loadData );
-	//	load by default the "config.xml" file 
+		//	load by default the "config.xml" file 
 		_cfLoader.load(_config.paths.athlete_data);
 		
 		
@@ -309,28 +309,6 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
  *  	they will go back to universe and "back to message" node comes up
   * * 
  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
