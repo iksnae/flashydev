@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Courtyard</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.powerflasher.fdt.core.FlashBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.powerflasher.fdt.core.FlashNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>mx</name>
+			<type>2</type>
+			<locationURI>mx</locationURI>
+		</link>
+		<link>
+			<name>core</name>
+			<type>2</type>
+			<locationURI>AS2_CORE_DEFAULT</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>
