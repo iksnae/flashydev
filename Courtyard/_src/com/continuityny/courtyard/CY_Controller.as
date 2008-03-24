@@ -12,8 +12,8 @@ import com.bourre.core.HashCodeFactory;
 import com.bourre.events.FrontController;
 
 //	Commands and Event list
-import com.continuityny.usoc.commands.*;
-import com.continuityny.usoc.USOC_EventList;
+import com.continuityny.courtyard.commands.*;
+import com.continuityny.courtyard.CY_EventList;
 	
 class com.continuityny.courtyard.CY_Controller
 	extends FrontController {
@@ -52,18 +52,15 @@ class com.continuityny.courtyard.CY_Controller
 */
 	private function _init( Void ) : Void {
 	
-		//push ( USOC_EventList.DO_THIS, 		new DoThis() );	
-		push ( USOC_EventList.BUILD_SITE, 		new BuildSite() );	
-		push ( USOC_EventList.SET_DATA, 		new SetData() );	
-		push ( USOC_EventList.SELECT_ATHLETE, 	new SelectAthlete() );	
-		push ( USOC_EventList.SET_GALAXY_MC, 	new SetGalaxyMC() );
+		//push ( CY_EventList.DO_THIS, 		new DoThis() );	
+		push ( CY_EventList.BUILD_SITE, 			new BuildSite() );	
 		
-		push ( USOC_EventList.LOCATION_ON_ARRIVED, 		new OnLocationArrived() );	
-		push ( USOC_EventList.LOCATION_ON_DEPARTED, 	new OnLocationDeparted() );	
-		push ( USOC_EventList.SET_LOCATION, 			new SetLocation() );	
-		push ( USOC_EventList.CHANGE_LOCATION, 			new ChangeLocation() );	
+		push ( CY_EventList.LOCATION_ON_ARRIVED, 	new OnLocationArrived() );	
+		push ( CY_EventList.LOCATION_ON_DEPARTED, 	new OnLocationDeparted() );	
+		push ( CY_EventList.SET_LOCATION, 			new SetLocation() );	
+		push ( CY_EventList.CHANGE_LOCATION, 		new ChangeLocation() );	
 		
-		push ( USOC_EventList.MUTE_SOUND, 			new MuteSound() );	
+		//push ( CY_EventList.MUTE_SOUND, 			new MuteSound() );	
 	}
 	
 /**
@@ -71,7 +68,7 @@ class com.continuityny.courtyard.CY_Controller
 * @return
 */
 	public function toString() : String {
-		return 'om.continuityny.usoc.USOC_Controller' + HashCodeFactory.getKey( this );
+		return 'om.continuityny.courtyard.CY_Controller' + HashCodeFactory.getKey( this );
 	}
 }
 

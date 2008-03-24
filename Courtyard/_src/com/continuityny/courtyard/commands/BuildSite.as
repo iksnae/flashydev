@@ -26,7 +26,7 @@ import com.bourre.visual.MovieClipHelper;
 import com.continuityny.courtyard.CY_ViewList;
 import com.continuityny.courtyard.views.CY_Nav_View;
 import com.continuityny.courtyard.views.CY_Sound_View;
-import com.continuityny.courtyard.views.CY_Location_View;
+import com.continuityny.courtyard.views.CY_Location_View;import com.continuityny.courtyard.views.CY_Home_View;
 
 class com.continuityny.courtyard.commands.BuildSite 
 	implements Command {
@@ -45,14 +45,15 @@ class com.continuityny.courtyard.commands.BuildSite
 */
 
 	public function execute( e : IEvent ) : Void {
-		trace("BuildSite Executing");
+		
+		trace("CY BuildSite Executing");
 
-		CY_Site_Model( Model.getModel( CY_ModelList.MODEL_SITE ) ).organizeData( e );
-	
+		//CY_Site_Model( Model.getModel( CY_ModelList.MODEL_SITE ) ).organizeData( e );		
+		CY_Home_View( MovieClipHelper.getMovieClipHelper( CY_ViewList.VIEW_HOME))._build(e);
+
+		CY_Nav_View( MovieClipHelper.getMovieClipHelper( CY_ViewList.VIEW_NAV ) )._build(e);
 		
-		CY_Nav_View( MovieClipHelper.getMovieClipHelper( CY_ViewList.VIEW_NAV ) )._build();
-		
-		CY_Sound_View( MovieClipHelper.getMovieClipHelper( CY_ViewList.VIEW_SOUND ) )._loadSounds();
+		//CY_Sound_View( MovieClipHelper.getMovieClipHelper( CY_ViewList.VIEW_SOUND ) )._loadSounds();
 		
 		
 	}

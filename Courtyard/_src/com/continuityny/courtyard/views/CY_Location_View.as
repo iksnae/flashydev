@@ -31,14 +31,14 @@ import com.bourre.events.IEvent;
 import com.bourre.events.BasicEvent;
 import com.bourre.events.EventType;
 
-import com.continuityny.usoc.USOC_EventList;
-import com.continuityny.usoc.USOC_EventBroadcaster;
+import com.continuityny.courtyard.CY_EventList;
+import com.continuityny.courtyard.CY_EventBroadcaster;
 
 //	MovieClipHelper
 import com.bourre.visual.MovieClipHelper;
 
 //	list of Views
-import com.continuityny.usoc.USOC_ViewList;
+import com.continuityny.courtyard.CY_ViewList;
 
 
 
@@ -57,7 +57,9 @@ class com.continuityny.courtyard.views.CY_Location_View
 	private static var LOCATIONS : Object ; 
 	private static var LIVE_LOCATION : String;
 	private var LIVE_DATA : Object;
+	private static var LIVE_E : IEvent; 
 	private var DEPARTING_LOCATION : String;
+	private static var DEPARTING_E : IEvent;
 	private var INTERNAL_CALL : Boolean = false;
 	
 	private var INITIAL_LOCATION:String;
@@ -70,8 +72,9 @@ class com.continuityny.courtyard.views.CY_Location_View
 * CONSTRUCTOR
 **************************************************************************** */
 	function CY_Location_View( mc : MovieClip ) {
-		super( USOC_ViewList.VIEW_LOCATION, mc );
-		trace("View: mc:"+mc);
+		super( CY_ViewList.VIEW_LOCATION, mc );
+		
+		trace("CY_Location_View:"+mc);
 		
 		
 		_init();
@@ -89,11 +92,18 @@ class com.continuityny.courtyard.views.CY_Location_View
 	
 		var my_so:SharedObject = SharedObject.getLocal("video_cookie");
 		
-		if(my_so.data.watched){
+		/*
+		 * If we set a shared object
+		 *  
+		 if(my_so.data.watched){
 			INITIAL_LOCATION = "universe,welcome";
 		}else{
 			INITIAL_LOCATION = "universe,video";
 		}
+		 * */
+		 
+		 INITIAL_LOCATION = "ITS_A_NEW_STAY";
+		 
 				
 		address_listener 		= new Object();
 		LOCATIONS 				= new Object();
@@ -131,15 +141,17 @@ class com.continuityny.courtyard.views.CY_Location_View
 	
 	
 	
-	public function changeLocation(loc:String, data){
+	public function changeLocation(e:IEvent){
 		
-		
+		var loc : String = 	e.getTarget()[0];
+		var data  = 		e.getTarget()[1];
 		
 		trace("\n*********************\n>>> LocationView changeLocation:"
 						+loc+" LIVE_LOCATION:"+LIVE_LOCATION+" LIVE_DATA:"+data);
 		
 		DEPARTING_LOCATION  = LIVE_LOCATION;
-			
+		DEPARTING_E			= LIVE_E;
+		LIVE_E 			= e; 
 		LIVE_LOCATION 	= loc;
 		LIVE_DATA 		= data;
 		
@@ -150,7 +162,68 @@ class com.continuityny.courtyard.views.CY_Location_View
 		
 		// TODO make this handle multiple paramaters
 		
-		if(data.uid != undefined ){
+		
+		// if the first param == the current first param
+		// depart full string
+		// else depart first param
+		// cascade this
+		// depart of first param needs to be able to clear secondonry items 
+		
+		
+		var arr_array = loc.split(",");
+		var dep_array = DEPARTING_LOCATION.split(",");
+		
+		
+		trace(">>> LocationView depart: "+DEPARTING_LOCATION);
+		
+		 if(arr_array.length == 1 && dep_array.length == 1){
+		
+			if(arr_array[0] != dep_array[0]){
+				
+				LOCATIONS[DEPARTING_LOCATION].depart(DEPARTING_E);
+				
+			}
+			
+		 }else if(arr_array.length == 2 && dep_array.length == 1){
+		 	
+		 	if(arr_array[0] != dep_array[0]){
+				
+				LOCATIONS[DEPARTING_LOCATION].depart(DEPARTING_E);
+				
+			}else if(arr_array[0] == dep_array[0]){
+				
+				onDepartureDone(e);	
+		 	}
+		 	
+		 }else if(arr_array.length == 1 && dep_array.length == 2){
+		 	
+		 	if(arr_array[0] != dep_array[0]){
+				trace("you got the one");
+				LOCATIONS[dep_array[0]].depart(DEPARTING_E);
+				
+			}else if(arr_array[0] == dep_array[0]){
+				
+				LOCATIONS[DEPARTING_LOCATION].depart(DEPARTING_E);
+		 	}
+		 	
+		 }else if(arr_array.length == 2 && dep_array.length == 2){
+		 	
+		 	if(arr_array[0] != dep_array[0]){
+				
+				LOCATIONS[dep_array[0]].depart(DEPARTING_E);
+				
+			}else if(arr_array[0] == dep_array[0]){
+				
+				LOCATIONS[DEPARTING_LOCATION].depart(DEPARTING_E);
+		 	}
+		 	
+		 }else if(DEPARTING_LOCATION == undefined){
+			trace(">>> LocationView changeLocation - LIVE_LOCATION = undefiend");
+			onDepartureDone(e);
+		 }
+			
+		
+		/*if(data.uid != undefined ){
 			params_str = ","+data["uid"];	
 			//setLocation(LIVE_LOCATION+""+params_str, LOCATIONS[LIVE_LOCATION].arrive,LOCATIONS[LIVE_LOCATION].depart );
 			//LIVE_PARAM = data.uid;
@@ -164,9 +237,9 @@ class com.continuityny.courtyard.views.CY_Location_View
 			
 			delete LIVE_PARAM;
 				
-		}
+		}*/
 		
-		
+		/*
 		if(DEPARTING_LOCATION == undefined){
 			trace(">>> LocationView changeLocation - LIVE_LOCATION = undefiend");
 			onDepartureDone();
@@ -175,13 +248,13 @@ class com.continuityny.courtyard.views.CY_Location_View
 			trace(">>> LocationView depart: "+DEPARTING_LOCATION);
 			LOCATIONS[DEPARTING_LOCATION].depart();
 		
-		}	
+		}	*/
 		
 		
 		
-		trace("params_str:"+params_str);
+		//trace("params_str:"+params_str);
 		
-		var address : String = LIVE_LOCATION+""+params_str;
+		//var address : String = LIVE_LOCATION+""+params_str;		var address : String = LIVE_LOCATION;
 		
 		INTERNAL_CALL = true;
 		
@@ -209,14 +282,14 @@ class com.continuityny.courtyard.views.CY_Location_View
 		
 			
 		INTERNAL_CALL = false; 
-		trace("swfAddress_change Not Internal");
+		trace(">>> LocationView swfAddress_change Not Internal");
 		
 		
 		// inital call, no paramters 
 		if( (addr == "/") || (addr == "" )){ 
 					
-			trace(">>> LocationView - swfAddress_change initial call");
-			this._fireEvent(new BasicEvent( USOC_EventList.CHANGE_LOCATION, [INITIAL_LOCATION]) );
+			trace(">>> LocationView - swfAddress_change initial call:"+INITIAL_LOCATION);
+			this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, [INITIAL_LOCATION]) );
 			
 		}else{
 
@@ -230,7 +303,7 @@ class com.continuityny.courtyard.views.CY_Location_View
 		
 		if(loc_array.length == 1){
 			
-			this._fireEvent(new BasicEvent( USOC_EventList.CHANGE_LOCATION, [stripped_addr]) );
+			this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, [stripped_addr]) );
 			
 		}else if(loc_array.length == 2){
 			
@@ -238,7 +311,7 @@ class com.continuityny.courtyard.views.CY_Location_View
 			var second 		= loc_array[1];
 			
 			
-			this._fireEvent(new BasicEvent( USOC_EventList.CHANGE_LOCATION, [base+","+second]));
+			this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, [base+","+second]));
 				
 			
 			
@@ -249,24 +322,24 @@ class com.continuityny.courtyard.views.CY_Location_View
 			var third 		= loc_array[2];
 			var fourth 		= loc_array[3];
 			
-			trace("second:"+second+" third:"+third+" fourth:"+fourth);
+			trace(">>> LocationView - second:"+second+" third:"+third+" fourth:"+fourth);
 			
 			if(base == "galaxy"){
 				
 			switch (second) {  
 				
 				case "athlete" :
-					this._fireEvent(new BasicEvent( USOC_EventList.CHANGE_LOCATION, 
+					this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, 
 					["galaxy,athlete",{aid:third}]					));
 					break;
 			
 				case "supporter" :
-					this._fireEvent(new BasicEvent( USOC_EventList.CHANGE_LOCATION, 
+					this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, 
 					["galaxy,supporter",{uid:third, vcode:fourth}]	));
 					break;
 				
 				case "connect" :
-					this._fireEvent(new BasicEvent( USOC_EventList.CHANGE_LOCATION, 
+					this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, 
 					["galaxy,connect",{uid:third,icode:fourth}]		));
 					break;
 				
@@ -292,7 +365,7 @@ class com.continuityny.courtyard.views.CY_Location_View
 				var data = {uid:third};
 			}*/
 				
-			//this._fireEvent(new BasicEvent( USOC_EventList.CHANGE_LOCATION, [stripped_addr,{uid:id}]) );
+			//this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, [stripped_addr,{uid:id}]) );
 			
 		}
 	
@@ -309,7 +382,7 @@ class com.continuityny.courtyard.views.CY_Location_View
 		var data 	= d[1];
 			trace(">>> LocationView onArrivalDone:"+loc);
 			//trace("LocationView onArrivalDone:"+data.message);
-		LOCATIONS[loc].onArrival(data);
+		LOCATIONS[loc].onArrival(e);
 		
 	}
 	
@@ -320,11 +393,11 @@ class com.continuityny.courtyard.views.CY_Location_View
 		trace(">>> LocationView onDepartureDone:"+loc);
 		//trace("LocationView onDepartureDone:data - "+data);
 		
-		LOCATIONS[loc].onDeparture(data);
+		LOCATIONS[loc].onDeparture(e);
 		
-		trace(">>> LocationView arrive:"+LIVE_LOCATION +" LIVE_DATA:icode - "+LIVE_DATA.icode);
+		trace(">>> LocationView arrive:"+LIVE_LOCATION +" LIVE_DATA: - "+LIVE_DATA.length);
 		
-		LOCATIONS[LIVE_LOCATION].arrive(LIVE_DATA);
+		LOCATIONS[LIVE_LOCATION].arrive(LIVE_E);
 		
 		trace("*********************\n");
 	}
@@ -344,13 +417,20 @@ class com.continuityny.courtyard.views.CY_Location_View
 			if(LIVE_LOCATION.indexOf(",") != -1){
 				var end:Number = LIVE_LOCATION.indexOf(",")+1;
 				return LIVE_LOCATION.substr(0,end); 
-				trace("USOC_Location_View:base"+LIVE_LOCATION.substr(0,end));
+				trace("CY_Location_View:base"+LIVE_LOCATION.substr(0,end));
 			}else{
 				return LIVE_LOCATION;
-				trace("USOC_Location_View:base"+LIVE_LOCATION);
+				trace("CY_Location_View:base"+LIVE_LOCATION);
 			}
 		
 	}
+	
+	public static function getDepartingE():IEvent{
+		//traceMe();
+		return DEPARTING_E; 
+	}
+	
+	
 	
 	
 	public static function getSubLiveLocation():String{
@@ -370,7 +450,7 @@ class com.continuityny.courtyard.views.CY_Location_View
 */
 	private function _fireEvent( e : IEvent ) : Void {
 		trace("fire event");
-			USOC_EventBroadcaster.getInstance().broadcastEvent( e );
+			CY_EventBroadcaster.getInstance().broadcastEvent( e );
 	}
 
 

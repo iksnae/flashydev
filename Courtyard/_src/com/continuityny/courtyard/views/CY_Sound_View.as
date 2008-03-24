@@ -12,17 +12,17 @@ import com.bourre.events.IEvent;
 import com.bourre.events.BasicEvent;
 import com.bourre.events.EventType;
 
-import com.continuityny.usoc.USOC_EventList;
-import com.continuityny.usoc.USOC_EventBroadcaster;
+import com.continuityny.courtyard.CY_EventList;
+import com.continuityny.courtyard.CY_EventBroadcaster;
 
 import com.bourre.visual.MovieClipHelper;
 
 //	list of Views
-import com.continuityny.usoc.USOC_ViewList;
-import com.continuityny.usoc.USOC_Site_Model;
-import com.continuityny.usoc.views.USOC_Location_View;
-import com.continuityny.usoc.views.USOC_Universe_View;
-import com.continuityny.usoc.views.USOC_Nav_View;
+import com.continuityny.courtyard.CY_ViewList;
+import com.continuityny.courtyard.CY_Site_Model;
+import com.continuityny.courtyard.views.CY_Location_View;
+import com.continuityny.courtyard.views.CY_Home_View;
+import com.continuityny.courtyard.views.CY_Nav_View;
 
 
 
@@ -54,8 +54,8 @@ class com.continuityny.courtyard.views.CY_Sound_View extends MovieClipHelper {
 	
 	
 		public function CY_Sound_View( mc ) {
-			super( USOC_ViewList.VIEW_SOUND, mc );
-			trace("USOC_Sound_View: mc:   eee "+mc);
+			super( CY_ViewList.VIEW_SOUND, mc );
+			trace("CY_Sound_View: mc:   eee "+mc);
 			
 			_init();
 			
@@ -228,25 +228,25 @@ class com.continuityny.courtyard.views.CY_Sound_View extends MovieClipHelper {
 	
 	public function soundMute(bool){
 		//var bool = e.getTarget();
-		trace("USOC_Sound_View:onSoundMute:"+bool);
+		trace("CY_Sound_View:onSoundMute:"+bool);
 		MUTED = bool; 
-		fadeSound(bool);
+		//fadeSound(bool);
 	}
 	
 	
-	public function fadeSound(bool){
-		trace("fadeSound:"+bool);
+	/*public function fadeSound(bool){
+		trace("CY_Sound_View:fadeSound:"+bool);
 		if(bool){
 			fadeDownMusic();
 		}else if(!bool){
 			
-			var video_playing : Boolean = USOC_Nav_View( MovieClipHelper.getMovieClipHelper( 
-				USOC_ViewList.VIEW_NAV ) ).videoPlaying();
+			var video_playing : Boolean = CY_Nav_View( MovieClipHelper.getMovieClipHelper( 
+				CY_ViewList.VIEW_NAV ) ).videoPlaying();
 				
 			if(!MUTED && !video_playing)fadeUpMusic();
 		}
 		
-	}
+	}*/
 	
 	
 

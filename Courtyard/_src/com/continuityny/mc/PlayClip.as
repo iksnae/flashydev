@@ -35,8 +35,8 @@ class com.continuityny.mc.PlayClip {
 				//INT = setInterval(Delegate.create(this, prevFrame), FPS); 
 				_MC.onEnterFrame = Delegate.create(this, prevFrame);
 			}else{
-				//INT = setInterval(Delegate.create(this, nextFrame), FPS); 
-				_MC.onEnterFrame = Delegate.create(this, nextFrame);
+				INT = setInterval(Delegate.create(this, nextFrame), FPS); 
+				//_MC.onEnterFrame = Delegate.create(this, nextFrame);
 			}
 	}
 	
