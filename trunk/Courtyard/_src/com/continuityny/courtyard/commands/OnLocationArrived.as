@@ -18,17 +18,16 @@ import com.bourre.events.IEvent;
 
 //	Model
 import com.bourre.core.Model;
-import com.continuityny.usoc.USOC_Site_Model;
-import com.continuityny.usoc.USOC_ModelList;
+import com.continuityny.courtyard.CY_Site_Model;
+import com.continuityny.courtyard.CY_ModelList;
 
 //	Views
 import com.bourre.visual.MovieClipHelper;
-import com.continuityny.usoc.USOC_ViewList;
-import com.continuityny.usoc.views.USOC_Nav_View;
-import com.continuityny.usoc.views.USOC_Universe_View;
-import com.continuityny.usoc.views.USOC_Location_View;
+import com.continuityny.courtyard.CY_ViewList;
+import com.continuityny.courtyard.views.CY_Nav_View;
+import com.continuityny.courtyard.views.CY_Location_View;
 
-class com.continuityny.usoc.commands.OnLocationArrived 
+class com.continuityny.courtyard.commands.OnLocationArrived 
 	implements Command {
 
 /* ****************************************************************************
@@ -52,12 +51,12 @@ class com.continuityny.usoc.commands.OnLocationArrived
 	
 		//USOC_Universe_View( MovieClipHelper.getMovieClipHelper( USOC_ViewList.VIEW_UNIVERSE ) ).populate( e );
 		
-		USOC_Location_View( MovieClipHelper.getMovieClipHelper( USOC_ViewList.VIEW_LOCATION ) ).onArrivalDone( e );
+		CY_Location_View( MovieClipHelper.getMovieClipHelper( CY_ViewList.VIEW_LOCATION ) ).onArrivalDone( e );
 	}
 
 
 	public function toString() : String {
-		return 'com.continuityny.usoc.commands.OnLocationArrived' + HashCodeFactory.getKey( this );
+		return 'com.continuityny.courtyard.commands.OnLocationArrived' + HashCodeFactory.getKey( this );
 	}
 	
 }

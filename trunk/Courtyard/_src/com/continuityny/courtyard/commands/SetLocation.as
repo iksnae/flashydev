@@ -18,17 +18,17 @@ import com.bourre.events.IEvent;
 
 //	Model
 import com.bourre.core.Model;
-import com.continuityny.usoc.USOC_Site_Model;
-import com.continuityny.usoc.USOC_ModelList;
+import com.continuityny.courtyard.CY_Site_Model;
+import com.continuityny.courtyard.CY_ModelList;
 
 //	Views
 import com.bourre.visual.MovieClipHelper;
-import com.continuityny.usoc.USOC_ViewList;
-import com.continuityny.usoc.views.USOC_Nav_View;
-import com.continuityny.usoc.views.USOC_Location_View;
+import com.continuityny.courtyard.CY_ViewList;
+import com.continuityny.courtyard.views.CY_Nav_View;
+import com.continuityny.courtyard.views.CY_Location_View;
 import com.bourre.commands.Delegate;
 
-class com.continuityny.usoc.commands.SetLocation 
+class com.continuityny.courtyard.commands.SetLocation 
 	implements Command {
 
 /* ****************************************************************************
@@ -70,8 +70,8 @@ class com.continuityny.usoc.commands.SetLocation
 		var on_arrival_function 	= e.getTarget()[3];
 		var on_departure_function = e.getTarget()[4];
 		
-		USOC_Location_View( MovieClipHelper.getMovieClipHelper( 
-				USOC_ViewList.VIEW_LOCATION ) ).setLocation(	loc, 
+		CY_Location_View( MovieClipHelper.getMovieClipHelper( 
+				CY_ViewList.VIEW_LOCATION ) ).setLocation(	loc, 
 																arrival_function, 
 																departure_function, 
 																on_arrival_function,
@@ -82,7 +82,7 @@ class com.continuityny.usoc.commands.SetLocation
 	}
 
 	public function toString() : String {
-		return 'com.continuityny.usoc.commands.SetLocation' + HashCodeFactory.getKey( this );
+		return 'com.continuityny.courtyard.commands.SetLocation' + HashCodeFactory.getKey( this );
 	}
 	
 }

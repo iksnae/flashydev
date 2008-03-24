@@ -33,7 +33,7 @@ class com.continuityny.courtyard.CY_EventBroadcaster
 * PRIVATE FUNCTIONS
 **************************************************************************** */
 /**
-* create a new instance of the USOC_EventBroadcaster
+* create a new instance of the CY_EventBroadcaster
 * @return
 */
 	private static function _buildInstance() : CY_EventBroadcaster	{

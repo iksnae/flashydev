@@ -11,13 +11,13 @@ import com.bourre.log.LogLevel;
 import com.bourre.core.Model;
 
 //	Import the model list
-import com.continuityny.usoc.USOC_ModelList;
+import com.continuityny.courtyard.CY_ModelList;
 
 //	Broadcasting event
 import com.bourre.events.EventType;
 import com.bourre.events.BasicEvent;
-import com.continuityny.usoc.USOC_EventList;
-import com.continuityny.usoc.USOC_EventBroadcaster;
+import com.continuityny.courtyard.CY_EventList;
+import com.continuityny.courtyard.CY_EventBroadcaster;
 import com.bourre.events.IEvent;
 
 class com.continuityny.courtyard.CY_Site_Model 
@@ -32,17 +32,15 @@ class com.continuityny.courtyard.CY_Site_Model
 * PRIVATE VAR 
 **************************************************************************** */
 	
-	// big ball o' data - from usoc_data.xml
 	private static var _data 		: Object; 
 	private static var _config 		: Object; 
-	private static var _connections 		: Object; 
 	
 
 /* ****************************************************************************
 * CONSTRUCTOR
 **************************************************************************** */
 	function CY_Site_Model() {
-		super( USOC_ModelList.MODEL_SITE);
+		super( CY_ModelList.MODEL_SITE);
 		
 	}
 
@@ -64,16 +62,12 @@ class com.continuityny.courtyard.CY_Site_Model
 		return _config; 
 	}
 	
-	public static function getConnections( Void ) : Object {
-		return _connections; 
-	}
 	
 	
 	public function organizeData( e : IEvent ){
 		
 		_data = e.getTarget()[0]; 
 		_config = e.getTarget()[1];
-		_connections = e.getTarget()[2];
 		
 		
 		trace("Model organizeData:"+_data);
