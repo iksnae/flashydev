@@ -6,7 +6,14 @@ package com.flashydev.control
 	
 	*/
 	
+	import flash.system.Security;
+	import flash.system.SecurityDomain;
+	
+	
 	public class CrossDomainManager
 	{
+		public function addPolicy(url:String):void{
+			Security.loadPolicyFile(url);
+		}
 	}
 }
