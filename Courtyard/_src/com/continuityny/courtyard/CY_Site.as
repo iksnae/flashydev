@@ -36,8 +36,7 @@ import com.continuityny.courtyard.views.CY_Sound_View;
 import com.continuityny.mc.ImageLoader;
 import com.bourre.commands.Delegate;
 import com.continuityny.mc.PlayClip;
-
-// da site
+import com.continuityny.courtyard.views.CYHomey;// da site
 
 class com.continuityny.courtyard.CY_Site extends MovieClip {
 	
@@ -51,6 +50,7 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 	
 	private var TARGET_MC:MovieClip;
 	private var preloader:MovieClip; 
+	private var nav : MovieClip
 	
 	public function CY_Site( container ) {
 				
@@ -87,6 +87,10 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 		
 		//	init the controller with our custom EventBroadcaster class
 		CY_Controller.getInstance( CY_EventBroadcaster.getInstance() );
+		
+		
+		
+		
 	}
 	
 	/**
@@ -123,7 +127,7 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 	/* Config Loaded Callback */
 	private function _build(){
 		
-		trace("Site _build:"+_data+" HOME:"+_data.locations.home.loc);
+		trace("Site _build:"+_data+" HOME:"+_data.locations.section[1].loc);
 		
 		
 		var ALL_DATA : Array = [_data, _config];
@@ -135,16 +139,20 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 		preloader 	= main.attachMovie("mc_preloader", 	"preloader_mc", 9000, {_x:5, _y:75} );
 		
 		//var main_nav = main.createEmptyMovieClip("nav_mc", 1000 );
-		var nav : MovieClip 	= main.attachMovie("mc_nav", 	"nav_mc", 		3000 );
+		nav  					= main.attachMovie("mc_nav", 	"nav_mc", 		3000, {_visible:false} );
 		var details : MovieClip = main.attachMovie("mc_details","details_mc", 	2000, {_x:5, _y:75});
 		var video : MovieClip 	= main.attachMovie("mc_video", 	"video_mc", 	1000, {_x:5, _y:75});
-		video.mask_mc._x = 970; 
+		var video_mask : MovieClip 	= main.attachMovie("mc_stage_size", 	"video_m_mc", 	1005, {_x:5, _y:75});		video.setMask(video_mask);
+		
+		var amenities : MovieClip 	= main.attachMovie("mc_amenities", "amenities_mc", 8000, {_visible:false,_x:5, _y:75});		var tv : MovieClip 	= main.attachMovie("mc_tv", 	"tv_mc", 	7000, {_x:5, _y:75});
+		
 		//nav.attachMovie("mc_bottom_nav", 	"bottom_nav_mc", 2000 );
 		
-		var vNav  : CY_Nav_View = new CY_Nav_View ( nav, details, video );		
+		var vNav  : CY_Nav_View = new CY_Nav_View ( nav, details, video, tv, amenities );		
 		
 		var home : MovieClip = main.createEmptyMovieClip("home_mc", 500 );
 		var vHome  : CY_Home_View = new CY_Home_View ( home );	
+		
 		
 		//var vGalaxy  : CY_Galaxy_View = new CY_Galaxy_View ( galaxy );
 		
@@ -172,13 +180,10 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 		
 		
 		//new PlayClip( preloader.anim_mc, 33);
-		preloader.whenDone = function(){
-			trace("preloadAnimDone");
-			CY_EventBroadcaster.getInstance().broadcastEvent( new BasicEvent( CY_EventList.CHANGE_LOCATION, ["home"] ) );
-		}
-		
-		
+		preloader.whenDone 	= Delegate.create(this, onPreloaderDone); // cued at end of preload animation
+		preloader.skipButton_mc.onRelease = Delegate.create(this, preloadSkip); 
 	}
+	
 	
 	private function preloadStart(){
 		
@@ -190,9 +195,26 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 	private function preloadDone(){
 		
 		preloader.removeMovieClip();
+		
+		nav._visible = true; 
+		//nav.logo_mc.gotoAndPlay(2);
+		new PlayClip( nav.logo_mc, 33);
 		CY_EventBroadcaster.getInstance().broadcastEvent( new BasicEvent( CY_EventList.LOCATION_ON_DEPARTED, ["home"] ) );
 		
 	}
+	
+	private function onPreloaderDone (){
+			trace("preloadAnimDone");
+			CY_EventBroadcaster.getInstance().broadcastEvent( new BasicEvent( CY_EventList.CHANGE_LOCATION, ["home"] ) );
+	}
+	
+	private function preloadSkip(){
+		
+		preloader.skipButton_mc._visible = false; 
+		onPreloaderDone();
+		
+	}
+	
 	
 	
 	private function _setStyle() : Void {
@@ -209,7 +231,7 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 		_global.style.setStyle("textSelectedColor", 0xFFFFFF);
 
 		
-	}
+	}	
 
 
 

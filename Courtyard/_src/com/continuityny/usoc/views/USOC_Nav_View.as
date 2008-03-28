@@ -1116,7 +1116,6 @@ class com.continuityny.usoc.views.USOC_Nav_View
 		
 		this._fireEvent(new BasicEvent( USOC_EventList.CHANGE_LOCATION, ["universe"]) );
 		
-		
 			
 	}
 	

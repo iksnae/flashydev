@@ -48,7 +48,7 @@ class com.continuityny.courtyard.commands.BuildSite
 		
 		trace("CY BuildSite Executing");
 
-		//CY_Site_Model( Model.getModel( CY_ModelList.MODEL_SITE ) ).organizeData( e );		
+		CY_Site_Model( Model.getModel( CY_ModelList.MODEL_SITE ) ).organizeData( e );		
 		CY_Home_View( MovieClipHelper.getMovieClipHelper( CY_ViewList.VIEW_HOME))._build(e);
 
 		CY_Nav_View( MovieClipHelper.getMovieClipHelper( CY_ViewList.VIEW_NAV ) )._build(e);
