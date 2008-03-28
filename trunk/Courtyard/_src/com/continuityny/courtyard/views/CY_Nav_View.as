@@ -49,7 +49,7 @@ import com.continuityny.mc.PlayClip;
 
 import gs.TweenLite;
 import gs.TweenFilterLite;
-import com.bourre.transitions.FLVBeacon;//class net.webbymx.projects.tutorial01.views.ViewTools
+//class net.webbymx.projects.tutorial01.views.ViewTools
 class com.continuityny.courtyard.views.CY_Nav_View 
 	extends MovieClipHelper {
 /* ****************************************************************************
@@ -245,21 +245,25 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	 	var video_mask:MovieClip = _video_mc.attachMovie("mc_stage_size", "video_mask_mc", 1100,{_x:970});
 	 	var vid_mc = _video_mc.createEmptyMovieClip("vid_mc", 1105);
 	 	
-	 	FLVPBK = FLVPlayback(_video_mc.vid_mc.attachMovie("FLVPlayback", "flvpb_mc",1000, {_x:74}));
-		FLVPBK.setSize(800, 400)
+	 	FLVPBK = FLVPlayback(_video_mc.vid_mc.attachMovie("FLVPlayback", "flvpb_mc",1000, {_x:79}));
+		FLVPBK.setSize(800, 400);
 		
 		
 		var path = "flv/"+loc+".flv";
 		
 		FLVPBK.bufferTime = 20;
 		FLVPBK.load(path);
-		//FLVPBK.pause();
+		FLVPBK.pause();
 		
 		preloadVideo(loc);
 		setCuePoints(loc);
 		
 		_video_mc.vid_mc['flvpb_mc'].setMask(_video_mc['video_mask_mc']);
 		
+		TweenLite.to(_video_mc.preloader_mc, .5, {_y:350});		
+		_video_mc.preloader_mc.title_txt.text = _data.locations.section[loc].cue[0].title;		_video_mc.preloader_mc.loading_txt.text = "LOADING "+_data.locations.section[loc].title+" VIDEO TOUR";
+		
+		_video_mc.preloader_mc.swapDepths(1200);
 		
 		VIDEO_LISTENER.cuePoint =  Delegate.create(this, function(eventObject:Object):Void {
 				trace("cuepoint:"+eventObject.info.name +" : "+eventObject.info.time);
@@ -316,7 +320,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 				
 				trace("video ready:"+FLVPBK.bufferTime);
 					FLVPBK.removeEventListener("ready", VIDEO_LISTENER);  
-					FLVPBK.removeEventListener("buffering", VIDEO_LISTENER);  
+					FLVPBK.removeEventListener("progress", VIDEO_LISTENER);  
 					
 						CHECK_INT = setInterval(Delegate.create(this, function(){
 							if(DELAYDONE){
@@ -328,16 +332,17 @@ class com.continuityny.courtyard.views.CY_Nav_View
 				
 		});
 		
-		VIDEO_LISTENER.buffering   = Delegate.create(this, function(eventObject:Object):Void {
+		VIDEO_LISTENER.progress   = Delegate.create(this, function(eventObject:Object):Void {
 				// base_mc.buffer_mc._visible = true; 
 				var bt = FLVPBK.bytesTotal;
 				var bl = FLVPBK.bytesLoaded;
 				var perc = Math.ceil(bl/bt * 100); 
 				
-				trace("video loading:"+perc);
+				trace("video loading:"+perc);				trace("video loading:"+_video_mc.preloader_mc.bar_mc.perc_mc);
+				_video_mc.preloader_mc.bar_mc.perc_mc._xscale = perc;
 				
 				if(perc >= 100){
-					FLVPBK.removeEventListener("buffering", VIDEO_LISTENER);  
+					FLVPBK.removeEventListener("progress", VIDEO_LISTENER);  
 				}
 				
 		});
@@ -345,7 +350,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		
 		FLVPBK.addEventListener("ready", VIDEO_LISTENER);  
-		FLVPBK.addEventListener("buffering", VIDEO_LISTENER);  		FLVPBK.addEventListener("playing", VIDEO_LISTENER);  
+		FLVPBK.addEventListener("progress", VIDEO_LISTENER);  		FLVPBK.addEventListener("playing", VIDEO_LISTENER);  
 		
 	}
 	
@@ -381,6 +386,10 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		var _mc = _video_mc['video_mask_mc']; 
 		var tw 	= new Tween(_mc, "_x", Quad.easeIn, _mc._x, 0, .75, true);
 		
+		
+		TweenLite.to(_video_mc.preloader_mc, .5, {_y:402});
+		
+		
 		//var _mc = _video_mc.vid_mc;
 		var scope = this;
 		//TweenFilterLite.to(scope._video_mc.vid_mc, 0, {blurFilter:{blurX:20, blurY:20}});
@@ -412,12 +421,13 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		//var _mc = _video_mc; 
 		//new Tween(_mc, "_x", Quad.easeOut, _mc._x, 400, 1, true);
-
+		
 		var scope = this; 
 		tw.onMotionFinished = function(){
 			scope.FLVPBK.stop();
 			scope._video_mc.vid_mc.flvpb_mc.removeMovieClip();
 			scope._video_mc.video_mask_mc.removeMovieClip();
+			FLVPBK.removeMovieClip();
 		
 		}
 		
@@ -438,7 +448,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		var _mc = _details_mc.nav_base_mc;
 		var w = _mc._width;
-		var tw = new Tween(_mc, "_x", Quad.easeOut, _mc._x, 970-w, .5, true);
+		var tw = new Tween(_mc, "_x", Quad.easeOut, _mc._x, 970-116, .5, true);
 		
 		
 		createDetailsNav(loc);
@@ -579,9 +589,15 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	private function onSliderNavClick(i){
 				trace("loc_array:"+loc_array[i]+" i:"+i);
 				
-			CURRENT_ARROW_LOC = loc_array[i];
+				var loc = loc_array[i]; 
+				
+			CURRENT_ARROW_LOC = loc;
 			centerSlider(i);
-			this._fireEvent(	new BasicEvent( CY_EventList.CHANGE_LOCATION, [loc_array[i]] ) );
+			this._fireEvent(	new BasicEvent( CY_EventList.CHANGE_LOCATION, [loc] ) );
+			
+			CY_Home_View( MovieClipHelper.getMovieClipHelper( 
+								CY_ViewList.VIEW_HOME ) ).changeSection(loc);
+				
 						
 	}
 	
@@ -785,13 +801,14 @@ class com.continuityny.courtyard.views.CY_Nav_View
 			//var this_nav_mc = view.detail_nav_mc.attachMovie("mc_det_nav_label", "nav_"+i+"_mc", (i*10));
 			var this_nav_mc = view.detail_nav_mc.createEmptyMovieClip("nav_"+i+"_mc", (i*10));
 			var lab = loc_details[i].title;
+			
 			createDetailLabel(this_nav_mc, lab);
 			
 			var prev_nav_mc = view.detail_nav_mc["nav_"+(i-1)+"_mc"];
 			this_nav_mc._x = 1010; 
 			//this_nav_mc._y = 130+(60*i);
 			if(i == 0){
-				this_nav_mc._y = 140; 
+				this_nav_mc._y = 180; 
 			}else{
 				this_nav_mc._y = prev_nav_mc._y + prev_nav_mc._height + 30 ; 
 			}
@@ -1018,7 +1035,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	private function detailOver(){
 		//trace("detailOver");
 		var _mc  = this;
-		TweenLite.to(_mc, .25, {mcColor:0x000000});
+		TweenLite.to(_mc, .25, {mcColor:0x4D7635});
 	}
 	
 	private function detailOut(){
