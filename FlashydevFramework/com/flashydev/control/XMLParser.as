@@ -6,5 +6,12 @@ package com.flashydev.control
 	*/
 	public class XMLParser
 	{
+		
+	}
+	public function getRSSFeed(url:String,proxyID:String):void{
+		
+	}
+	public function getXML(url, proxyID:String){
+		
 	}
 }
