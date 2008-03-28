@@ -1,6 +1,6 @@
 ﻿/*
-VERSION: 6.04
-DATE: 3/11/2008
+VERSION: 6.07
+DATE: 3/28/2008
 ACTIONSCRIPT VERSION: 2.0 (AS3 version is also available)
 UPDATES & MORE DETAILED DOCUMENTATION AT: http://www.TweenLite.com 
 DESCRIPTION:
@@ -39,38 +39,38 @@ PARAMETERS:
 					  _x: To change a MovieClip's x position, just set this to the value you'd like the MovieClip to 
 					      end up at (or begin at if you're using TweenLite.from()). 
 				  SPECIAL PROPERTIES (OPTIONAL):
-				  	  delay: Amount of delay before the tween should begin (in seconds).
-					  ease: You can specify a function to use for the easing with this variable. For example, 
-					        mx.transitions.easing.Elastic.easeOut. The Default is Regular.easeOut.
-					  easeParams: An array of extra parameters to feed the easing equation. This can be useful when you 
-					  			  use an equation like Elastic and want to control extra parameters like the amplitude and period.
-								  Most easing equations, however, don't require extra parameters so you won't need to pass in any easeParams.
-					  autoAlpha: Same as changing the _alpha property but with the additional feature of toggling the _visible 
-				  			 	 property to false if the _alpha ends at 0. It will also toggle _visible to true before the tween 
-								 starts if the value of autoAlpha is greater than zero.
-					  volume: To change a MovieClip's volume, just set this to the value you'd like the MovieClip to
-					          end up at (or begin at if you're using TweenLite.from()).
-					  tint: To change a MovieClip's color, set this to the hex value of the color you'd like the MovieClip
-					  		to end up at(or begin at if you're using TweenLite.from()). An example hex value would be 0xFF0000. 
-							If you'd like to remove the color from a MovieClip, just pass null as the value of tint. 
-							(tint used to be called mcColor prior to version 5.8)
-					  frame: Use this to tween a MovieClip to a particular frame.
-					  onStart: If you'd like to call a function as soon as the tween begins, pass in a reference to it here.
-					  		   This is useful for when there's a delay. 
-					  onStartParams: An array of parameters to pass the onStart function. (this is optional)
-					  onStartScope: Use this to define the scope of the onStart function.
-					  onUpdate: If you'd like to call a function every time the property values are updated (on every frame during
-								the time the tween is active), pass a reference to it here.
-					  onUpdateParams: An array of parameters to pass the onUpdate function (this is optional)
-					  onUpdateScope: Use this to define the scope of the onUpdate function.
-					  onComplete: If you'd like to call a function when the tween has finished, use this. 
-					  onCompleteParams: An array of parameters to pass the onComplete function (this is optional)
-					  onCompleteScope: Use this to define the scope of the onComplete function.
-					  renderOnStart: If you're using TweenLite.from() with a delay and want to prevent the tween from rendering until it
-					  				 actually begins, set this to true. By default, it's false which causes TweenLite.from() to render
-									 its values immediately, even before the delay has expired.
-					  overwrite: If you do NOT want the tween to automatically overwrite any other tweens that are 
-					             affecting the same target, make sure this value is false.
+				  	  delay : Number - Amount of delay before the tween should begin (in seconds).
+					  ease : Function - You can specify a function to use for the easing with this variable. For example, 
+					        			mx.transitions.easing.Elastic.easeOut. The Default is Regular.easeOut.
+					  easeParams : Array - An array of extra parameters to feed the easing equation. This can be useful when you 
+										  use an equation like Elastic and want to control extra parameters like the amplitude and period.
+										  Most easing equations, however, don't require extra parameters so you won't need to pass in any easeParams.
+					  autoAlpha : Number - Same as changing the _alpha property but with the additional feature of toggling the _visible 
+										  property to false if the _alpha ends at 0. It will also toggle _visible to true before the tween 
+										  starts if the value of autoAlpha is greater than zero.
+					  volume : Number - To change a MovieClip's volume, just set this to the value you'd like the MovieClip to
+					         			end up at (or begin at if you're using TweenLite.from()).
+					  tint : Number - To change a MovieClip's color, set this to the hex value of the color you'd like the MovieClip
+									to end up at(or begin at if you're using TweenLite.from()). An example hex value would be 0xFF0000. 
+									If you'd like to remove the color from a MovieClip, just pass null as the value of tint. 
+									(tint used to be called mcColor prior to version 5.8)
+					  frame : Number - Use this to tween a MovieClip to a particular frame.
+					  onStart : Function - If you'd like to call a function as soon as the tween begins, pass in a reference to it here.
+					  		  			   This is useful for when there's a delay. 
+					  onStartParams : Array - An array of parameters to pass the onStart function. (this is optional)
+					  onStartScope : Object - Use this to define the scope of the onStart function.
+					  onUpdate : Function - If you'd like to call a function every time the property values are updated (on every frame during
+											the time the tween is active), pass a reference to it here.
+					  onUpdateParams : Array - An array of parameters to pass the onUpdate function (this is optional)
+					  onUpdateScope : Object - Use this to define the scope of the onUpdate function.
+					  onComplete : Function - If you'd like to call a function when the tween has finished, use this. 
+					  onCompleteParams : Array - An array of parameters to pass the onComplete function (this is optional)
+					  onCompleteScope : Object - Use this to define the scope of the onComplete function.
+					  renderOnStart : Boolean - If you're using TweenLite.from() with a delay and want to prevent the tween from rendering until it
+											    actually begins, set this to true. By default, it's false which causes TweenLite.from() to render
+											    its values immediately, even before the delay has expired.
+					  overwrite : Boolean - If you do NOT want the tween to automatically overwrite any other tweens that are 
+					             			affecting the same target, make sure this value is false.
 	
 
 EXAMPLES: 
@@ -94,8 +94,8 @@ EXAMPLES:
 		import gs.TweenLite;
 		import mx.transitions.easing.Back;
 		TweenLite.to(clip_mc, 5, {_alpha:50, _x:120, ease:Back.easeOut, delay:2, onComplete:onFinishTween, onCompleteParams:[5, clip_mc]});
-		function onFinishTween(argument1_num:Number, argument2_mc:MovieClip):Void {
-			trace("The tween has finished! argument1_num = " + argument1_num + ", and argument2_mc = " + argument2_mc);
+		function onFinishTween(argument1:Number, argument2:MovieClip):Void {
+			trace("The tween has finished! argument1 = " + argument1 + ", and argument2 = " + argument2);
 		}
 	
 	If you have a MovieClip on the stage that is already in it's end position and you just want to animate it into 
@@ -112,6 +112,7 @@ NOTES:
 	- Putting quotes around values will make the tween relative to the current value. For example, if you do
 	  TweenLite.to(mc, 2, {x:"-20"}); it'll move the mc.x to the left 20 pixels which is the same as doing
 	  TweenLite.to(mc, 2, {x:mc.x - 20});
+	- You can change the TweenLite.defaultEase if you prefer something other than Regular.easeOut.
 	- You can tween the volume of any MovieClip using the tween property "volume", like:
 	  TweenLite.to(myClip_mc, 1.5, {volume:0});
 	- You can tween the color of a MovieClip using the tween property "tint", like:
@@ -129,6 +130,12 @@ NOTES:
 	  pass in the beginning _x and/or _y and/or _alpha (or whatever properties you want).
 	  
 CHANGE LOG:
+	6.07:
+		- Fixed problem with tweening _alpha and tint at the same time.
+	6.06:
+		- Fixed problem that could prevent tweens from working properly when subloading SWFs across domains
+	6.05:
+		- Added the ability to change the TweenLite.defaultEase.
 	6.04:
 		- Fixed bug that caused calls to complete() to not render if the tween hadn't ever started (like if there was a delay that hadn't expired yet)
 	6.03:
@@ -167,13 +174,14 @@ Copyright 2008, GreenSock (This work is subject to the terms in http://www.green
 */
 
 class gs.TweenLite {
-	public static var version:Number = 6.04;
+	public static var version:Number = 6.07;
 	public static var killDelayedCallsTo:Function = killTweensOf;
 	private static var _e:MovieClip; //A reference to the empty MovieClip that we use to drive all our onEnterFrame actions.
 	private static var _all:Object = new Object(); //Holds references to all our tweens.
 	private static var _cnt:Number = -16000;
 	private static var _gc:Number; //Interval id for garbage collection
 	private static var _hrp:Boolean = false;
+	private static var _classInitted:Boolean;
 	private var _active:Boolean; //If true, this tween is active. 
 	private var _subTweens:Array; //Only used for associated sub-tweens like tint and volume
 	private var _hst:Boolean; //Has SubTweens. We track this with a boolean value as opposed to checking _subTweens.length for speed purposes
@@ -203,7 +211,7 @@ class gs.TweenLite {
 		this.delay = $vars.delay || 0;
 		this.target = $target;
 		if (typeof(this.vars.ease) != "function") {
-			this.vars.ease = easeOut;
+			this.vars.ease = defaultEase;
 		}
 		if (this.vars.easeParams != undefined) {
 			this.vars.proxiedEase = this.vars.ease;
@@ -230,17 +238,13 @@ class gs.TweenLite {
 			}
 		}
 		if (!_active) {
-			if (_e._visible != false) { //We were running into strange issues back on Flash player 6 in nested SWFs where _e was defined but wasn't valid. As a workaround, we had to test its _visible property to find out if it's really valid. This empty MovieClip will have the onEnterFrame handler attached to it which will call all our activeions.
-				if (!_root.tweenLite_mc) { //If this MovieClip is being loaded inside another, there may already be a tweenLite_mc set up in which case we should use that one. Otherwise, set up a new one.
-					var l = _root.getNextHighestDepth() || 9999;
-					_e = _root.createEmptyMovieClip("tweenLite_mc", l);
-					_e.swapDepths(-1); //We shoot this down to level -1 because sometimes developers assume levels at 0 and above are open and just hard-code new MovieClips into those levels without doing a getNextHighestDepth(). We swapDepths just in case there is already a MovieClip on level -1 - that way we don't kill it (replace it).
-				} else {
-					_e = _root.tweenLite_mc;
-				}
-				_e._visible = false;
+			if (!_classInitted) { //We were running into strange issues back on Flash player 6 in nested SWFs where _e was defined but wasn't valid. As a workaround, we had to test its _visible property to find out if it's really valid. This empty MovieClip will have the onEnterFrame handler attached to it which will call all our activeions.
+				var l = _root.getNextHighestDepth() || 9999;
+				_e = _root.createEmptyMovieClip("_tweenLite_mc", l);
+				_e.swapDepths(-1); //We shoot this down to level -1 because sometimes developers assume levels at 0 and above are open and just hard-code new MovieClips into those levels without doing a getNextHighestDepth(). We swapDepths just in case there is already a MovieClip on level -1 - that way we don't kill it (replace it).
 				clearInterval(_gc);
 				_gc = setInterval(killGarbage, 2000);
+				_classInitted = true;
 			}
 			_e.onEnterFrame = executeAll;
 		}
@@ -262,18 +266,17 @@ class gs.TweenLite {
 								
 				} else if (p == "tint" && (isMC || this.target instanceof TextField)) { //If we're trying to change the color of a MovieClip or TextField, then set up a quasai proxy using an instance of a TweenLite to control the color.
 					var clr:Color = new Color(this.target);
-					var endA:Number;
+					var endA:Number = this.vars._alpha;
+					if (endA != undefined) {
+						delete this.vars._alpha;
+						delete this.tweens._alpha;
+					} else {
+						endA = this.target._alpha;
+					}
 					if (this.vars[p] == null || this.vars[p] == "") { //In case they're actually trying to remove the colorization, they should pass in null or "" for the tint
-						if (this.vars._alpha != undefined) {
-							endA = this.vars._alpha;
-							delete this.vars._alpha;
-							delete this.tweens._alpha;
-						} else {
-							endA = this.target._alpha;
-						}
 						addSubTween(tintProxy, clr.getTransform(), {rb:0, gb:0, bb:0, ab:0, ra:endA, ga:endA, ba:endA, aa:endA}, {color:clr});
 					} else {
-						addSubTween(tintProxy, clr.getTransform(), {rb:(this.vars[p] >> 16), gb:(this.vars[p] >> 8) & 0xff, bb:(this.vars[p] & 0xff), ra:0, ga:0, ba:0}, {color:clr});
+						addSubTween(tintProxy, clr.getTransform(), {rb:(this.vars[p] >> 16), gb:(this.vars[p] >> 8) & 0xff, bb:(this.vars[p] & 0xff), ra:0, ga:0, ba:0, aa:endA}, {color:clr});
 					}
 				} else if (p == "frame" && isMC) {
 					addSubTween(frameProxy, {frame:this.target._currentframe}, {frame:this.vars[p]}, {mc:this.target});
@@ -463,8 +466,7 @@ class gs.TweenLite {
 		}
 	}
 	
-	//Default ease function for tweens other than _alpha (Regular.easeOut)
-	private static function easeOut($t:Number, $b:Number, $c:Number, $d:Number):Number {
+	public static function defaultEase($t:Number, $b:Number, $c:Number, $d:Number):Number {
 		return -$c * ($t /= $d) * ($t - 2) + $b;
 	}
 	
