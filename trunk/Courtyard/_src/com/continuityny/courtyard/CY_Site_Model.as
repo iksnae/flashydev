@@ -66,50 +66,24 @@ class com.continuityny.courtyard.CY_Site_Model
 	
 	public function organizeData( e : IEvent ){
 		
-		_data = e.getTarget()[0]; 
+		_data 	= e.getTarget()[0]; 
 		_config = e.getTarget()[1];
 		
 		
-		trace("Model organizeData:"+_data);
+		trace("Model organizeData:"+_data.locations.section[0].loc);
 		
+		for (var i:Number = 0; i<_data.locations.section.length; i++){
+			
+			var loc = _data.locations.section[i].loc;
+			
+			_data.locations.section[loc] = 	_data.locations.section[i];
+			trace("loc:"+loc+" _data.section[loc]"+_data.locations.section[loc].loc );
+			
+		}
+			
 	}
 
-	public function addGalaxyMCToAthleteData( e : IEvent ) {
-			
-			// add a reference for the galaxy_mc to the big ball o' data
-			var data = e.getTarget(); 
-			
-			trace("galaxy_mc:"+data["galaxy_mc"]+"  key:" +data["key"]);
-			
-			_data.athlete[data["key"]]["galaxy_mc"] = data["galaxy_mc"];
 	
-	}
-	
-	
-	
-	public static function getAthleteDataById(id) : Object {
-		
-		var data : Object; 
-		var athletes_data = _data.athlete;  
-		
-		trace("idid:"+id);
-		
-			for (var i : Number = 0; i < (athletes_data.length); i++) {
-				
-				var aid = 	athletes_data[i].aid;
-				//trace(sport_data[i].uid+" - "+id); 
-				
-				data = athletes_data[i];
-				trace("data:"+aid+ " "+data.uid+" id:"+id);
-				if(aid == id){
-					break;
-					trace("break data:"+data);
-				}
-		}
-		
-		return data;
-		
-	}
 
 	
 

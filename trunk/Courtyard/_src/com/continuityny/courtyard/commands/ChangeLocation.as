@@ -28,8 +28,7 @@ import com.continuityny.courtyard.views.CY_Nav_View;
 import com.continuityny.courtyard.views.CY_Location_View;
 import com.bourre.commands.Delegate;
 import com.continuityny.courtyard.views.CY_Sound_View;
-
-class com.continuityny.courtyard.commands.ChangeLocation 
+import com.continuityny.courtyard.views.CY_Home_View;class com.continuityny.courtyard.commands.ChangeLocation 
 	implements Command {
 
 /* ****************************************************************************
@@ -54,6 +53,10 @@ class com.continuityny.courtyard.commands.ChangeLocation
 		
 		CY_Location_View( MovieClipHelper.getMovieClipHelper( 
 				CY_ViewList.VIEW_LOCATION ) ).changeLocation(e);
+		
+		
+		CY_Home_View( MovieClipHelper.getMovieClipHelper( 
+				CY_ViewList.VIEW_HOME ) ).changeSection(loc);
 	
 	
 	}
