@@ -39,7 +39,7 @@ import com.continuityny.mc.ImageLoader;
 import com.continuityny.filetransfer.UploadFile;
 import com.continuityny.courtyard.CY_ModelList;
 import com.continuityny.courtyard.CY_Site_Model;
-import com.continuityny.courtyard.views.CY_Sound_View;
+import com.continuityny.courtyard.views.CY_Sound_View;import com.continuityny.courtyard.views.CY_Home_View;
 import com.continuityny.mc.ImageResizeControls;
 
 import com.bourre.data.libs.ConfigLoader;
@@ -98,8 +98,11 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	
 	private var a_x_array:Array = [118,176,269,446,577,741,830]; // slider positions 
 	
+	private var ARROW_INT:Number;
 	private var PRELOAD_INT:Number;	private var CHECK_INT:Number;
 	private var DELAYDONE:Boolean;
+	
+	private var CURRENT_ARROW_LOC : String;
 	
 	private var VIDEO_LISTENER : Object ; 
 	
@@ -264,7 +267,10 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		});
 		
 		FLVPBK.addEventListener("cuePoint", VIDEO_LISTENER);  
+		
 	}
+	
+	
 	
 	
 	private function showCuePoint(name:String, param:Object, offset:Number){
@@ -399,7 +405,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	
 	
 	
-	private function stopVideo(loc){
+	private function stopVideo(){
 		
 		var _mc = _video_mc['video_mask_mc']; 
 		var tw = new Tween(_mc, "_x", Quad.easeOut, _mc._x, 970, .5, true);
@@ -572,8 +578,10 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	
 	private function onSliderNavClick(i){
 				trace("loc_array:"+loc_array[i]+" i:"+i);
-				centerSlider(i);
-				this._fireEvent(	new BasicEvent( CY_EventList.CHANGE_LOCATION, [loc_array[i]] ) );
+				
+			CURRENT_ARROW_LOC = loc_array[i];
+			centerSlider(i);
+			this._fireEvent(	new BasicEvent( CY_EventList.CHANGE_LOCATION, [loc_array[i]] ) );
 						
 	}
 	
@@ -624,10 +632,13 @@ class com.continuityny.courtyard.views.CY_Nav_View
 
 		}
 		
-		
+		var scope = this; 
 		_slider_mc.arrow_mc.onPress = function(){
+			trace("slider press");
 			var a_y = 522; 
 			this.startDrag(false, 111, a_y, 828, a_y);	
+			
+			scope.setImageByArrowPosition();
 		}
 		
 		_slider_mc.arrow_mc.onRelease = 
@@ -819,9 +830,12 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 			var _mc:MovieClip = _slider_mc.arrow_mc; 
 			
+			
+			
+			
 			_slider_mc.arrow_mc.stopDrag();
 			
-			
+			clearInterval(ARROW_INT);
 			
 			if(_mc._x >= a_x_array[0] && _mc._x < a_x_array[1]){
 				
@@ -865,6 +879,72 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 	}
 	
+	
+	
+	private function setImageByArrowPosition(){
+		
+			trace("setImageByArrowPosition");
+			
+			var _mc:MovieClip = _slider_mc.arrow_mc; 
+			
+			//_slider_mc.arrow_mc.stopDrag();
+			
+			ARROW_INT = setInterval(Delegate.create(this, function(){
+			
+				if(_mc._x >= a_x_array[0] && _mc._x < a_x_array[1]){
+					
+					var loc = "lobby"; 
+					var i = 1; 
+					
+				}else 
+				if(_mc._x >= a_x_array[1] && _mc._x < a_x_array[2]){
+					
+					var loc = "market"; 
+					var i = 2;
+					
+				}else
+				if(_mc._x >= a_x_array[2] && _mc._x < a_x_array[3]){
+					
+					var loc = "business"; 
+					var i = 3;
+					
+				}else
+				if(_mc._x >= a_x_array[3] && _mc._x < a_x_array[4]){
+					
+					var loc = "guest_room"; // 577 741
+					var i = 4;
+					
+				}else
+				if(_mc._x >= a_x_array[4] && _mc._x < a_x_array[5]){
+					
+					var loc = "fitness"; 
+					var i = 5;
+					
+				}else
+				if(_mc._x >= a_x_array[5] && _mc._x < a_x_array[6]){
+					
+					var loc = "outdoor"; 
+					var i = 6;
+					
+				}
+				//trace("loc = :"+loc);
+				
+				if(loc != CURRENT_ARROW_LOC){
+					
+					trace("CURRENT_ARROW_LOC = :"+loc);
+					CURRENT_ARROW_LOC = loc; 
+					//CY_HOMEY.changeLocation(loc);	
+					CY_Home_View( MovieClipHelper.getMovieClipHelper( 
+								CY_ViewList.VIEW_HOME ) ).changeSection(loc);
+								
+								stopVideo();
+					
+				}
+				
+			}), 25);
+			
+		
+	}
 	
 	private function centerSlider(i:Number){
 		

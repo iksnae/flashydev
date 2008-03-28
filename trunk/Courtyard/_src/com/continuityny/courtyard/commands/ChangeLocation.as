@@ -55,8 +55,8 @@ import com.continuityny.courtyard.views.CY_Home_View;class com.continuityny.co
 				CY_ViewList.VIEW_LOCATION ) ).changeLocation(e);
 		
 		
-		CY_Home_View( MovieClipHelper.getMovieClipHelper( 
-				CY_ViewList.VIEW_HOME ) ).changeSection(loc);
+		//CY_Home_View( MovieClipHelper.getMovieClipHelper( 
+			//	CY_ViewList.VIEW_HOME ) ).changeSection(loc);
 	
 	
 	}
