@@ -26,6 +26,7 @@ package heavy
 		public var adTimer:Timer;
 		private var adURLS:Array = new Array();
 		private var myShell:Sprite;
+		private var test;
 		
 		private var imageLoader:Loader= new Loader();
 		
