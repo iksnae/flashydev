@@ -1,0 +1,1 @@
+package flashydev {	import flash.display.Sprite;		/**	 * @author k	 */	public class Application extends Sprite {		public function Application() {		}	}}
