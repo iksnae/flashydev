@@ -7,6 +7,9 @@ package {
 	import flash.events.*;
 	import flash.text.*;	
 	import flash.media.*;
+	import flash.system.Security;
+	import flash.text.TextFormat;
+        import flash.text.AntiAliasType;
 	
 	import fl.controls.*;
 	import fl.data.*;
@@ -30,11 +33,12 @@ package {
 	import heavy.AdViewController;
 	import heavy.HeavyCloseButton;
 	import lt.uza.utils.Global;
-	import flash.system.Security;
+	
 	
 
 	public class HeavyLite extends Sprite
 	{
+		
 		public var yt:YouTube;
 		Security.loadPolicyFile('http://gdata.youtube.com/crossdomain.xml');
 		private var global:Global = Global.getInstance();
@@ -56,7 +60,11 @@ package {
 		private var __adViewer:AdViewController;
 		private var __allVideos:Array= new Array();
 		private var __allThumbs:Array= new Array();
-		private var kontrol:Sprite = new Sprite();
+		private var __allTitles:Array = new Array();
+		private var __kontrol:Sprite = new Sprite();
+		private var __titleText:TextField = new TextField();
+		private var __viewsText:TextField = new TextField();
+		private var __lengthText:TextField = new TextField();
 		private var __playingVideo:Boolean=false;
 		
 		
@@ -97,7 +105,11 @@ package {
 			__dimmer.graphics.endFill();
 			__dimmer.visible=false;
 			
-			// add holder to stage...
+			
+			// move the thumbholder
+		//	__thumbHolder.y=50;
+			
+			// add thumb, dimmer, + centered holders to stage...
 			__centeredHolder.addChild(__videoHolder);
 			addChild(__bg);
 			addChild(__thumbHolder);
@@ -111,7 +123,7 @@ package {
 		
 		public function playVideo():void{
 			trace('play video: '+__currentTrack);
-			kontrol.visible=true;
+			__kontrol.visible=true;
 			getVideo(__currentTrack);
 		}
 		
@@ -134,6 +146,8 @@ package {
 			yt.addEventListener(YouTubeEvent.ERROR,		ytError);
 			__youTubePlayer.addEventListener(FLVPlayerEvent.COMPLETE,closePlayer);
 			__youTubePlayer.addEventListener(FLVPlayerEvent.UPDATE,flvUpdate);
+			__videoHolder.addEventListener(MouseEvent.MOUSE_OVER, showControls);
+			__videoHolder.addEventListener(MouseEvent.MOUSE_OUT,hideControls);
 			
 
 			createControls();
@@ -141,6 +155,21 @@ package {
 		private function flvUpdate(e:FLVPlayerEvent):void {
 			 __hider.alpha=0;
 			trace('phase: '+e)
+		}
+		private function hideControls(e):void{
+			TweenLite.to(__kontrol,.5,{alpha:0});
+			TweenLite.to(__closeButton,.5,{alpha:0});
+			__titleText.visible=false;
+			__viewsText.visible=false;
+			__lengthText.visible=false;
+		}
+		private function showControls(e):void{
+			TweenLite.to(__kontrol,.5,{alpha:1});
+			TweenLite.to(__closeButton,.5,{alpha:1});
+			__titleText.visible=true;
+			__viewsText.visible=true;
+			__lengthText.visible=true;
+			
 		}
 		
 		private function showVideoPlayer():void{
@@ -154,10 +183,15 @@ package {
 		}
 		private function hideVideoPlayer():void{
 			trace('hideVideoPlayer');
+			__titleText.text='';
+			__viewsText.text='';
+			__lengthText.text='';
+			
 			TweenLite.to(__dimmer,1,{alpha:.5});
 			
 			TweenLite.to(__centeredHolder,.3,{alpha:0,scaleX:1,scaleY:1,onComplete:disableVPlayer});
 		}
+	
 		private function disableVPlayer():void{
 			__centeredHolder.visible=false;
 			__dimmer.visible=false;
@@ -167,20 +201,51 @@ package {
 	
 		private function createControls():void{
 		
-			kontrol.graphics.beginFill(0x666666,.5);
-			kontrol.graphics.drawRoundRect(5,5,630,25,5);
-			kontrol.graphics.endFill();
+			__kontrol.graphics.beginFill(0x666666,.5);
+			__kontrol.graphics.drawRoundRect(5,5,630,25,5);
+			__kontrol.graphics.endFill();
 			
-			kontrol.y=220;
-			kontrol.scaleX=.5;
-			kontrol.scaleY=.5;
+			__kontrol.y=220;
+			__kontrol.scaleX=.5;
+			__kontrol.scaleY=.5;
+			
+			//setup control text
+			var myStyle:TextFormat = new TextFormat();
+			var myFont:Font = new Font();
+		
+			myStyle.color = 0xffffff;
+	//		myStyle.font =
+			__titleText.defaultTextFormat=myStyle;
+			__titleText.selectable=false;
+			__titleText.width=600;
+			__titleText.x = 30;
+			__titleText.y = 10;
+			
+			__viewsText.defaultTextFormat=myStyle;
+			__viewsText.selectable=false;
+			__viewsText.width=600;
+			__viewsText.x = 500;
+			__viewsText.y = 10;
+			
+			
+			__lengthText.defaultTextFormat=myStyle;
+			__lengthText.selectable=false;
+			__lengthText.width=600;
+			__lengthText.x = 350;
+			__lengthText.y = 10;
+			
+			
+			
+			__kontrol.addChild(__titleText);
+			__kontrol.addChild(__viewsText);
+			__kontrol.addChild(__lengthText);
 			
 			// add the kids
-			kontrol.addChild(__playButton);
-			kontrol.addChild(__stopButton);
+			__kontrol.addChild(__playButton);
+			__kontrol.addChild(__stopButton);
 			__stopButton.visible=false;
 			
-			__videoHolder.addChild(kontrol);
+			__videoHolder.addChild(__kontrol);
 			// add listeners
 			__closeButton.addEventListener(MouseEvent.CLICK, closePlayer);
 			__playButton.addEventListener(MouseEvent.CLICK,playButtonClicked);
@@ -199,15 +264,18 @@ package {
 		
 		private function ytLoaded(e:YouTubeEvent):void{
 			trace('loaded: '+e.method);
+			
 			switch(e.method){
 				case YouTube.VIDEOSBYTAG :
 					try {
 			//			addToVideoList(e.data);
+		
 						trace("Videos For Tag : " + e.request.tag + " : " + e.data.length());
 						for(var i in e.data){
 						//	trace(e.data[i].id);
-						
+							var title = e
 							__allVideos.push(e.data[i].id);
+							__allTitles.push(e.data[i].title);
 							getThumbnail(e.data[i].id)
 							
 						}
@@ -222,6 +290,38 @@ package {
 						trace('video could not play');
 					}
 				break;
+				case YouTube.VIDEOSPLAYLIST :
+					try {
+			//			addToVideoList(e.data);
+		
+						trace("Videos By Playlist: " + e.request.tag + " : " + e.data.length());
+						for(var i in e.data){
+						//	trace(e.data[i].id);
+							var title = e
+							__allVideos.push(e.data[i].id);
+							__allTitles.push(e.data[i].title);
+							getThumbnail(e.data[i].id)
+							
+						}
+					} catch (evt:ArgumentError) {
+						trace("ERROR : No Videos For Tag");
+					}
+				break;
+				case YouTube.VIDEOIDDETAILS :
+				//	writeLine("VIDEO ID DETAILS");
+				trace('============================================')
+					for each (var detail:XML in e.data.elements()) {
+						trace(detail.name()+": "+detail);
+					//	writeLine(detail.name()+": "+detail);
+					}
+					trace('============================================')
+					var theDetails:XML = new XML(e.data);
+					__titleText.text = theDetails..title;
+					__viewsText.text = theDetails..view_count+' views';
+					__lengthText.text = theDetails..length_seconds+' seconds';
+				
+					trace(e.data.elements())
+					break;
 			}
 		}
 		
@@ -234,12 +334,13 @@ package {
 		private function getThumbnail(str:String):String{
 			var thumbURL:String = 'http://i.ytimg.com/vi/'+str+'/default.jpg';
 			var thumbLoader:Loader=new Loader();
+			
 		
 			thumbLoader.load(new URLRequest(thumbURL));
 			
 			
 			thumbLoader.x = col*60;
-			thumbLoader.y = row*30;
+			thumbLoader.y = row*50;
 			col++;
 			if( col>=7){
 				col=0;
@@ -250,30 +351,41 @@ package {
 			thumbLoader.scaleY=.5;
 			
 			thumbLoader.addEventListener(MouseEvent.CLICK,thumbClicked);
+			thumbLoader.mouseEnabled;
+			
 			__thumbHolder.addChild(thumbLoader);
+			__thumbHolder.buttonMode=true;
+			__thumbHolder.useHandCursor=true;
+			
 			trace(thumbURL);
 			
 			__allThumbs.push([thumbLoader,__allThumbs.length]);
 			return thumbURL;
 		}
+		
 		private function thumbClicked(e:MouseEvent):void{
 			for(var i in __allThumbs){
 				if(__allThumbs[i][0]==e.target){
 					showVideoPlayer();
 					__currentTrack = __allVideos[i];
-					__adViewer.showAd(4);
-					kontrol.visible=false;
+					//__titleText.text = __allTitles[i];
+					
+					__adViewer.showAd(1.5);
+					__kontrol.visible=false;
 				}
 			}
-			
 		}
 		
 		private function getVideos():void{
-			yt.videosbyTag('heavy funny');
+			yt.videosbyTag('donnell rawlings');
+			yt.videosbyTag('ashy larry');
+		//	yt.videosbyTag('bootlegcomedy');
+			
 		}
 		private function getVideo(id:String):void{
 			try{
 				__playingVideo=true;
+				
 				trace('video loaded')
 				yt.getVideoId(id);
 				yt.videoIdDetails(id);
