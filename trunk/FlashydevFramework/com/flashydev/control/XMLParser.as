@@ -1,5 +1,6 @@
 package com.flashydev.control
 {
+
 	/*
 	XMLParser
 	this xml utility will responsible for loading and parsing xml sources to local data.
@@ -8,10 +9,11 @@ package com.flashydev.control
 	{
 		
 	}
-	public function getRSSFeed(url:String,proxyID:String):void{
+	public function getRSSFeed(  url:String, proxyID:String ):void{
 		
 	}
-	public function getXML(url, proxyID:String){
+	public function getXML( url, proxyID:String ){
 		
 	}
+	
 }
