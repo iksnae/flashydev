@@ -30,12 +30,13 @@ package {
 	import heavy.AdViewController;
 	import heavy.HeavyCloseButton;
 	import lt.uza.utils.Global;
+	import flash.system.Security;
 	
 
 	public class HeavyLite extends Sprite
 	{
 		public var yt:YouTube;
-	
+		Security.loadPolicyFile('http://gdata.youtube.com/crossdomain.xml');
 		private var global:Global = Global.getInstance();
 		
 		private var __currentTrack:String;
