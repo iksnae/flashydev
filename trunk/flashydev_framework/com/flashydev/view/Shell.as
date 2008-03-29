@@ -1,0 +1,1 @@
+package flashydev.view {	/**	 * @author k	 */	public class Shell {	}}

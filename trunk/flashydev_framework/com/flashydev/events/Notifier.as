@@ -1,0 +1,1 @@
+package flashydev.events {	/**	 * @author k	 */	public class Notifier {	}}

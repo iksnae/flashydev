@@ -1,0 +1,1 @@
+package flashydev.model {	/**	 * @author k	 */	public class Model {	}}
