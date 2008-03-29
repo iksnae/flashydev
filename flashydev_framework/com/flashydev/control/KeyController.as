@@ -1,0 +1,1 @@
+package flashydev.control {	/**	 * @author k	 */	public class KeyController {	}}
