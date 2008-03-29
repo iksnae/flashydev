@@ -11,7 +11,7 @@
 		var items:Dictionary = new Dictionary();
 		public var APIKey:String="WplekwLy_Nw";
 
-		private static const servicesDomain:String = "http://iksnae.com/";
+		private static const servicesDomain:String = "http://bootlegcomedy.com/";
 		private static const proxyUrl:String= servicesDomain+"proxyRequest.php?url=";
 		private static const videoIdUrl:String = servicesDomain+"getVideoId.php";
 		/*private static const proxyUrl:String= servicesDomain+"proxyRequest.php?url=";
