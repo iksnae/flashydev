@@ -11,9 +11,9 @@
 		var items:Dictionary = new Dictionary();
 		public var APIKey:String="WplekwLy_Nw";
 
-		private static const servicesDomain:String = "http://code.flashdynamix.com/YouTube/";
-		private static const proxyUrl:String= servicesDomain+"proxyRequest.aspx?url=";
-		private static const videoIdUrl:String = servicesDomain+"getVideoId.aspx";
+		private static const servicesDomain:String = "http://iksnae.com/";
+		private static const proxyUrl:String= servicesDomain+"proxyRequest.php?url=";
+		private static const videoIdUrl:String = servicesDomain+"getVideoId.php";
 		/*private static const proxyUrl:String= servicesDomain+"proxyRequest.php?url=";
 		private static const videoIdUrl:String = servicesDomain+"getVideoId.php";*/
 		private static const watchVideoUrl:String = "http://www.youtube.com/watch?v=";
