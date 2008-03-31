@@ -93,15 +93,19 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	private var _amenities_mc : MovieClip;
 	private var _find_but_mc : MovieClip;	private var _tv_but_mc : MovieClip;	private var _amen_but_mc : MovieClip;
 	private var _slider_mc : MovieClip;
-
+	private var _drop_mc:MovieClip; 
+	
 	private var loc_array : Array = ["home", "lobby", "market", "business",  "guest_room", "fitness", "outdoor"]; 
 	
-	private var a_x_array:Array = [118,176,269,446,577,741,830]; // slider positions 
+	private var a_x_array:Array = [90,167,300,478,609,754,855]; // slider positions 
+	
+	private var detail_am_array:Array;
 	
 	private var ARROW_INT:Number;
 	private var PRELOAD_INT:Number;	private var CHECK_INT:Number;
 	private var DELAYDONE:Boolean;
 	
+	private var FIND_OPEN:Boolean;
 	private var CURRENT_ARROW_LOC : String;
 	
 	private var VIDEO_LISTENER : Object ; 
@@ -177,9 +181,10 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	
 	//	init var, assets, events, ...
 		
+		_sound_switch_mc = view.sound_btn;
 		_slider_mc 		= view.slider_nav_mc; 
 		_tv_but_mc		= view.tv_but_mc;		_find_but_mc	= view.find_but_mc;		_amen_but_mc	= view.amen_but_mc;
-		
+		_drop_mc		= view.drop_mc;
 		
 		_detailLabel = new TextFormat("GothamRoundBold", 11, 0xFFFFFF);
 		_detailLabel.align = "right";
@@ -188,6 +193,23 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		_superLabel = new TextFormat("GothamRoundMed", 20, 0xFFFFFF);
 		
 		VIDEO_LISTENER  = new Object();
+		
+		
+		_drop_mc._visible = false; 
+		_drop_mc.bg_mc._rotation = -90; 
+		_drop_mc.bg_mc._y = -30; 		_drop_mc.bg_mc._x = -50; 
+		
+		_form_field_array.push(_drop_mc.form_mc.city_txt);
+		
+		setFormFieldFocusAction();
+		
+		
+		_drop_mc.form_mc.find_mc.onRelease = function(){
+			
+			getURL("http://www.marriott.com/search/findHotels.mi");	
+		}
+		
+		
 		
 	}
 
@@ -215,10 +237,37 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		showDetailLinks(loc);
 		
+		var caption = _data.locations.section[loc].caption;
+		if(caption.line1 != undefined){
+			showCaption(caption);
+		}
 		//this._fireEvent(	new BasicEvent( CY_EventList.LOCATION_ON_ARRIVED, [loc]) );
+		
+		//preloadDetailImages(loc);
 		
 	}
 	
+	
+	
+	
+	
+	private function showCaption(caption){
+		TweenLite.to(view.caption_mc, .5, {_y:426, delay:.25});
+		
+		updateCaption(caption);
+	}
+	
+	private function hideCaption(){
+		TweenLite.to(view.caption_mc, .25, {_y:475, delay:.25, ease:Quad.easeIn});
+	}
+	
+	private function updateCaption(caption){
+		
+		view.caption_mc.loc_txt.text 	= caption.line1;
+		view.caption_mc.loc2_txt.text 	= (caption.line2 == undefined) ? "" : caption.line2;
+		
+		view.caption_mc.loc2_txt._y = view.caption_mc.loc_txt._y + 11;
+	}
 	
 	
 	private function removeSection(e:IEvent){
@@ -234,6 +283,9 @@ class com.continuityny.courtyard.views.CY_Nav_View
 			removeDetailLinks(loc);
 			
 			stopVideo();
+			hideCaption();
+			hideCloseButton();
+			
 	}
 	
 	
@@ -251,7 +303,9 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		var path = "flv/"+loc+".flv";
 		
-		FLVPBK.bufferTime = 20;
+		FLVPBK.bufferTime = 10;
+		
+		
 		FLVPBK.load(path);
 		FLVPBK.pause();
 		
@@ -260,7 +314,11 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		_video_mc.vid_mc['flvpb_mc'].setMask(_video_mc['video_mask_mc']);
 		
-		TweenLite.to(_video_mc.preloader_mc, .5, {_y:350});		
+		
+		if(loc != "outdoor"){
+			TweenLite.to(_video_mc.preloader_mc, .5, {_y:350});
+		}
+				
 		_video_mc.preloader_mc.title_txt.text = _data.locations.section[loc].cue[0].title;		_video_mc.preloader_mc.loading_txt.text = "LOADING "+_data.locations.section[loc].title+" VIDEO TOUR";
 		
 		_video_mc.preloader_mc.swapDepths(1200);
@@ -314,7 +372,13 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		}), 2000);
 		
 		VIDEO_LISTENER.playing   = Delegate.create(this, function(eventObject:Object):Void {
+				
 				trace("FLVPBK.fps:"+FLVPBK.metadata.framerate);
+				
+				CY_Sound_View( MovieClipHelper.getMovieClipHelper( 
+								CY_ViewList.VIEW_SOUND ) ).playSound("video");
+				
+				FLVPBK.removeEventListener("playing", VIDEO_LISTENER);  
 		});
 				VIDEO_LISTENER.ready   = Delegate.create(this, function(eventObject:Object):Void {
 				
@@ -347,10 +411,18 @@ class com.continuityny.courtyard.views.CY_Nav_View
 				
 		});
 		
-		
+		VIDEO_LISTENER.complete   = Delegate.create(this, function(eventObject:Object):Void {
+				
+				trace("FLVPBK.complete:");
+				
+				/*CY_Sound_View( MovieClipHelper.getMovieClipHelper( 
+								CY_ViewList.VIEW_SOUND ) ).fadeSound("video");*/
+				stopVideo();
+				FLVPBK.removeEventListener("complete", VIDEO_LISTENER);  
+		});
 		
 		FLVPBK.addEventListener("ready", VIDEO_LISTENER);  
-		FLVPBK.addEventListener("progress", VIDEO_LISTENER);  		FLVPBK.addEventListener("playing", VIDEO_LISTENER);  
+		FLVPBK.addEventListener("progress", VIDEO_LISTENER);  		FLVPBK.addEventListener("playing", VIDEO_LISTENER);  		FLVPBK.addEventListener("complete", VIDEO_LISTENER);  
 		
 	}
 	
@@ -387,8 +459,11 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		var tw 	= new Tween(_mc, "_x", Quad.easeIn, _mc._x, 0, .75, true);
 		
 		
-		TweenLite.to(_video_mc.preloader_mc, .5, {_y:402});
+		TweenLite.to(_video_mc.preloader_mc, .25, {_y:402, ease:Quad.easeIn});
 		
+		TweenLite.to(_video_mc.bg_mc, .5, {_x:0, delay:.5, ease:Quad.easeOut});
+		
+		hideCaption();
 		
 		//var _mc = _video_mc.vid_mc;
 		var scope = this;
@@ -397,6 +472,8 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		//var _mc = _video_mc; 
 		//new Tween(_mc, "_x", Quad.easeOut, _mc._x, 0, 1, true);
 		FLVPBK.seek(0);
+		
+		
 		
 		var scope = this; 
 		tw.onMotionFinished = function(){
@@ -407,11 +484,16 @@ class com.continuityny.courtyard.views.CY_Nav_View
 			//var _mc = scope._video_mc.vid_mc;
 			//TweenFilterLite.to(scope._video_mc.vid_mc, 2, {blurFilter:{blurX:0, blurY:0}});
 		
+			
 		
 		}	
 		
+		
+		
+								
+
 	}
-	
+
 	
 	
 	private function stopVideo(){
@@ -432,6 +514,13 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		}
 		
 		FLVPBK.removeEventListener("cuePoint", VIDEO_LISTENER);  
+		
+		TweenLite.to(_video_mc.bg_mc, .5, {_x:970});
+		
+		CY_Sound_View( MovieClipHelper.getMovieClipHelper( 
+								CY_ViewList.VIEW_SOUND ) ).fadeSound("video")
+								
+								
 	}
 
 	
@@ -452,6 +541,37 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		
 		createDetailsNav(loc);
+	}
+	
+	private function openFindCourtyard(){
+		trace("open find");
+		
+		_drop_mc._visible = true; 
+		var scope = this; 
+		TweenLite.to(_drop_mc.bg_mc, .25, {_y:0, _rotation:0, _x:0,
+			onComplete:Delegate.create(this, showForm)} ); 
+		
+	}
+	
+	private function showForm(){
+		trace("sho form");
+		TweenLite.to(_drop_mc.close_but_mc, .25, {_alpha:100}); 		TweenLite.to(_drop_mc.form_mc, .5, {_alpha:100}); 
+	}
+	
+	private function closeFindCourtyard(){
+		
+		trace("close find");
+		
+		_drop_mc.close_but_mc._alpha = 0; 		_drop_mc.form_mc._alpha = 0; 
+		
+		TweenLite.to(_drop_mc.bg_mc, .5, {_y:-30, _x:-50, _rotation:-90, onComplete:hideFind, scope:this}); 
+		
+	}
+	
+	private function hideFind(){
+		
+		_drop_mc._visible = false; 
+		
 	}
 	
 	
@@ -475,8 +595,10 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	
 	
 	private function showDetail(e:IEvent){
-		
 		var loc = current_loc = e.getTarget()[0];
+		
+		trace("show detail:"+loc);
+		
 		//var _mc = detail_array[loc];
 		var d = _details_mc.detail_base_mc.getNextHighestDepth();
 		var loc_s = loc.split(",").join("");
@@ -516,7 +638,10 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		body_txt._y = header_txt._y + header_txt._height + 5;
 		
-		
+		var caption = _data.locations.section[base_loc].detail[detail_num].caption;
+		if(caption.line1 != undefined){
+			showCaption(caption);
+		}
 		
 		trace("CY_Nav_View: showDetail: "+loc+"   _mc:"+_mc+" d:"+d);
 		var tw = new Tween(_mc, "_x", Quad.easeOut, _mc._x, 0, 1.7, true);
@@ -527,6 +652,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		tw.onMotionFinished = function(){
 			
 			TweenLite.to(_mc.copy_mc, 1, {_alpha:100});
+			scope.showCloseButton();
 			
 			scope._fireEvent(	new BasicEvent( CY_EventList.LOCATION_ON_ARRIVED, [loc]) );
 			
@@ -535,7 +661,18 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		}
 		
 		
-		FLVPBK.pause();
+		
+		_details_mc.close_mc.onRelease = Delegate.create(this, function(){
+			
+			var base = CY_Location_View.getBaseLiveLocation().split(",").join("");
+			trace("base:"+base);
+			this._fireEvent(	new BasicEvent( CY_EventList.CHANGE_LOCATION, [base] ) );
+			
+		});
+		
+		//FLVPBK.pause();
+		
+		stopVideo();
 	}
 	
 	
@@ -575,8 +712,22 @@ class com.continuityny.courtyard.views.CY_Nav_View
 			trace("CY_Nav_View: removeDetail: "+loc_s+" _mc:"+scope._details_mc["detail_page_"+loc_s+"_mc"]);
 		}
 			scope._fireEvent(	new BasicEvent( CY_EventList.LOCATION_ON_DEPARTED, [loc]) );
+			
+		
+		hideCaption();
+		hideCloseButton();
+		
+		
+		
 	}
 	
+	private function showCloseButton(){
+		TweenLite.to(_details_mc.close_mc, .5, {_y:378, easing:Quint.easeIn});
+	}
+	
+	private function hideCloseButton(){
+		TweenLite.to(_details_mc.close_mc, .5, {_y:411, easing:Quint.easeIn});
+	}
 	
 	// hack untill fix location manager
 	private function removeCurrentDetail(){
@@ -694,20 +845,26 @@ class com.continuityny.courtyard.views.CY_Nav_View
 			
 			if(!CY_Sound_View.getMute()) {
 				trace("mute sound");
-				/*this.gotoAndStop(2);
+				_sound_switch_mc.gotoAndStop("OFF");
 				CY_Sound_View( MovieClipHelper.getMovieClipHelper( 
-				CY_ViewList.VIEW_SOUND ) ).soundMute(true);*/
+				CY_ViewList.VIEW_SOUND ) ).soundMute(true);
 				
-				this._fireEvent(	new BasicEvent( CY_EventList.MUTE_SOUND, [true] ) );
+				CY_Sound_View( MovieClipHelper.getMovieClipHelper( 
+				CY_ViewList.VIEW_SOUND ) ).fadeSound("video");
+				
+				//this._fireEvent(	new BasicEvent( CY_EventList.MUTE_SOUND, [true] ) );
 				
 				
 			}else{
 				trace("unmute sound");
-				/*this.gotoAndStop(1);
+				_sound_switch_mc.gotoAndStop("ON");
 				CY_Sound_View( MovieClipHelper.getMovieClipHelper( 
-				CY_ViewList.VIEW_SOUND ) ).soundMute(false);*/
+				CY_ViewList.VIEW_SOUND ) ).soundMute(false);
 				
-				this._fireEvent(	new BasicEvent( CY_EventList.MUTE_SOUND, [false] ) );
+				//CY_Sound_View( MovieClipHelper.getMovieClipHelper( 
+				//CY_ViewList.VIEW_SOUND ) ).fadeUpSound("video");
+				
+				// this._fireEvent(	new BasicEvent( CY_EventList.MUTE_SOUND, [false] ) );
 			}
 				
 				
@@ -744,9 +901,21 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		
 		_find_but_mc.onRollOver = secondOver;
-		_find_but_mc.onRollOut 	= secondOut;
+		_find_but_mc.onRollOut 	= secondOut;		
+		_find_but_mc.onRelease 	= Delegate.create(this, function(){
+			
+			if(FIND_OPEN){
+				closeFindCourtyard();
+				FIND_OPEN = false; 
+			}else{
+				openFindCourtyard();
+				FIND_OPEN = true; 
+			}
+		});
 		
-		
+		_drop_mc.close_but_mc.onRelease 	= Delegate.create(this, closeFindCourtyard);
+			
+			
 		_amenities_mc.close_but_mc.onRelease = Delegate.create(this, function(){
 			
 			this._fireEvent(	new BasicEvent( CY_EventList.CHANGE_LOCATION, ["lobby"] ) );
@@ -846,8 +1015,6 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	private function getSectionByArrowPosition(){
 		
 			var _mc:MovieClip = _slider_mc.arrow_mc; 
-			
-			
 			
 			
 			_slider_mc.arrow_mc.stopDrag();
@@ -993,18 +1160,89 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	private function activateAmen() : Void {
 		//var _mc = _ammenities_mc.mask_mc; 
 		//var tw = new Tween(_mc, "_x", Quad.easeOut, _mc._x, 0, .5, true);
-		
+	
 		//new PlayClip( _ammenities_mc.amen_anim_mc, 33);
 		_amenities_mc._visible = true;
 		 _amenities_mc.amen_anim_mc.gotoAndPlay("IN");
+		 
+		 	buildAmen();
+		 	
+		 	
 		this._fireEvent(	new BasicEvent( CY_EventList.LOCATION_ON_ARRIVED, ["amenities"]) );
 	}
 
+	private function buildAmen(){
+		
+		for (var i = 1; i< loc_array.length; i++) {
+			var loc = loc_array[i];
+			trace("buildAmen :"+loc);
+			_amenities_mc.amen_anim_mc.attachMovie("mc_am_block", "block_"+loc+"_mc", 10*i, 
+				{_alpha:0, _y:475, _x:5+((i-1)*162)});
+			
+			var block_mc:MovieClip = _amenities_mc.amen_anim_mc["block_"+loc+"_mc"];
+			block_mc.title_txt.text = _data.locations.section[loc].title; 
+			
+			//detail_am_array = new Array();
+			//var temp_array  : Array = new Array();
+			//temp_array = _data.locations.section[loc].detail.splice(); 
+			detail_am_array = _data.locations.section[loc].detail; 
+			
+			TweenLite.to(block_mc, .125, {_alpha:100, delay:(.125*(6-i))});
+			
+			for (var j = 0; j< detail_am_array.length; j++) {
+				
+				block_mc.attachMovie("mc_am_label", "label_"+j+"_mc", 10*j, {_x:40});
+				var label_mc:MovieClip = block_mc["label_"+j+"_mc"];
+				
+				var _txt:TextField = 	label_mc.label_txt; 
+				_txt.multiline = true; 
+				_txt.autoSize = true; 
+				_txt.text = _data.locations.section[loc].detail[j].title;
+				
+				var prev_txt = block_mc["label_"+(j-1)+"_mc"].label_txt;
+				
+				if(j == 0){
+					_txt._y = -10 - _txt._height; 
+				}else{
+					_txt._y = (prev_txt._y-_txt._height-20);
+				}
+				
+				var scope = this; 
+				label_mc.loc = loc+","+j;
+				label_mc.onRelease = function(){
+			
+					//var base = CY_Location_View.getBaseLiveLocation().split(",").join("");
+					//trace("base:"+base);
+					var this_loc = this.loc;
+					scope._fireEvent(	new BasicEvent( CY_EventList.CHANGE_LOCATION, [this_loc] ) );
+					
+				};
+				
+				
+				
+			}
+				
+		}
+	}
+	
+	
 	private function removeAmen() : Void {
 		//var _mc = _ammenities_mc.mask_mc; 
 		//var tw = new Tween(_mc, "_x", Quad.easeOut, _mc._x, 970, .5, true);
 		 _amenities_mc.amen_anim_mc.gotoAndPlay("OUT");
 		this._fireEvent(	new BasicEvent( CY_EventList.LOCATION_ON_DEPARTED, ["amenities"]) );
+		
+		for (var i = 1; i< loc_array.length; i++) {
+			var loc = loc_array[i];
+			trace("buildAmen :"+loc);
+			var block_mc:MovieClip = _amenities_mc.amen_anim_mc["block_"+loc+"_mc"];
+			
+			TweenLite.to(block_mc, .0125, {_alpha:0, delay:(.0125*i)});
+			
+			
+			
+		}
+		
 	}
 	
 	
@@ -1068,6 +1306,43 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		var _mc = this['arrow_mc'];
 		TweenLite.to(_mc, .25, {_rotation:0, _y:4, _x:_mc.x});
+	}
+	
+	
+	
+	private function setFormFieldFocusAction(){
+		
+		
+		view.createTextField("hold_txt", 123567, -1000, -1000, 1, 1)
+		
+		for(var each in _form_field_array){
+			
+			var _txt:TextField = _form_field_array[each];
+			
+			_txt.onSetFocus = function(){
+				if(!this.impure){
+					this.default_text = this.text ;
+					this.text = "" ;
+				}
+					
+			}
+	
+			_txt.onKillFocus = function(){
+				
+				//Selection.setFocus(_search_mc.hold_txt);
+				//_search_mc.hold_txt.setFocus();
+				
+				if(!this.impure){
+					this.text = this.default_text ;
+				}
+			}
+			
+			_txt.onChanged = function(){
+					this.impure = true ;
+			}
+			
+		}
+		
 	}
 	
 	

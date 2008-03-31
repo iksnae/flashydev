@@ -176,6 +176,10 @@ class com.continuityny.courtyard.views.CY_Location_View
 		
 		trace(">>> LocationView depart: "+DEPARTING_LOCATION);
 		
+		if(LIVE_LOCATION != DEPARTING_LOCATION){
+			
+			
+		
 		 if(arr_array.length == 1 && dep_array.length == 1){
 		
 			if(arr_array[0] != dep_array[0]){
@@ -222,6 +226,10 @@ class com.continuityny.courtyard.views.CY_Location_View
 			onDepartureDone(e);
 		 }
 			
+		
+		
+		}
+		
 		
 		/*if(data.uid != undefined ){
 			params_str = ","+data["uid"];	
@@ -301,7 +309,7 @@ class com.continuityny.courtyard.views.CY_Location_View
 		
 		var loc_array = stripped_addr.split(",");
 		
-		if(loc_array.length == 1){
+		/*if(loc_array.length == 1){
 			
 			this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, [stripped_addr]) );
 			
@@ -370,6 +378,7 @@ class com.continuityny.courtyard.views.CY_Location_View
 		}
 	
 		
+		this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, [INITIAL_LOCATION]) );
 		 
 	}
 	
