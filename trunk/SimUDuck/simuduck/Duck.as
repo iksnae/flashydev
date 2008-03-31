@@ -8,6 +8,9 @@ package simuduck
 		public var quackBehavior:QuackBehavior;
 		
 		function Duck(){
+			trace("new duck");
+			trace("+++++++++++++++++++++++++");
+			display();
 		}
 		public function display():void{
 		}
@@ -15,9 +18,11 @@ package simuduck
 			trace("All ducks float");
 		}
 		public function performQuack():void{
+			trace("quack: "+this.duckType);
 			quackBehavior.quack();
 		}
 		public function performFly():void{
+			trace("fly: "+this.duckType);
 			flyBehavior.fly();
 		}
 		public function setDuckType(type:String):void{

@@ -1,5 +1,9 @@
-package simuduck
+package simuduck.ducks
 {
+	import simuduck.Duck
+	import simuduck.behaviors.*;
+	
+	
 	public class DecoyDuck extends Duck
 	{
 		function DecoyDuck():void{
