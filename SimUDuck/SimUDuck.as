@@ -10,9 +10,10 @@ package {
 		
 		public function SimUDuck()
 		{
-			mallard.performFly();
 			mallard.performQuack();
+			mallard.performFly();
 			
+			decoy.performQuack();
 			decoy.performFly();
 		}
 	}
