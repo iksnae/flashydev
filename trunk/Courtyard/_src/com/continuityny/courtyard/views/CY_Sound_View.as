@@ -50,10 +50,8 @@ class com.continuityny.courtyard.views.CY_Sound_View extends MovieClipHelper {
 
 	private var MAIN_VOLUME : Number = 100;
 
-	private static var MUTED : Boolean = false; 
-	
-	
-		public function CY_Sound_View( mc ) {
+	private static var MUTED : Boolean = false;	private var _config : Object; 
+		public function CY_Sound_View( mc ) {
 			super( CY_ViewList.VIEW_SOUND, mc );
 			trace("CY_Sound_View: mc:   eee "+mc);
 			
@@ -74,11 +72,14 @@ class com.continuityny.courtyard.views.CY_Sound_View extends MovieClipHelper {
 		
 		//trace("	MB_Sound_View:Inited");
 		
-		MUSIC_FILE_ARRAY 	= new Array();
+		_config = CY_Site_Model.getConfig() ;
+		
+		MUSIC_FILE_ARRAY 	= _config.audio;
+		
 		SOUND_ARRAY 		= new Array(); 
 		SOUND_LOADED_ARRAY 	= new Array(); 
 		
-		MUSIC_FILE_ARRAY["main"] 	= "AmazingAwaits.mp3";
+		//MUSIC_FILE_ARRAY["main"] 	= "AmazingAwaits.mp3";
 		
 
 		
@@ -93,6 +94,7 @@ class com.continuityny.courtyard.views.CY_Sound_View extends MovieClipHelper {
 	//	LOCATION_MANAGER.setTarget(TARGET_MC); 
 		//loadSounds();
 		
+		trace("	MB_Sound_View:Inited - "+MUSIC_FILE_ARRAY.preload);
 	
 	}
 	
@@ -133,6 +135,53 @@ class com.continuityny.courtyard.views.CY_Sound_View extends MovieClipHelper {
 		
 	}
 
+
+	public function _loadSound(refName:String, soundFile:String, callBack:Function) : Sound {
+		
+		trace("Sound_View:load sound - "+soundFile); 
+			
+		//	var this_file = MUSIC_FILE_ARRAY[each]; 
+		//	var this_name = each; 
+			var d = SOUND_BOARD.getNextHighestDepth();
+			SOUND_BOARD.createEmptyMovieClip("sound_"+d+"_mc", d);
+			var this_sound_mc = SOUND_BOARD["sound_"+d+"_mc"]; 
+			
+			var this_sound:Sound = SOUND_ARRAY[refName] = new Sound(this_sound_mc);
+			
+			//var this_sound:Sound = new Sound(this_sound_mc);
+			
+			this_sound.loadSound(soundFile, false);
+			
+			this_sound.onLoad =  Delegate.create(this, function (success){
+			   if (success) {
+			        //trace("Sound_View: Sound Loaded:"+this_name);
+			       //	SOUND_LOADED_ARRAY[this_name] = true; 
+			       callBack();
+			       
+			    }
+			});
+		 
+		 return this_sound;
+		//checkAllLoaded();
+		
+	}
+
+	
+	public function playSound(refName:String){
+		
+		if(MUTED){
+			SOUND_ARRAY[refName].setVolume(0);
+		}else{
+			SOUND_ARRAY[refName].setVolume(100);	
+		}
+		
+		SOUND_ARRAY[refName].stop();
+		SOUND_ARRAY[refName].start(0);
+		
+		trace("play sound:"+SOUND_ARRAY[refName]+" ref:"+refName);
+		
+	}
+	
 	
 	
 	private function checkAllLoaded() : Void {
@@ -220,6 +269,54 @@ class com.continuityny.courtyard.views.CY_Sound_View extends MovieClipHelper {
 		}), 10); 
 		
 	}
+	
+	
+	public function fadeSound(this_sound:String){
+		
+		var TEMP_INT:Number;
+		//clearInterval(TEMP_INT);
+		var main_sound:Sound = SOUND_ARRAY[this_sound]; 
+		
+		TEMP_INT = setInterval(Delegate.create(this, function(){
+			
+			var v = main_sound.getVolume(); 
+			main_sound.setVolume(v-3);
+			//MAIN_VOLUME = main_sound.getVolume();
+			//trace("set volume:"+v); 
+			if(v <= 0) {  
+				 main_sound.setVolume(0); 
+				 
+				 main_sound.stop();
+				 clearInterval(TEMP_INT); }
+			
+		}), 20); 
+		
+	}
+	
+	
+	public function fadeUpSound(this_sound:String){
+		
+		var TEMP_INT:Number;
+		//clearInterval(TEMP_INT);
+		var main_sound:Sound = SOUND_ARRAY[this_sound]; 
+		
+		TEMP_INT = setInterval(Delegate.create(this, function(){
+			
+			var v = main_sound.getVolume(); 
+			main_sound.setVolume(v-3);
+			//MAIN_VOLUME = main_sound.getVolume();
+			//trace("set volume:"+v); 
+			if(v >= 100) {  
+				 main_sound.setVolume(100); 
+				// main_sound.stop();
+				 clearInterval(TEMP_INT); }
+			
+		}), 20); 
+		
+	}
+	
+	
+	
 	
 	public static function getMute():Boolean{
 		return MUTED;	

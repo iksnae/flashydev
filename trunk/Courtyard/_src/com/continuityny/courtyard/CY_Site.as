@@ -47,10 +47,12 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 	private var _data	: Object;	
 	
 	private var ModelCY : CY_Site_Model;
-	
+	private var vSound  : CY_Sound_View ;
 	private var TARGET_MC:MovieClip;
 	private var preloader:MovieClip; 
-	private var nav : MovieClip
+	private var nav : MovieClip;
+	private var preloadSound : Sound;
+
 	
 	public function CY_Site( container ) {
 				
@@ -156,8 +158,8 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 		
 		//var vGalaxy  : CY_Galaxy_View = new CY_Galaxy_View ( galaxy );
 		
-		var sound : MovieClip = main.createEmptyMovieClip("sound_mc", 1202 );
-		var vSound  : CY_Sound_View = new CY_Sound_View ( sound );
+		var sound : MovieClip = main.createEmptyMovieClip("sound_mc", 1203 );
+		vSound  = new CY_Sound_View ( sound );
 		
 		
 		//	the views are listening to the model
@@ -187,14 +189,36 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 	
 	private function preloadStart(){
 		
+		vSound._loadSound("preloader", _config.audio.preload, Delegate.create(this, preloadCallback));
+		
+		//new PlayClip( preloader.anim_mc, 33);
+		//TODO change to location gotten from URL - or skip preloader altogether
+		//CY_EventBroadcaster.getInstance().broadcastEvent( new BasicEvent( CY_EventList.LOCATION_ON_ARRIVED, ["home"] ) );
+	}
+	
+	
+	private function preloadCallback(){
+		trace("preloadCallback");
+		
+		vSound.playSound("preloader").start(0);
+		
 		new PlayClip( preloader.anim_mc, 33);
 		//TODO change to location gotten from URL - or skip preloader altogether
 		CY_EventBroadcaster.getInstance().broadcastEvent( new BasicEvent( CY_EventList.LOCATION_ON_ARRIVED, ["home"] ) );
+		
+		
+		vSound._loadSound("video", _config.audio.video);
+		
+		
 	}
+	
+	
 	
 	private function preloadDone(){
 		
 		preloader.removeMovieClip();
+		
+		vSound.fadeSound("preloader");
 		
 		nav._visible = true; 
 		//nav.logo_mc.gotoAndPlay(2);
@@ -220,7 +244,7 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 	private function _setStyle() : Void {
 		
 		
-		_global.style.setStyle("backgroundColor", 0xF1F6F0);
+		/*_global.style.setStyle("backgroundColor", 0xF1F6F0);
 		_global.style.setStyle("fontSize",  10);
 		_global.style.setStyle("embedFonts", true);
 		_global.style.setStyle("fontFamily",  "GothamBold");
@@ -228,7 +252,20 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 		_global.style.setStyle("rollOverColor", 0x9FB6C3);
 		_global.style.setStyle("selectionColor", 0x67838F);
 		_global.style.setStyle("textRollOverColor", 0xFFFFFF);
-		_global.style.setStyle("textSelectedColor", 0xFFFFFF);
+		_global.style.setStyle("textSelectedColor", 0xFFFFFF);*/
+		
+		// import mx.styles.CSSStyleDeclaration;
+		_global.style.setStyle("borderStyle", "solid");
+		_global.style.setStyle("borderColor", "0xB0CEEC");
+		_global.style.setStyle("fontSize", 11);
+		_global.style.setStyle("fontFamily", "GothamRoundMed");
+		_global.style.setStyle("embedFonts", true);
+		_global.style.setStyle("color", "0x713158");
+		_global.style.setStyle("rollOverColor", "0x9FB6C3");
+		_global.style.setStyle("selectionColor", "0x67838F");
+		_global.style.setStyle("textRollOverColor", "0xFFFFFF");
+		_global.style.setStyle("textSelectedColor", "0xFFFFFF");
+		_global.style.setStyle("scrollTrackColor", "0xE1EEC4");
 
 		
 	}	
