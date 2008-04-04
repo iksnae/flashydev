@@ -1,0 +1,5 @@
+﻿package {	import flash.display.Sprite;	import lt.uza.utils.Global;	import com.bootlegcomedy.model.AllData;
+	import com.bootlegcomedy.views.VideoMediaView;
+	import com.bootlegcomedy.views.Navigation;
+	import com.bootlegcomedy.control.ViewController;
+	import com.bootlegcomedy.views.AudioMediaView;	public class BootlegComedy extends Sprite	{		private var global:Global = Global.getInstance();				private var data:AllData = new AllData();		private var controller:ViewController=new ViewController();		private var pageHolder:Sprite=new Sprite();						private var videoMediaPage:VideoMediaView= new VideoMediaView();		private var audioMediaPage:AudioMediaView= new AudioMediaView();		private var navigation:Navigation=new Navigation();				public function BootlegComedy()		{				pageHolder.y=190;			addChild(pageHolder);			addChild(navigation);			pageHolder.addChild(videoMediaPage);			pageHolder.addChild(audioMediaPage);			global.views.push([2,videoMediaPage]);			global.views.push([3,audioMediaPage]);			trace(this);		}	}}
