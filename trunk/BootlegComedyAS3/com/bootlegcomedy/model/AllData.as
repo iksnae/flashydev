@@ -14,6 +14,8 @@ package com.bootlegcomedy.model
 		private var imageLoader:Loader=new Loader();
 		private var allImageContent:Array = new Array();
 		private var allTextContent:Array = new Array();
+		private var allArrayContent:Array=new Array();
+		
 		
 		
 		
@@ -28,10 +30,26 @@ package com.bootlegcomedy.model
 		
 		function AllData():void{
 			global.getNavData = getNavigationArray;
+			global.getArray = getArrayById;
 			getDataXML();
+			
+			///make fake video data
+			makeFake();
 		}
+		private function makeFake():void{
+			var popular:Array = new Array();
+			for(var i=0;i<5;i++){
+				var vidObj:VideoDataObject=new VideoDataObject();
+				vidObj.VideoTitle = "Test"+i;
+				vidObj.VideoDescription="Description Test";
+				vidObj.VideoID='svgUFb_N-Z0'
+				popular.push(vidObj);
+			}
 		
+			allArrayContent.push(['popularVideos',popular]);
+			trace(allArrayContent);
 		
+		}
 		public function getImageById(id:String):BitmapData{
 			var bdata:BitmapData;
 			for(var i:Number=0; i<allImageContent.length; i++){
@@ -44,6 +62,20 @@ package com.bootlegcomedy.model
 		public function getImageByNumber(num:Number):BitmapData{
 			var bdata:BitmapData = allImageContent[num];
 			return bdata;
+		}
+		public function getArrayById(id:String):Array{
+			trace('getArrayById: '+id);
+			var data:Array;
+			var datafound:Boolean=false;
+			for(var i:Number=0; i<allArrayContent.length; i++){
+				trace(allArrayContent[i][0]);
+				if(allArrayContent[i][0]==id){
+					datafound = true;
+					data = allArrayContent[i][1];
+				}
+			}
+			trace('  - datafound: '+datafound);
+			return data;
 		}
 			
 		public function getTextById(id:String):String{
@@ -91,6 +123,7 @@ package com.bootlegcomedy.model
 				break;
 			}
 		}
+		
 		private function parseNavigation(xml:XMLList):void{
 			trace('parseNavigation')
 			
