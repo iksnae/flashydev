@@ -21,7 +21,8 @@ package com.bootlegcomedy.views
 		private function init():void{
 			
 			
-			
+			videoplayer.width=600;
+			videoplayer.height=450;
 			bg.graphics.beginFill(0x666666,.5);
 			bg.graphics.drawRect(0,0,600,450);
 			bg.graphics.endFill();
