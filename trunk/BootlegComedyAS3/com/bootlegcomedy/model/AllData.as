@@ -38,15 +38,24 @@ package com.bootlegcomedy.model
 		}
 		private function makeFake():void{
 			var popular:Array = new Array();
-			for(var i=0;i<5;i++){
+			var recent:Array=new Array();
+			for(var i=0;i<6;i++){
 				var vidObj:VideoDataObject=new VideoDataObject();
 				vidObj.VideoTitle = "Test"+i;
 				vidObj.VideoDescription="Description Test";
 				vidObj.VideoID='svgUFb_N-Z0'
 				popular.push(vidObj);
 			}
+			for(var j=0;j<3;j++){
+				var vidObj1:VideoDataObject=new VideoDataObject();
+				vidObj1.VideoTitle = "Recent"+j;
+				vidObj1.VideoDescription="Description Test";
+				vidObj1.VideoID='svgUFb_N-Z0'
+				recent.push(vidObj1);
+			}
 		
 			allArrayContent.push(['popularVideos',popular]);
+			allArrayContent.push(['recentVideos',recent]);
 			trace(allArrayContent);
 		
 		}
