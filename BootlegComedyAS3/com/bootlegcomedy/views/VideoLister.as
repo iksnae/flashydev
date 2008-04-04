@@ -55,18 +55,48 @@ package com.bootlegcomedy.views
 			hit.graphics.drawRect(0,0,50,23);;
 			hit.graphics.endFill();
 			targ.addChild(hit);
-			
-			targ.swapChildren(hit,txt);
-			
-			
-		}
-		public function buildList(arr:Array):void{
 			ListHolder = new Sprite();
 			ListHolder.x=6;
 			ListHolder.y=32;
 			
 			addChild(ListHolder);
 
+			
+			targ.swapChildren(hit,txt);
+			global.buildList=buildList;
+			
+			
+		}
+		public function buildList(arr:Array):void{
+			clearList(arr);
+			
+			
+			
+		}
+		private function getPopularVideos():void{
+			var list:Array = global.getArray('popularVideos');
+			buildList(list);
+			trace(list);
+		}
+		private function getRecentVideos():void{
+			var list:Array = global.getArray('recentVideos');
+			buildList(list);
+			trace(list);
+		}
+		private function toggleSearchView():void{
+			
+		}
+		private function clearList(arr):void{
+			for(var i=0;i<listItems.length;i++){
+				trace(listItems[i].name);
+				ListHolder.removeChild(listItems[i]);
+	//			listItems[i].deleteMe();
+			}
+			populateList(arr);
+		}
+		private var listItems:Array=new Array();
+		private function populateList(arr:Array):void{
+			listItems = new Array();
 			for(var i:Number=0;i<arr.length;i++){
 				var data:VideoDataObject = arr[i];
 				var entry:VideoListEntry = new VideoListEntry();
@@ -74,19 +104,24 @@ package com.bootlegcomedy.views
 				entry.y=i*40
 				entry.addEventListener(MouseEvent.CLICK,entryClick);
 				ListHolder.addChild(entry);
-				trace(data.VideoTitle);
+				listItems.push(entry);
+				//trace(data.VideoTitle);
 			}
-			
-			
-		}
-		private function getPopular():void{
-			var list:Array = global.getArray('popularVideos');
-			buildList(list);
-			trace(list);
 		}
 		private function tabClick(e:MouseEvent):void{
-			trace(e.target);
-			getPopular();
+			trace('CLICKED: '+e.currentTarget.name);
+			switch(e.currentTarget.name){
+				case 'popular_btn':
+					getPopularVideos();
+				break;
+				case 'recent_btn':
+					getRecentVideos();
+				break;
+				case 'search_btn':
+					toggleSearchView();
+				break;
+			}
+			
 		}
 		private function entryClick(e:MouseEvent):void{
 			trace('CLICKED: '+e.currentTarget.MyVideoData);
