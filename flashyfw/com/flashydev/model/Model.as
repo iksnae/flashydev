@@ -7,6 +7,8 @@
 	{
 		
 		private var _dataMap:Array=new Array();
+		private var _observers:Array=new Array();
+		
 		private static var instance:Model = null;
 		private static var allowInstantiation:Boolean = false;
 		
@@ -21,7 +23,6 @@
 		public function notifyObservers():void{
 			
 		}
-		
 		
 		
 		public static function getInstance() : Model {
