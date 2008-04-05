@@ -10,7 +10,7 @@ package {
 		
 		public function flashyfw()
 		{
-			// makeup soem data
+			// makeup some data
 			var obj:String ="it Worked";
 			
 			// store it... 
