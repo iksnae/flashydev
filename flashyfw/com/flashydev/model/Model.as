@@ -1,11 +1,26 @@
   package com.flashydev.model
 {
-	public class Model
+	import com.flashydev.control.Observable;
+	
+	public class Model implements Observable
 	{
 		
 		private var _dataMap:Array=new Array();
 		private static var instance:Model = null;
 		private static var allowInstantiation:Boolean = false;
+		
+		
+		
+		public function addObserver(o):void{
+			
+		}
+		public function removeObserver(o):void{
+			
+		}
+		public function notifyObservers():void{
+			
+		}
+		
 		
 		
 		public static function getInstance() : Model {
