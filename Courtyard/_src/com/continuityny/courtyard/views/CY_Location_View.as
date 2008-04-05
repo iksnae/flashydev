@@ -102,7 +102,7 @@ class com.continuityny.courtyard.views.CY_Location_View
 		}
 		 * */
 		 
-		 INITIAL_LOCATION = "ITS_A_NEW_STAY";
+		 INITIAL_LOCATION = "ITS_A_NEW_STAY";		// INITIAL_LOCATION = "ITS_A_NEW_STAY";
 		 
 				
 		address_listener 		= new Object();
@@ -282,6 +282,9 @@ class com.continuityny.courtyard.views.CY_Location_View
 	
 	
 	
+	
+	
+	
 	private function swfAddress_change(){
 		
 		
@@ -309,78 +312,28 @@ class com.continuityny.courtyard.views.CY_Location_View
 		
 		var loc_array = stripped_addr.split(",");
 		
-		/*if(loc_array.length == 1){
-			
-			this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, [stripped_addr]) );
-			
-		}else if(loc_array.length == 2){
-			
-			var base 		= loc_array[0];
-			var second 		= loc_array[1];
-			
-			
-			this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, [base+","+second]));
-				
-			
-			
-		}else if(loc_array.length >= 3){
-			
 			var base 		= loc_array[0];
 			var second 		= loc_array[1];
 			var third 		= loc_array[2];
 			var fourth 		= loc_array[3];
 			
-			trace(">>> LocationView - second:"+second+" third:"+third+" fourth:"+fourth);
 			
-			if(base == "galaxy"){
-				
-			switch (second) {  
-				
-				case "athlete" :
-					this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, 
-					["galaxy,athlete",{aid:third}]					));
-					break;
+			this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, [INITIAL_LOCATION]));
 			
-				case "supporter" :
-					this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, 
-					["galaxy,supporter",{uid:third, vcode:fourth}]	));
-					break;
-				
-				case "connect" :
-					this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, 
-					["galaxy,connect",{uid:third,icode:fourth}]		));
-					break;
-				
-			}
-			}
-			
-			//stripped_addr = loc_array[0]+","+loc_array[1]; 
-			
-			trace(">>> LocationView - stripped_addr.split:"+stripped_addr+" id:"+third);
+			trace(">>> LocationView - swfAddress_change - base:"+base);
 		
-			}
-						
-						
-			/*}else{
-					// adress with parameters
-					var stripped_addr = addr.substr(1,(addr.length-1)); // remove the initial backslashes
-			}*/
-					
-			// trace("LIVE_DATA - change loc:"+LIVE_DATA);
-			/*if(third == undefined){
-				var data = {uid:LIVE_DATA.uid};
-			}else{
-				var data = {uid:third};
-			}*/
-				
-			//this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, [stripped_addr,{uid:id}]) );
-			
 		}
 	
 		
-		this._fireEvent(new BasicEvent( CY_EventList.CHANGE_LOCATION, [INITIAL_LOCATION]) );
+		
 		 
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	public function onArrivalDone (e:IEvent){

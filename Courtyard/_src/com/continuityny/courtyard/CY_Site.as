@@ -153,7 +153,8 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 		var vNav  : CY_Nav_View = new CY_Nav_View ( nav, details, video, tv, amenities );		
 		
 		var home : MovieClip = main.createEmptyMovieClip("home_mc", 500 );
-		var vHome  : CY_Home_View = new CY_Home_View ( home );	
+		var vHome  : CY_Home_View = new CY_Home_View ( home, Delegate.create(this, preloadCallback) );	
+		
 		
 		
 		//var vGalaxy  : CY_Galaxy_View = new CY_Galaxy_View ( galaxy );
@@ -184,12 +185,13 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 		//new PlayClip( preloader.anim_mc, 33);
 		preloader.whenDone 	= Delegate.create(this, onPreloaderDone); // cued at end of preload animation
 		preloader.skipButton_mc.onRelease = Delegate.create(this, preloadSkip); 
+		preloader.skipButton_mc._visible = false; 
 	}
 	
 	
 	private function preloadStart(){
 		
-		vSound._loadSound("preloader", _config.audio.preload, Delegate.create(this, preloadCallback));
+		//vSound._loadSound("preloader", _config.audio.preload, Delegate.create(this, preloadCallback));		//vSound._loadSound("preloader", _config.audio.preload);
 		
 		//new PlayClip( preloader.anim_mc, 33);
 		//TODO change to location gotten from URL - or skip preloader altogether
@@ -197,19 +199,21 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 	}
 	
 	
-	private function preloadCallback(){
+	public function preloadCallback(){
 		trace("preloadCallback");
 		
-		vSound.playSound("preloader").start(0);
+		//vSound.playSound("preloader").start(0);
+		//preloader.anim_mc.gotoAndPlay(2);
 		
-		new PlayClip( preloader.anim_mc, 33);
+		new PlayClip( preloader.anim_mc, 39);
+		
+		
 		//TODO change to location gotten from URL - or skip preloader altogether
 		CY_EventBroadcaster.getInstance().broadcastEvent( new BasicEvent( CY_EventList.LOCATION_ON_ARRIVED, ["home"] ) );
 		
-		
 		vSound._loadSound("video", _config.audio.video);
 		
-		
+		preloader.skipButton_mc._visible = true;
 	}
 	
 	
@@ -236,6 +240,8 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 		
 		preloader.skipButton_mc._visible = false; 
 		onPreloaderDone();
+		
+		preloader.anim_mc.gotoAndStop("stopMe");
 		
 	}
 	
