@@ -11,14 +11,18 @@ package {
 		public function flashyfw()
 		{
 			// makeup some data
-			var obj:String ="it Worked";
+			var testdata:String ="it Worked";
+			var moretestdata:Array =new Array(testdata,"is an array with ",3,"tyes of data");
 			
 			// store it... 
-			model.storeData('test',obj);
+			model.storeData('test1',testdata);
+			model.storeData('test2',moretestdata);
 			// retreive it...
-			var results:DataObject = model.getData('test');
+			var results1:DataObject = model.getData('test1');
+			var results2:DataObject = model.getData('test2');
 		//	trace results 
-			trace(results.getData());
+			trace('stored data: '+results1.getData());
+			trace('stored data: '+results2.getData());
 			/// ;-)
 		}
 	}
