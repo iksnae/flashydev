@@ -3,7 +3,7 @@
 	import com.flashydev.control.Observable;
 	import com.flashydev.control.Observer;
 	
-	public class Model implements  Observer
+	public class Model implements Observable
 	{
 		
 		private var _dataMap:Array=new Array();
