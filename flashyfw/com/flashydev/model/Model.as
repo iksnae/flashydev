@@ -1,8 +1,9 @@
   package com.flashydev.model
 {
 	import com.flashydev.control.Observable;
+	import com.flashydev.control.Observer;
 	
-	public class Model implements Observable
+	public class Model implements  Observer
 	{
 		
 		private var _dataMap:Array=new Array();
