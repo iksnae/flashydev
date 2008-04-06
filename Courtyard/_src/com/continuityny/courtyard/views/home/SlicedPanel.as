@@ -1,0 +1,1 @@
+/** * @author k */interface com.continuityny.courtyard.views.home.SlicedPanel {	function revealPage():Void;	function hidePage():Void;	}
