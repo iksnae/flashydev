@@ -507,7 +507,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 						}), 250);
 						
 						
-					if(!FLVPBK.bufferring){
+					if(!FLVPBK.bufferring && perc >= 10){
 						onVideoPreloaded(loc);
 					}
 						
