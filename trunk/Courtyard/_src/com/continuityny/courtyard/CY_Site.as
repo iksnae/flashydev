@@ -183,7 +183,7 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 		
 		
 		//new PlayClip( preloader.anim_mc, 33);
-		preloader.whenDone 	= Delegate.create(this, onPreloaderDone); // cued at end of preload animation
+		//preloader.playVO 	= Delegate.create(this, playVO); // cued at end of preload animation		preloader.whenDone 	= Delegate.create(this, onPreloaderDone); // cued at end of preload animation
 		preloader.skipButton_mc.onRelease = Delegate.create(this, preloadSkip); 
 		preloader.skipButton_mc._visible = false; 
 	}
@@ -191,11 +191,15 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 	
 	private function preloadStart(){
 		
-		//vSound._loadSound("preloader", _config.audio.preload, Delegate.create(this, preloadCallback));		//vSound._loadSound("preloader", _config.audio.preload);
+		//vSound._loadSound("VO", _config.audio.preload, Delegate.create(this, preloadCallback));		//vSound._loadSound("preloader", _config.audio.preload);
 		
 		//new PlayClip( preloader.anim_mc, 33);
 		//TODO change to location gotten from URL - or skip preloader altogether
 		//CY_EventBroadcaster.getInstance().broadcastEvent( new BasicEvent( CY_EventList.LOCATION_ON_ARRIVED, ["home"] ) );
+	}
+	
+	private function playVO(){
+		vSound.playSound("VO");
 	}
 	
 	
