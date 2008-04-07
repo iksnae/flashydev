@@ -354,17 +354,17 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	 	var video_mask:MovieClip = _video_mc.attachMovie("mc_stage_size", "video_mask_mc", 1100,{_x:970});
 	 	var vid_mc = _video_mc.createEmptyMovieClip("vid_mc", 1105);
 	 	
-	 	FLVPBK = FLVPlayback(_video_mc.vid_mc.attachMovie("FLVPlayback", "flvpb_mc",1000, {_x:79}));
+	 	FLVPBK = FLVPlayback(_video_mc.vid_mc.attachMovie("FLVPlayback", "flvpb_mc", 1000, {_x:79}));
 		FLVPBK.setSize(800, 400);
 		
 		
 		var path = "flv/"+loc+".flv";
 		
 		FLVPBK.bufferTime = 10;
-		
+	//	FLVPBK.setBufferTime(20);
 		
 		FLVPBK.load(path);
-		
+		 
 		
 		setVideoControls();
 		
@@ -422,7 +422,8 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	private function preloadVideo(loc){
 		
 		trace("preloadVideo;"+loc);
-		FLVPBK.pause();
+		
+		//FLVPBK.pause();
 		
 		DELAYDONE = null; 
 		
@@ -440,14 +441,23 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		VIDEO_LISTENER.playing   = Delegate.create(this, function(eventObject:Object):Void {
 			trace("VIDEO_LISTENER.playing:");
+				
 				setVideoControls(true); // playing
+				
 				if(INITIAL_VIDEO_PLAY){
 					CY_Sound_View( MovieClipHelper.getMovieClipHelper( 
 								CY_ViewList.VIEW_SOUND ) ).playSound("video", true);
+								
+				
+					
 					INITIAL_VIDEO_PLAY = false; 
 				}else{
 					CY_Sound_View( MovieClipHelper.getMovieClipHelper( 
 								CY_ViewList.VIEW_SOUND ) ).playSound("video", false);
+								
+						
+						
+						
 				}
 		});		
 		VIDEO_LISTENER.ready   = Delegate.create(this, function(eventObject:Object):Void {
@@ -456,14 +466,16 @@ class com.continuityny.courtyard.views.CY_Nav_View
 				
 				
 				
-				CHECK_INT = setInterval(Delegate.create(this, function(){
+				/*CHECK_INT = setInterval(Delegate.create(this, function(){
+					trace("CHECK_INT:");
 							if(DELAYDONE){
 								
 								clearInterval(CHECK_INT);
 								trace("clear check delay done");
 								onVideoPreloaded(loc);
 							}
-						}), 250);
+						}), 250);*/
+					
 						
 				FLVPBK.removeEventListener("ready", VIDEO_LISTENER);  
 				//setVideoControls(true); // playing
@@ -471,28 +483,33 @@ class com.continuityny.courtyard.views.CY_Nav_View
 				
 		
 		VIDEO_LISTENER.progress   = Delegate.create(this, function(eventObject:Object):Void {
+				
 				// base_mc.buffer_mc._visible = true; 
 				var bt = FLVPBK.bytesTotal;
 				var bl = FLVPBK.bytesLoaded;
 				var perc = Math.ceil(bl/bt * 100); 
 				
-				trace("video loading: perc "+perc+" bt:"+" bl:"+bl);				trace("video loading:"+_video_mc.preloader_mc.bar_mc.perc_mc);
+				trace("video loading: perc "+perc+" bt:"+" bl:"+bl);				trace("video loading:"+_video_mc.preloader_mc.bar_mc.perc_mc+ " FLVPBK.bufferring:"+FLVPBK.bufferring);
 				_video_mc.preloader_mc.bar_mc.perc_mc._xscale = perc;
 				
 				//TODO SWITCH PARADIGM TO GO OFF PLAY() instead of LOAD()
 				
-				if(perc >= 100 && (bt != 0) ){
+				if(perc >= 30 && (bt != 0) ){
 					
 					
-						/*CHECK_INT = setInterval(Delegate.create(this, function(){
+						CHECK_INT = setInterval(Delegate.create(this, function(){
 							if(DELAYDONE){
 								
 								clearInterval(CHECK_INT);
 								trace("clear check delay done");
-								onVideoPreloaded(loc);
+								//onVideoPreloaded(loc);
 							}
 						}), 250);
-						*/
+						
+						
+					if(!FLVPBK.bufferring){
+						onVideoPreloaded(loc);
+					}
 						
 						FLVPBK.removeEventListener("progress", VIDEO_LISTENER);  
 				}
@@ -509,6 +526,9 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		});
 		
 		VIDEO_LISTENER.paused   = Delegate.create(this, function(eventObject:Object):Void {
+			
+			trace("VIDEO_LISTENER.paused:");
+			
 			setVideoControls(false); // playing
 			
 			CY_Sound_View( MovieClipHelper.getMovieClipHelper( 
@@ -516,8 +536,14 @@ class com.continuityny.courtyard.views.CY_Nav_View
 								
 		});
 		
+		VIDEO_LISTENER.stateChange   = Delegate.create(this, function(eventObject:Object):Void {
+			trace("VIDEO_LISTENER.stateChange:"+FLVPBK.state+ " : "+FLVPBK.bufferTime);
+		});
+		
 		
 		FLVPBK.addEventListener("ready", VIDEO_LISTENER);  		FLVPBK.addEventListener("progress", VIDEO_LISTENER);  		FLVPBK.addEventListener("playing", VIDEO_LISTENER);  		FLVPBK.addEventListener("complete", VIDEO_LISTENER);  		FLVPBK.addEventListener("paused", VIDEO_LISTENER);  
+		
+		FLVPBK.addEventListener("stateChange", VIDEO_LISTENER);  
 		
 	}
 	
@@ -566,13 +592,15 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		//var _mc = _video_mc; 
 		//new Tween(_mc, "_x", Quad.easeOut, _mc._x, 0, 1, true);
-		FLVPBK.seek(0);
+		//FLVPBK.seek(0);
 		
 		
 		
 		var scope = this; 
 		tw.onMotionFinished = function(){
+			trace(">>> PLAY NOW onPreloadVideo:"+loc);
 			
+			scope.FLVPBK.seekSeconds(0); 
 			scope.FLVPBK.play();
 			scope._fireEvent(	new BasicEvent( CY_EventList.LOCATION_ON_ARRIVED, [loc]) );
 			
@@ -601,11 +629,14 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		var scope = this; 
 		tw.onMotionFinished = function(){
+			
+			trace("scope:FLVPBK:"+scope.FLVPBK+" : "+FLVPBK);
 			scope.FLVPBK.stop();
+			scope.FLVPBK.removeMovieClip();
 			scope._video_mc.vid_mc.flvpb_mc.removeMovieClip();
 			scope._video_mc.video_mask_mc.removeMovieClip();
 			scope._video_mc._visible = false; 
-			FLVPBK.removeMovieClip();
+			trace("scope:FLVPBK:"+scope.FLVPBK+" : "+FLVPBK);
 		
 		}
 		

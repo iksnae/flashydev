@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<config>
+	<paths>
+		<all_data type="string"><![CDATA[cy_xml/cy_data.xml]]></all_data>
+		
+		
+	</paths>
+	
+	<audio>
+		<preload><![CDATA[./music/preload.mp3]]></preload>
+		<video><![CDATA[./music/video.mp3]]></video>
+	</audio>
+	
+	<locations>
+			<location>home</location>
+			<location>lobby</location>
+			<location>market</location>
+			<location>market</location>
+			<location>tv</location>
+			<location>amenities</location>
+	</locations>
+		
+	<assets>
+		<preloader>
+			<view type="string">view_preloader</view>
+			<url type="string">view_preloader.swf</url>
+			<depth type="number">1000</depth>
+		</preloader>
+		
+		<asset>
+			<view type="string">view_tools</view>
+			<url type="string">view_menu.swf</url>
+			<size type="number">2014</size>
+			<depth type="number">2</depth>
+		</asset>		
+		<asset>
+			<view type="string">view_digital</view>
+			<url type="string">view_digital.swf</url>
+			<size type="number">483</size>
+			<depth type="number">1</depth>
+		</asset>
+		<asset>
+			<view type="string">view_analog</view>
+			<url type="string">view_analog.swf</url>
+			<size type="number">2831</size>
+			<depth type="number">0</depth>
+		</asset>
+		
+	</assets>
+</config>
