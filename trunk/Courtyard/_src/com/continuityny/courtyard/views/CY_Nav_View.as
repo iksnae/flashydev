@@ -96,7 +96,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	private var _drop_mc:MovieClip; 
 		private var selected_detail_mc:MovieClip; 
 	
-	private var loc_array : Array = ["home", "lobby", "market", "business",  "guest_room", "fitness", "outdoor"]; 
+	private var loc_array : Array = ["home", "lobby", "market", "business",  "guest_room", "fitness", "outdoor"]; 	private var color_array : Array = ["home", 0x619544, 0x8CC63F, 0xB4D670, 0xF7931D, 0x625D84, 0xB0CEEC]; 
 	
 	private var a_x_array:Array = [90,167,300,478,609,754,855]; // slider positions 
 	
@@ -719,6 +719,9 @@ class com.continuityny.courtyard.views.CY_Nav_View
 			det_x_array[i] = det_mc._x;
 			det_mc._x = 970;
 		}
+		
+		
+		new Color(_mc['detail_4_mc']).setRGB(color_array[getIndexByLoc(base_loc)]);
 		
 		//** Build Detail Image Arrays **//
 		var targ_array:Array = new Array();		var src_array:Array = new Array();
