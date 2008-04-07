@@ -148,7 +148,9 @@ class com.continuityny.courtyard.views.CY_Sound_View extends MovieClipHelper {
 			
 			var this_sound:Sound = SOUND_ARRAY[refName] = new Sound(this_sound_mc);
 			
+			
 			//var this_sound:Sound = new Sound(this_sound_mc);
+			
 			
 			this_sound.loadSound(soundFile, false);
 			
@@ -167,7 +169,7 @@ class com.continuityny.courtyard.views.CY_Sound_View extends MovieClipHelper {
 	}
 
 	
-	public function playSound(refName:String){
+	public function playSound(refName:String, rewind){
 		
 		if(MUTED){
 			SOUND_ARRAY[refName].setVolume(0);
@@ -175,10 +177,30 @@ class com.continuityny.courtyard.views.CY_Sound_View extends MovieClipHelper {
 			SOUND_ARRAY[refName].setVolume(100);	
 		}
 		
-		SOUND_ARRAY[refName].stop();
-		SOUND_ARRAY[refName].start(0);
 		
-		trace("play sound:"+SOUND_ARRAY[refName]+" ref:"+refName);
+		var startPoint = SOUND_ARRAY[refName].rememberPosition/1000; 
+		SOUND_ARRAY[refName].stop();
+		
+		if(startPoint != undefined && !rewind ){
+			SOUND_ARRAY[refName].start(startPoint);
+		}else{
+			SOUND_ARRAY[refName].start(0);
+		}
+		
+		SOUND_ARRAY[refName].paused = false;
+		 
+		trace("play sound:"+SOUND_ARRAY[refName]+" ref:"+refName+" startPoint:"+startPoint);
+		
+	}
+	
+	
+	public function pauseSound(refName:String){
+		
+		SOUND_ARRAY[refName].rememberPosition = SOUND_ARRAY[refName].position; 
+		SOUND_ARRAY[refName].paused = true; 
+		SOUND_ARRAY[refName].stop();
+		
+		trace("pause sound:"+SOUND_ARRAY[refName]+" ref:"+refName);
 		
 	}
 	
@@ -276,6 +298,8 @@ class com.continuityny.courtyard.views.CY_Sound_View extends MovieClipHelper {
 		var TEMP_INT:Number;
 		//clearInterval(TEMP_INT);
 		var main_sound:Sound = SOUND_ARRAY[this_sound]; 
+		
+		SOUND_ARRAY[this_sound].paused = false;
 		
 		TEMP_INT = setInterval(Delegate.create(this, function(){
 			

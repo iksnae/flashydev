@@ -205,7 +205,7 @@ class com.continuityny.courtyard.CY_Site extends MovieClip {
 		//vSound.playSound("preloader").start(0);
 		//preloader.anim_mc.gotoAndPlay(2);
 		
-		new PlayClip( preloader.anim_mc, 39);
+		new PlayClip( preloader.anim_mc, 34);
 		
 		
 		//TODO change to location gotten from URL - or skip preloader altogether
