@@ -94,21 +94,22 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	private var _find_but_mc : MovieClip;	private var _tv_but_mc : MovieClip;	private var _amen_but_mc : MovieClip;
 	private var _slider_mc : MovieClip;
 	private var _drop_mc:MovieClip; 
+		private var selected_detail_mc:MovieClip; 
 	
 	private var loc_array : Array = ["home", "lobby", "market", "business",  "guest_room", "fitness", "outdoor"]; 
 	
 	private var a_x_array:Array = [90,167,300,478,609,754,855]; // slider positions 
 	
-	private var detail_am_array:Array;
+	private var detail_am_array:Array;	private var detail_bg_array:Array;
 	private var det_x_array : Array ; 
 	
 	private var ARROW_INT:Number;
 	private var PRELOAD_INT:Number;	private var CHECK_INT:Number;
 	private var ROTATE_INT:Number;
-	private var DELAYDONE:Boolean;
+	private var DELAYDONE:Boolean;	private var INITIAL_VIDEO_PLAY:Boolean;
 	
 	private var FIND_OPEN:Boolean;
-	private var CURRENT_ARROW_LOC : String;
+	private var CURRENT_ARROW_LOC : String;	private var LIVE_AMEN_LOC : String;
 	
 	private var VIDEO_LISTENER : Object ; 
 	
@@ -181,12 +182,16 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		view._x = 0;
 		view._y = 0;
 	
+	
+		
 	//	init var, assets, events, ...
+		detail_bg_array = new Array(); 
 		
 		_sound_switch_mc = view.sound_btn;
 		_slider_mc 		= view.slider_nav_mc; 
 		_tv_but_mc		= view.tv_but_mc;		_find_but_mc	= view.find_but_mc;		_amen_but_mc	= view.amen_but_mc;
-		_drop_mc		= view.drop_mc;
+		//_drop_mc		= view.drop_mc;		var d_mc		= view._parent.attachMovie("mc_drop_masked", "drop_mc", 12349); 
+		_drop_mc 		= d_mc.drop_mc; 
 		
 		_detailLabel = new TextFormat("GothamRoundBold", 11, 0xFFFFFF);
 		_detailLabel.align = "right";
@@ -244,9 +249,31 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		showDetailLinks(loc);
 		
 		var caption = _data.locations.section[loc].caption;
-		if(caption.line1 != undefined){
-			showCaption(caption);
+		if(caption.line1 != undefined || caption[0].line1 != undefined){
+			showCaption(caption, 0);
 		}
+		
+		
+		
+		
+		if(_data.locations.section[loc].rotate == "true"){
+			
+			var neutral_rotate_mc = _details_mc.detail_base_mc.createEmptyMovieClip("rotate_mc", 5); 
+			neutral_rotate_mc._x = 864-52; 
+			
+			for(var j=2; j>=1; j--){
+				var rot_mc = neutral_rotate_mc.createEmptyMovieClip("rotate_"+j+"_mc", (100*j));
+				rot_mc._x = 58; 
+				new ImageLoader(rot_mc, "images/"+loc+"_"+(j+1)+".jpg");
+			}
+			var caption = _data.locations.section[loc].caption;
+			startRotate(neutral_rotate_mc, caption, 3);
+		}else{
+			neutral_rotate_mc._visible = false; 
+		}
+		
+		
+		
 		//this._fireEvent(	new BasicEvent( CY_EventList.LOCATION_ON_ARRIVED, [loc]) );
 		
 		//preloadDetailImages(loc);
@@ -257,20 +284,40 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	
 	
 	
-	private function showCaption(caption){
-		TweenLite.to(view.caption_mc, .5, {_y:426, delay:.25});
+	private function showCaption(caption, n){
 		
-		updateCaption(caption);
+		TweenLite.to(view.caption_mc, .5, {_y:426, delay:1});
+		
+		updateCaption(caption, n);
 	}
 	
 	private function hideCaption(){
-		TweenLite.to(view.caption_mc, .25, {_y:475, delay:.25, ease:Quad.easeIn});
+		TweenLite.to(view.caption_mc, .25, {_y:475, delay:0, ease:Quad.easeIn});
 	}
 	
-	private function updateCaption(caption){
+	private function removeNeutralRotate(){
 		
-		view.caption_mc.loc_txt.text 	= caption.line1;
-		view.caption_mc.loc2_txt.text 	= (caption.line2 == undefined) ? "" : caption.line2;
+		var _mc = _details_mc.detail_base_mc.rotate_mc; 
+		TweenLite.to(_mc, .25, {_x:1770, ease:Quad.easeIn});
+		
+		stopRotate();
+	}
+	
+	
+	
+	
+	private function updateCaption(caption, n:Number){
+		
+		var nn = (n == undefined) ? 0 : n ;	
+
+		if(caption.length == undefined){
+			view.caption_mc.loc_txt.text 	= caption.line1;			view.caption_mc.loc2_txt.text 	= (caption.line2 == undefined) ? "" : caption.line2;		}else{
+			view.caption_mc.loc_txt.text 	= caption[n].line1;
+			view.caption_mc.loc2_txt.text 	= (caption[n].line2 == undefined) ? "" : caption[n].line2;
+		
+		}
+		
+		
 		
 		view.caption_mc.loc2_txt._y = view.caption_mc.loc_txt._y + 11;
 	}
@@ -292,6 +339,8 @@ class com.continuityny.courtyard.views.CY_Nav_View
 			hideCaption();
 			hideCloseButton();
 			
+			removeNeutralRotate();
+			
 	}
 	
 	
@@ -299,6 +348,8 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	private function setVideo(loc){
 		
 	 	// FLVPBK = _video_mc._flvPlbk;
+	 	
+	 	_video_mc._visible = true; 
 	 	
 	 	var video_mask:MovieClip = _video_mc.attachMovie("mc_stage_size", "video_mask_mc", 1100,{_x:970});
 	 	var vid_mc = _video_mc.createEmptyMovieClip("vid_mc", 1105);
@@ -313,7 +364,9 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		
 		FLVPBK.load(path);
-		//FLVPBK.pause();
+		
+		
+		setVideoControls();
 		
 		preloadVideo(loc);
 		setCuePoints(loc);
@@ -369,8 +422,14 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	private function preloadVideo(loc){
 		
 		trace("preloadVideo;"+loc);
+		FLVPBK.pause();
 		
 		DELAYDONE = null; 
+		
+		clearInterval(PRELOAD_INT);
+		clearInterval(PRELOAD_INT);
+		
+		INITIAL_VIDEO_PLAY = true; 
 		
 		PRELOAD_INT = setInterval(Delegate.create(this, function(){
 				DELAYDONE = true; 
@@ -380,13 +439,34 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		
 		VIDEO_LISTENER.playing   = Delegate.create(this, function(eventObject:Object):Void {
+			trace("VIDEO_LISTENER.playing:");
+				setVideoControls(true); // playing
+				if(INITIAL_VIDEO_PLAY){
+					CY_Sound_View( MovieClipHelper.getMovieClipHelper( 
+								CY_ViewList.VIEW_SOUND ) ).playSound("video", true);
+					INITIAL_VIDEO_PLAY = false; 
+				}else{
+					CY_Sound_View( MovieClipHelper.getMovieClipHelper( 
+								CY_ViewList.VIEW_SOUND ) ).playSound("video", false);
+				}
+		});		
+		VIDEO_LISTENER.ready   = Delegate.create(this, function(eventObject:Object):Void {
 				
-				trace("FLVPBK.fps:"+FLVPBK.metadata.framerate);
+				trace("VIDEO_LISTENER.ready - FLVPBK.fps:"+FLVPBK.metadata.framerate);
 				
-				CY_Sound_View( MovieClipHelper.getMovieClipHelper( 
-								CY_ViewList.VIEW_SOUND ) ).playSound("video");
 				
-				FLVPBK.removeEventListener("playing", VIDEO_LISTENER);  
+				
+				CHECK_INT = setInterval(Delegate.create(this, function(){
+							if(DELAYDONE){
+								
+								clearInterval(CHECK_INT);
+								trace("clear check delay done");
+								onVideoPreloaded(loc);
+							}
+						}), 250);
+						
+				FLVPBK.removeEventListener("ready", VIDEO_LISTENER);  
+				//setVideoControls(true); // playing
 		});
 				
 		
@@ -401,10 +481,10 @@ class com.continuityny.courtyard.views.CY_Nav_View
 				
 				//TODO SWITCH PARADIGM TO GO OFF PLAY() instead of LOAD()
 				
-				if(perc >= 30 && (bt != 0) ){
+				if(perc >= 100 && (bt != 0) ){
 					
 					
-						CHECK_INT = setInterval(Delegate.create(this, function(){
+						/*CHECK_INT = setInterval(Delegate.create(this, function(){
 							if(DELAYDONE){
 								
 								clearInterval(CHECK_INT);
@@ -412,15 +492,14 @@ class com.continuityny.courtyard.views.CY_Nav_View
 								onVideoPreloaded(loc);
 							}
 						}), 250);
-						
+						*/
 						
 						FLVPBK.removeEventListener("progress", VIDEO_LISTENER);  
 				}
 				
 		});
 		
-		VIDEO_LISTENER.complete   = Delegate.create(this, function(eventObject:Object):Void {
-				
+		VIDEO_LISTENER.complete   = Delegate.create(this, function(eventObject:Object):Void {				
 				trace("FLVPBK.complete:");
 				
 				/*CY_Sound_View( MovieClipHelper.getMovieClipHelper( 
@@ -429,7 +508,16 @@ class com.continuityny.courtyard.views.CY_Nav_View
 				FLVPBK.removeEventListener("complete", VIDEO_LISTENER);  
 		});
 		
-		FLVPBK.addEventListener("progress", VIDEO_LISTENER);  		FLVPBK.addEventListener("playing", VIDEO_LISTENER);  		FLVPBK.addEventListener("complete", VIDEO_LISTENER);  
+		VIDEO_LISTENER.paused   = Delegate.create(this, function(eventObject:Object):Void {
+			setVideoControls(false); // playing
+			
+			CY_Sound_View( MovieClipHelper.getMovieClipHelper( 
+								CY_ViewList.VIEW_SOUND ) ).pauseSound("video");
+								
+		});
+		
+		
+		FLVPBK.addEventListener("ready", VIDEO_LISTENER);  		FLVPBK.addEventListener("progress", VIDEO_LISTENER);  		FLVPBK.addEventListener("playing", VIDEO_LISTENER);  		FLVPBK.addEventListener("complete", VIDEO_LISTENER);  		FLVPBK.addEventListener("paused", VIDEO_LISTENER);  
 		
 	}
 	
@@ -516,6 +604,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 			scope.FLVPBK.stop();
 			scope._video_mc.vid_mc.flvpb_mc.removeMovieClip();
 			scope._video_mc.video_mask_mc.removeMovieClip();
+			scope._video_mc._visible = false; 
 			FLVPBK.removeMovieClip();
 		
 		}
@@ -592,6 +681,10 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		var tw = new Tween(_mc, "_x", Quad.easeOut, _mc._x, 0, 1, true);
 		var scope = this; 
 		
+		
+		removeDetailNav();
+		
+		
 		tw.onMotionFinished = function(){
 			scope._fireEvent(	new BasicEvent( CY_EventList.LOCATION_ON_DEPARTED, [loc]));
 		}
@@ -645,7 +738,8 @@ class com.continuityny.courtyard.views.CY_Nav_View
 				var rot_mc = _mc.rotate_mc.createEmptyMovieClip("rotate_"+j+"_mc", (100*j));
 				new ImageLoader(rot_mc, "images/det_images/"+base_loc+"_"+(Number(detail_num)+1)+"_b_"+j+".jpg");
 			}
-			startRotate(_mc.rotate_mc);
+			var caption = _data.locations.section[base_loc].detail[detail_num].caption;
+			startRotate(_mc.rotate_mc, caption, 4);
 		}else{
 			_mc.rotate_mc._visible = false; 
 		}
@@ -664,13 +758,13 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 		//** Display Caption if Applicable **//
 		var caption = _data.locations.section[base_loc].detail[detail_num].caption;
-		if(caption.line1 != undefined){
-			showCaption(caption);
+		if(caption.line1 != undefined || caption[0].line1 != undefined){
+			showCaption(caption, 0);
 		}
 		
 		
 		//** Set Close Button **//
-		_details_mc.close_mc.onRelease = Delegate.create(this, function(){
+		_details_mc.close_mc.label_mc.onRelease = Delegate.create(this, function(){
 			
 			var base = CY_Location_View.getBaseLiveLocation().split(",").join("");
 			trace("base:"+base);
@@ -678,7 +772,8 @@ class com.continuityny.courtyard.views.CY_Nav_View
 			
 		});
 		
-		_details_mc.close_mc.onRollOver ;		_details_mc.close_mc.onRollOut ;
+		_details_mc.close_mc.label_mc.onRollOver = shiftLabelOver;
+		_details_mc.close_mc.label_mc.onRollOut  = shiftLabelOut;
 		
 		stopVideo();
 		
@@ -728,7 +823,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	}
 	
 	
-	private function startRotate(base_mc){
+	private function startRotate(base_mc, caption, n){
 		
 		
 			var count = 1; 
@@ -737,11 +832,17 @@ class com.continuityny.courtyard.views.CY_Nav_View
 				
 				var rot_mc = base_mc["rotate_"+count+"_mc"];
 				trace("rotate:"+rot_mc);
-				rot_mc._x = 0;
-				TweenLite.to(rot_mc, .5, {_x:-526, easing:Quad.easeOut});
+				rot_mc._x = 58;
+				var t = 1; 
+				TweenLite.to(rot_mc, t, {_x:-526-58, easing:Quad.easeOut});
+				TweenFilterLite.from(rot_mc, t, {blurFilter:{blurX:30, blurY:30}, easing:Quad.easeOut, overwrite:false});
+				
+				//var caption = _data.locations.section[loc].caption;
+				updateCaption(caption, count-1);
+		
 				count++;
 				
-				if(count == 4){count = 1;}
+				if(count == n){clearInterval(ROTATE_INT)}
 				
 			}), 5000);
 			// new ImageLoader(rot_mc, "images/det_images/"+base_loc+"_"+(Number(detail_num)+1)+"_b_"+j+".jpg");
@@ -780,6 +881,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 			//new Tween(det_mc, "_x", Quad.easeOut, det_mc._x, det_mc.x, 1, true); 
 		}
 		
+		TweenLite.to(_mc.rotate_mc, .5, {_x:-_mc.rotate_mc._width});
 		
 		var scope = this;
 		
@@ -799,7 +901,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	}
 	
 	private function showCloseButton(){
-		TweenLite.to(_details_mc.close_mc, .5, {_y:378, easing:Quint.easeIn});
+		TweenLite.to(_details_mc.close_mc, .5, {_y:382, easing:Quint.easeIn});
 	}
 	
 	private function hideCloseButton(){
@@ -829,14 +931,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 						
 	}
 	
-	private function onDetailNavClick(loc, _mc){
-				trace("onDetailNavClick:"+loc);
-				
-				_mc.onRollOut();
-				
-				this._fireEvent(	new BasicEvent( CY_EventList.CHANGE_LOCATION, [loc] ) );
-						
-	}
+	
 	
 	public function _build( e : IEvent ){
 		
@@ -1046,7 +1141,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	
 	private function createDetailsNav(loc){
 		
-		
+		selected_detail_mc = null;
 		for(var each in view.detail_nav_mc){
 			var this_mc:MovieClip = view.detail_nav_mc[each];
 			this_mc.removeMovieClip();
@@ -1058,16 +1153,18 @@ class com.continuityny.courtyard.views.CY_Nav_View
 			trace(loc+" details:"+loc_details[i].title);
 			
 			//var this_nav_mc = view.detail_nav_mc.attachMovie("mc_det_nav_label", "nav_"+i+"_mc", (i*10));
-			var this_nav_mc = view.detail_nav_mc.createEmptyMovieClip("nav_"+i+"_mc", (i*10));
+			var this_nav_mc = view.detail_nav_mc.createEmptyMovieClip("nav_"+i+"_mc", ((i+1)*10));
 			var lab = loc_details[i].title;
-			
 			createDetailLabel(this_nav_mc, lab);
+			
+			//this_nav_mc.attachMovie("mc_detail_pebble", "bg_mc", 50);
+			
 			
 			var prev_nav_mc = view.detail_nav_mc["nav_"+(i-1)+"_mc"];
 			this_nav_mc._x = 1010; 
 			//this_nav_mc._y = 130+(60*i);
 			if(i == 0){
-				this_nav_mc._y = 180; 
+				this_nav_mc._y = 165; 
 			}else{
 				this_nav_mc._y = prev_nav_mc._y + prev_nav_mc._height + 30 ; 
 			}
@@ -1082,9 +1179,21 @@ class com.continuityny.courtyard.views.CY_Nav_View
 							Delegate.create(this,removeDetail)
 						] ) );
 						
-			this_nav_mc.onRelease = Delegate.create(this, onDetailNavClick, loc+","+i, this_nav_mc) ;			this_nav_mc.onRollOver = detailOver ;			this_nav_mc.onRollOut = detailOut ;			this_nav_mc.onPress = detailPress ;
+			this_nav_mc.onRelease = Delegate.create(this, onDetailNavClick, loc+","+i, this_nav_mc) ;			this_nav_mc.onRollOver = Delegate.create(this, detailOver, this_nav_mc) ;			this_nav_mc.onRollOut = Delegate.create(this, detailOut, this_nav_mc) ;			this_nav_mc.onPress = detailPress ;
 			
 		}	
+		
+	}
+	
+	private function removeDetailNav(){
+		
+		
+		selected_detail_mc = null;
+		for(var each in view.detail_nav_mc){
+			var this_mc:MovieClip = view.detail_nav_mc[each];
+			this_mc.removeMovieClip();
+		}
+		
 		
 	}
 	
@@ -1099,6 +1208,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		_txt.selectable = false;
 		_txt.embedFonts = true;
 		_txt.setTextFormat(_detailLabel);	
+		
 		
 	}
 	
@@ -1333,6 +1443,8 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		this._fireEvent(	new BasicEvent( CY_EventList.LOCATION_ON_ARRIVED, ["amenities"]) );
 	}
 
+	
+	
 	private function buildAmen(){
 		
 		for (var i = 1; i< loc_array.length; i++) {
@@ -1349,7 +1461,7 @@ class com.continuityny.courtyard.views.CY_Nav_View
 			//temp_array = _data.locations.section[loc].detail.splice(); 
 			detail_am_array = _data.locations.section[loc].detail; 
 			
-			TweenLite.to(block_mc, .125, {_alpha:100, delay:(.125*(6-i))});
+			TweenLite.to(block_mc, .25, {_alpha:100, delay:(.25*(6-i))});
 			
 			for (var j = 0; j< detail_am_array.length; j++) {
 				
@@ -1371,14 +1483,20 @@ class com.continuityny.courtyard.views.CY_Nav_View
 				
 				var scope = this; 
 				label_mc.loc = loc+","+j;
-				/*label_mc.onRelease = function(){
+				
+				label_mc.onRollOver = shiftLabelOver;
+				label_mc.onRollOut = shiftLabelOut; 
+								label_mc.onRelease = function(){
 			
 					//var base = CY_Location_View.getBaseLiveLocation().split(",").join("");
 					//trace("base:"+base);
 					var this_loc = this.loc;
-					scope._fireEvent(	new BasicEvent( CY_EventList.CHANGE_LOCATION, [this_loc] ) );
+					//scope._fireEvent(	new BasicEvent( CY_EventList.CHANGE_LOCATION, [this_loc] ) );
 					
-				};*/
+					scope.showAmenDetail(this_loc);
+					scope.closeAmen();
+					
+				};
 				
 				
 				
@@ -1388,11 +1506,196 @@ class com.continuityny.courtyard.views.CY_Nav_View
 	}
 	
 	
+	private function shiftLabelOver(){
+		
+		var _mc = this; 
+		_mc.x = _mc._x; 
+		
+		TweenLite.to(_mc, .25, {_x:"5"});
+			
+		
+	}
+	
+	private function shiftLabelOut(){
+		
+		var _mc = this; 
+		
+		TweenLite.to(_mc, .25, {_x:_mc.x});
+			
+		
+	}
+	
+	private function showAmenDetail(loc){
+		
+		//var loc = current_loc = e.getTarget()[0];
+		LIVE_AMEN_LOC = loc; 
+		trace("show AMEN detail:"+loc);
+		
+		//** Dissect LOCATION and build Detail Page **//
+		var d = _details_mc.detail_base_mc.getNextHighestDepth();
+		var loc_s = loc.split(",").join("");
+		var base_loc 	= loc.split(",")[0];
+		var detail_num 	= loc.split(",")[1];
+		
+		var _mc = _details_mc.detail_base_mc.attachMovie("mc_detail_pieces", "detail_page_"+loc_s+"_mc", d, {_x:10});
+		
+		_mc.copy_mc._alpha = 0; 
+		
+		 det_x_array = new Array();
+		
+		//** Save X Position and Collapse Detail slices **//
+		for(var i=7; i>=1; i--){
+			var det_mc : MovieClip = 	_mc['detail_'+i+'_mc'];
+			det_x_array[i] = det_mc._x;
+			det_mc._x = 970;
+		}
+		
+		//** Build Detail Image Arrays **//
+		var targ_array:Array = new Array();
+		var src_array:Array = new Array();
+		
+		targ_array.push(_mc['detail_2_mc']); src_array.push("images/det_images/"+base_loc+"_"+(Number(detail_num)+1)+"_d.jpg");
+		targ_array.push(_mc['detail_5_mc']); src_array.push("images/det_images/"+base_loc+"_"+(Number(detail_num)+1)+"_c.jpg");
+		targ_array.push(_mc['detail_6_mc']); src_array.push("images/det_images/"+base_loc+"_"+(Number(detail_num)+1)+"_b.jpg");
+		targ_array.push(_mc['detail_7_mc']); src_array.push("images/det_images/"+base_loc+"_"+(Number(detail_num)+1)+"_a.jpg");
+		
+		//** Load 'em **//
+		new MultiLoader(	src_array, targ_array, 
+							Delegate.create(this, detailInTransition, loc), 
+							Delegate.create(this, showDetailLoadProgress)
+						);
+		
+		
+		//** Build Image Rotation if Applicable  **//
+		if(_data.locations.section[base_loc].detail[detail_num].rotate == "true"){
+			for(var j=4; j>=1; j--){
+				var rot_mc = _mc.rotate_mc.createEmptyMovieClip("rotate_"+j+"_mc", (100*j));
+				new ImageLoader(rot_mc, "images/det_images/"+base_loc+"_"+(Number(detail_num)+1)+"_b_"+j+".jpg");
+			}
+			var caption = 	_data.locations.section[base_loc].detail[detail_num].caption;
+			
+			startRotate(_mc.rotate_mc, caption, 3);
+		}else{
+			_mc.rotate_mc._visible = false; 
+		}
+		
+		
+		//** Build Detail Title + Copy **//
+		var header_txt:TextField = _mc.copy_mc.header_txt;
+		var body_txt:TextField = _mc.copy_mc.body_txt;
+		header_txt.text = _data.locations.section[base_loc].detail[detail_num].header;
+		body_txt.text 	= _data.locations.section[base_loc].detail[detail_num].text;
+		trace("body:"+_data.locations.section[base_loc].detail[detail_num].text+" header_txt:"+header_txt);
+		
+		header_txt.autoSize = true
+		body_txt.autoSize 	= true
+		
+		body_txt._y = header_txt._y + header_txt._height + 5;
+		
+		
+		//** Display Caption if Applicable **//
+		var caption = _data.locations.section[base_loc].detail[detail_num].caption;
+		if(caption.line1 != undefined){
+			showCaption(caption, 0);
+		}
+		
+		
+		//** Set Close Button **//
+		_details_mc.close_mc.label_mc.onRelease = Delegate.create(this, function(){
+			
+			var base = CY_Location_View.getBaseLiveLocation().split(",").join("");
+			trace("base:"+base);
+			//this._fireEvent(	new BasicEvent( CY_EventList.CHANGE_LOCATION, ["amenities"] ) );
+			this.activateAmen();
+			this.removeAmenDetail(loc);
+			
+		});
+		
+		_details_mc.close_mc.label_mc.onRollOver = shiftLabelOver;
+		_details_mc.close_mc.label_mc.onRollOut  = shiftLabelOut;
+		
+		//stopVideo();
+		
+		centerSlider(getIndexByLoc(base_loc));
+		
+	}
+	
+	
+	private function getIndexByLoc(loc){
+		
+		for(var each in loc_array){
+			
+			if(loc_array[each] == loc){
+				return each;	
+				break;
+			}
+		}
+		
+		
+	}
+	
+	
+	private function removeAmenDetail(loc){
+		
+		//var loc = e.getTarget()[0];
+		trace("CY_Nav_View: removeDetail: "+loc);
+		//var _mc = detail_array[loc];
+		var loc_s = loc.split(",").join("");
+		var _mc = _details_mc.detail_base_mc["detail_page_"+loc_s+"_mc"]; 
+		var tw = new Tween(_mc, "_x", Quad.easeOut, _mc._x, 10, .5, true);
+		
+		//_mc.copy_mc._alpha = 0; 
+		TweenLite.to(_mc.copy_mc, 0, {_alpha:0});
+		
+		for(var i=1; i<=7; i++){
+			
+			var det_mc : MovieClip = 	_mc['detail_'+i+'_mc'];
+			trace("det_mc:"+det_mc);
+			//det_mc.x = det_mc._x;
+			//det_mc._x = 970;
+			
+			//var r = (random(10)/10);
+			var t = .5;
+			TweenLite.to(det_mc, t, {_x:-det_mc._width});
+			
+			//new Tween(det_mc, "_x", Quad.easeOut, det_mc._x, det_mc.x, 1, true); 
+		}
+		
+		
+		var scope = this;
+		
+		tw.onMotionFinished = function(){
+			var loc_s = loc.split(",").join("");
+			scope._details_mc.detail_base_mc["detail_page_"+loc_s+"_mc"].removeMovieClip();
+			trace("CY_Nav_View: removeDetail: "+loc_s+" _mc:"+scope._details_mc["detail_page_"+loc_s+"_mc"]);
+		}
+			//scope._fireEvent(	new BasicEvent( CY_EventList.LOCATION_ON_DEPARTED, [loc]) );
+			
+		
+		hideCaption();
+		hideCloseButton();
+		
+		
+		
+	}
+	
+	
+	
+	
 	private function removeAmen() : Void {
 		//var _mc = _ammenities_mc.mask_mc; 
 		//var tw = new Tween(_mc, "_x", Quad.easeOut, _mc._x, 970, .5, true);
-		 _amenities_mc.amen_anim_mc.gotoAndPlay("OUT");
+		removeAmenDetail(LIVE_AMEN_LOC); 
+		closeAmen();
 		this._fireEvent(	new BasicEvent( CY_EventList.LOCATION_ON_DEPARTED, ["amenities"]) );
+		
+		
+	}
+	
+	private function closeAmen() : Void {
+		//var _mc = _ammenities_mc.mask_mc; 
+		//var tw = new Tween(_mc, "_x", Quad.easeOut, _mc._x, 970, .5, true);
+		 _amenities_mc.amen_anim_mc.gotoAndPlay("OUT");
 		
 		for (var i = 1; i< loc_array.length; i++) {
 			var loc = loc_array[i];
@@ -1432,22 +1735,82 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		
 	}
 	
-	private function detailOver(){
-		//trace("detailOver");
-		var _mc  = this;
-		TweenLite.to(_mc, .25, {mcColor:0x4D7635});
+	
+	
+	private function onDetailNavClick(loc, _mc){
+				
+				trace("onDetailNavClick:"+loc);
+				selected_detail_mc = _mc;
+				
+				var base_mc:MovieClip = _mc._parent; 
+				
+				for(var each in base_mc){
+					if(base_mc[each]._name != selected_detail_mc._name){
+						TweenLite.to(base_mc[each], .25, {mcColor:0xFFFFFF});
+					}
+				}				
+				for(var each in detail_bg_array){
+					var this_mc:MovieClip = detail_bg_array[each];
+					
+					if(_mc.bg_mc._name != this_mc._name){
+						this_mc.removeMovieClip();
+						trace("remove:"+this_mc);
+					}
+					
+					
+				}
+		
+				_mc.onRollOut();
+				 
+				
+				this._fireEvent(	new BasicEvent( CY_EventList.CHANGE_LOCATION, [loc] ) );
+						
 	}
 	
-	private function detailOut(){
-		//trace("detailOut");
-		var _mc  = this;
-		TweenLite.to(_mc, .25, {mcColor:0xFFFFFF});
+	
+	private function detailOver(_mc){
+		trace("detailOver:selected_detail_mc"+selected_detail_mc._name);		trace("detailOver:_mc"+_mc._name);
+		//var _mc  = this;
+		TweenLite.to(_mc, .25, {mcColor:0x4D7635});
+		
+		if(_mc._name != selected_detail_mc._name){
+			var d:Number = _mc.getDepth(); 
+			
+			var base_mc:MovieClip = _mc._parent; 
+			var bg_mc:MovieClip = base_mc.attachMovie("mc_detail_pebble", (_mc._name+"_bg_mc"), d-1);
+			
+			detail_bg_array.push(bg_mc);
+			
+			bg_mc._x = _mc._x+75; 
+			bg_mc._y = _mc._y+14; 
+			
+			bg_mc._rotation += (d/3); 
+			
+			_mc.bg_mc = bg_mc; 
+		}
+		
+		trace("bg_mc:"+bg_mc+" y:"+bg_mc._y+" x:"+bg_mc._x+" d:"+d);
+		
+	}
+	
+	private function detailOut(_mc){
+		// var _mc  = this;
+		
+		trace("detailOut ");
+		
+		if(selected_detail_mc._name != _mc._name){
+			_mc.bg_mc.removeMovieClip();
+			TweenLite.to(_mc, .25, {mcColor:0xFFFFFF});		}else{
+			TweenLite.to(_mc, .25, {mcColor:0x4D7635});		
+		}
 	}
 	
 	private function detailPress(){
 		//trace("detailPress");
 		var _mc  = this;
-		TweenLite.to(_mc, 0, {mcColor:0xFFFF00});
+		TweenLite.to(_mc, 0, {mcColor:0xFFFFFF});
+		
+		
 	}
 	
 	
@@ -1551,6 +1914,63 @@ class com.continuityny.courtyard.views.CY_Nav_View
 		}
 		
 	}
+	
+	
+	private function setVideoControls(playing:Boolean){
+		
+		var preload_mc:MovieClip = _video_mc.preloader_mc; 
+		
+		if(playing){
+			preload_mc.stop_mc.gotoAndStop(1);			preload_mc.play_mc.gotoAndStop(2);
+			preload_mc.stop_mc.enabled = true; 			preload_mc.play_mc.enabled = false; 
+		}else if(!playing){
+			preload_mc.stop_mc.gotoAndStop(2);
+			preload_mc.play_mc.gotoAndStop(1);
+			preload_mc.stop_mc.enabled = false; 
+			preload_mc.play_mc.enabled = true; 
+		}else{
+			preload_mc.stop_mc.gotoAndStop(1);
+			preload_mc.play_mc.gotoAndStop(1);
+			preload_mc.stop_mc.enabled = false; 
+			preload_mc.play_mc.enabled = false; 
+			
+		}
+		
+		preload_mc.play_mc.onRelease = Delegate.create(this, function() {
+			FLVPBK.play();
+		}); 
+		
+		preload_mc.stop_mc.onRelease = Delegate.create(this, function(){
+			FLVPBK.pause();
+		}); 
+		
+		preload_mc.hit_mc.onRollOver = Delegate.create(this, function(){
+			trace("hit rollover");
+			TweenLite.to(_video_mc.preloader_mc, .25, {_y:350, ease:Quad.easeIn});
+		}); 
+		
+		preload_mc.hit_mc.onRollOut = Delegate.create(this, function(){
+			var hitPebble:Boolean = preload_mc.pebble_mc.hitTest(_xmouse, _ymouse);
+				trace("hit rollOUT - hitPebble:"+hitPebble);
+			if(!hitPebble){
+				TweenLite.to(_video_mc.preloader_mc, .25, {_y:402, ease:Quad.easeIn});
+			}
+		}); 
+		
+		preload_mc.pebble_mc.onRollOver = Delegate.create(this, function(){
+			trace("pebble rollover");			//preload_mc.hit_mc.enabled = false; 
+		});
+		
+		preload_mc.pebble_mc.onRollOut = Delegate.create(this, function(){			var hitHIT:Boolean = preload_mc.hit_mc.hitTest(_xmouse, _ymouse);
+			trace("pebble rollOUT - hitHIT:"+hitHIT);
+			if(!hitHIT){
+				TweenLite.to(_video_mc.preloader_mc, .25, {_y:402, ease:Quad.easeIn});
+			}
+		}); 
+		
+		
+	}
+	
 	
 
 }
