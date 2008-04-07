@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<courtyard>
+	
+	
+	<!-- 
+		
+		Courtyard TourCourtyard.com Content Data
+		
+	-->
+	
+	<locations>
+		
+		
+		<section loc="preloader">
+		</section>
+		
+		<section loc="home">
+		</section>
+		
+		
+		<section loc="lobby">
+			<title>LOBBY</title>
+			<caption>
+					<line1>LANCASTER, PA</line1>
+			</caption>
+			
+			<detail rotate="true">
+				<title><![CDATA[CASUAL MEETING & WORKSPACE]]></title>
+				<caption>
+					<line1>LOS ANGELES, CA</line1>
+					<line2>SHERMAN OAKS</line2>
+				</caption>
+				<caption>
+					<line1>CHICAGO, IL</line1>
+					<line2>DOWNTOWN/ MAGNIFICENT MILE</line2>
+				</caption>
+				<caption>
+					<line1>MANHATTAN, NY</line1>
+					<line2>UPPER EAST SIDE</line2>
+				</caption>
+				<caption>
+					<line1>SEATTLE, WA</line1>
+					<line2>DOWNTOWN/ LAKE UNION</line2>
+				</caption>
+				<header><![CDATA[CASUAL MEETING/WORKSPACE]]></header>
+				<text>The lobby isn't just for passing through.  It's a relaxing place you can meet up or get down to business.  Comfy seats, free WiFi and a big screen TV help you stay on top of it all.</text>
+			</detail>
+			
+			<detail>
+				<title>FREE WiFi</title>
+				<header>FREE WiFi</header>
+				<text>Stay in touch with home, the office and the world.  Free wireless Internet access keeps you connected.</text>
+			</detail>
+			
+			<detail>
+				<title>BREAKFAST AREA</title>
+				<header>BREAKFAST AREA</header>
+				<text>Make breakfast your first order of business.  With eggs any way you like them, fresh fruit, cereal, bagels and all your favorites.</text>
+			</detail>
+			
+			<detail>
+				<title><![CDATA[EASY CHECK-IN & CHECKOUT]]></title>
+				<header><![CDATA[EASY CHECK-IN/CHECKOUT]]></header>
+				<text>It's always great to see you, but we know your time is valuable.  So, we've made check-in and checkout quick, easy and painless.</text>
+			</detail>
+			
+			<detail>
+				<title><![CDATA[COMPLIMENTARY COFFEE/TEA]]></title>
+				<header><![CDATA[COMPLIMENTARY COFFEE/TEA]]></header>
+				<text>Need an eye-opener?  After-dinner pick me up?  Burning the midnight oil?  Fresh, complimentary coffee and tea whenever you need it.</text>
+			</detail>
+			
+			
+			<cue time="1" title="STAY YOUR WAY" x="580" y="352" color="0xb3d670" duration="4" />
+			<cue time="5.1" title="EASY CHECK-IN&#47;CHECKOUT" x="296" y="305" color="0xFFFFFF" duration="4" />
+			<cue time="12.2" title="FREE WiFi" x="180" y="289" color="0xFFFFFF" duration="4" />
+			<cue time="19.4" title="EGGS MADE TO ORDER" x="69" y="49" color="0xFFFFFF" duration="4" />
+			<cue time="30" title="BIG SCREEN TV" x="39" y="330" color="0xFFFFFF" duration="4" />
+			<cue time="34" title="CASUAL MEETING&#47;WORKSPACE" x="39" y="330" color="0xFFFFFF" duration="4" />
+
+			
+		</section>
+		
+		
+		
+		
+		
+		<section loc="market">
+			<title><![CDATA[24/7 MARKET]]></title>
+			
+			<detail>
+				<title>ALWAYS OPEN</title>
+				<header>ALWAYS OPEN</header>
+				<text><![CDATA[The Market is open 24/7 with everything you need to keep you going.  So you can always stay energized and refreshed on your schedule.]]></text>
+			</detail>
+			
+			<detail>
+				<title>EVERYTHING YOU NEED</title>
+				<header>EVERYTHING YOU NEED</header>
+				<text>Pick up what you need to stay on track.  From fresh salads, sandwiches and fruit, to life's little essentials you may have forgotten.  You can even get beer and wine (available at most locations.)</text>
+			</detail>
+			
+			<cue time=".5" title="STAY ENERGIZED" x="40" y="354" color="0xb3d670" duration="4" />
+			<cue time="5.9" title="SNACKS&#47;REFRESHMENTS" x="40" y="41" color="0xFFFFFF" duration="4" />
+			<cue time="9.8" title="FRESH AND HEALTHY OPTIONS" x="60" y="224" color="0xFFFFFF" duration="4" />
+			<cue time="14" title="ALWAYS OPEN" x="606" y="81" color="0xFFFFFF" duration="4" />
+			
+		</section>
+		
+		<section loc="business">
+			<title>BUSINESS LIBRARY</title>
+			
+			<detail>
+				<title>RELAXED WORKSPACE</title>
+				<header>RELAXED WORKSPACE</header>
+				<text>Sit down, meet up, print out, go online and fax away.  The business library has everything you need to stay in touch and on track.</text>
+			</detail>
+			
+			<detail>
+				<title>FREE WiFi AND HIGH-SPEED INTERNET ACCESS</title>
+				<header>FREE WiFi AND HIGH-SPEED INTERNET ACCESS</header>
+				<text>Stay in touch without staying put.  Connect fast and free with WiFi, or jump onto a desktop workspace.</text>
+			</detail>
+			
+			<detail>
+				<title>DESKTOP WORKSTATIONS</title>
+				<header>DESKTOP WORKSTATIONS</header>
+				<text>Get online, print out boarding passes and check your email at one of our convenient desktop computers.</text>
+			</detail>
+			
+			<detail>
+				<title>FAX AND PRINT</title>
+				<header>FAX AND PRINT</header>
+				<text>Stay connected on the road.  With convenient printers and fax machines you can easily print out reports and emails, as well as send documents wherever you want.</text>
+			</detail>
+			
+			<cue time="1" title="STAY CONNECTED" x="49" y="180" color="0xb3d670" duration="4" />
+			<cue time="6.6" title="FREE WiFi" x="39" y="300" color="0xFFFFFF" duration="4" />
+			<cue time="12.2" title="PRINTER &amp; FAX" x="565" y="250" color="0xFFFFFF" duration="4" />
+			<cue time="17.0" title="DESKTOP WORKSTATIONS" x="450" y="115" color="0xFFFFFF" duration="4" />
+			
+		</section>
+		
+		<section loc="guest_room">
+			<title>GUEST ROOM</title>
+			
+			<detail>
+				<title>PLUSH BEDDING</title>
+				<header>PLUSH BEDDING</header>
+				<text>Sleep tight.  A thicker mattress, crisp white linens and more, fluffier pillows make for a very soft landing.</text>
+			</detail>
+			
+			<detail>
+				<title>SMARTLY DESIGNED</title>
+				<header>SMARTLY DESIGNED</header>
+				<text>Stay focused and relaxed.  Clean modern design, spacious bathrooms, and a refreshing color palette create a comfortable space.</text>
+			</detail>
+			
+			<detail>
+				<title>SEPARATE SEATING AREA</title>
+				<header>SEPARATE SEATING AREA</header>
+				<text>Spread out and do your thing.  The separate seating area is perfect for catching up on those big projects, or just putting your feet up to catch the big game.</text>
+			</detail>
+			
+			<detail>
+				<title>FLEXIBLE WORKSPACE</title>
+				<header>FLEXIBLE WORKSPACE</header>
+				<text>Take a seat and get down to business.  Convenient data ports and egonomic chairs let you work where and how you want.</text>
+			</detail>
+			
+			<detail>
+				<title><![CDATA[FREE HIGH-SPEED INTERNET]]></title>
+				<header><![CDATA[FREE HIGH-SPEED INTERNET]]></header>
+				<text>Don't let anything slow you down.  Guest rooms are wired and ready, with free high-speed Internet access.</text>
+			</detail>
+			
+			<cue time="1" title="STAY COMFORTABLE" x="40" y="270" color="0xb3d670" duration="4" />
+			<cue time="6.0" title="SMARTLY DESIGNED" x="548" y="339" color="0xFFFFFF" duration="4" />
+			<cue time="14.0" title="ROOM TO SPREAD OUT" x="513" y="308" color="0xFFFFFF" duration="4" />
+			<cue time="25.0" title="ERGONOMIC WORKSPACE" x="37" y="182" color="0xFFFFFF" duration="4" />
+			<cue time="33.0" title="FREE HIGH-SPEED INTERNET" x="37" y="182" color="0xFFFFFF" duration="4" />
+			<cue time="41.0" title="PLUSH BEDDING" x="561" y="334" color="0xFFFFFF" duration="4" />
+			
+		</section>
+		
+		<section loc="fitness">
+			<title><![CDATA[FITNESS / POOL]]></title>
+			
+			<detail>
+				<title>TEMPERATURE-CONTROLLED POOL</title>
+				<header>TEMPERATURE-CONTROLLED POOL</header>
+				<text>Dive right in.  To the temperature controlled pool or your work.  Free wireless means you can connect from wherever you want.</text>
+			</detail>
+			
+			<detail>
+				<title>HOT TUB</title>
+				<header>HOT TUB</header>
+				<text>Recover after work or working out.  Hot bubbly water helps you soothe your muscles and collect your thoughts.</text>
+			</detail>
+			
+			<detail>
+				<title>EXERCISE EQUIPMENT</title>
+				<header>EXERCISE EQUIPMENT</header>
+				<text>Stay fit while you travel.  Our state-of-the-art fitness rooms are fully mirrored and equipped with flat screen TV's, cardio equipment and free weights.  (Equipment varies by location.)</text>
+			</detail>
+			
+			<!--<detail>
+				<title>TOWEL SERVICE</title>
+				<header>TOWEL SERVICE</header>
+				<text>Step out and dry off.  Fresh fluffy towels are available poolside whenever you want one.</text>
+			</detail>-->
+			
+			<cue time=".5" title="STAY FIT" x="660" y="356" color="0xb3d670" duration="4" />
+			<cue time="5" title="TEMPERATURE CONTROLLED POOL" x="20" y="345" color="0xFFFFFF" duration="4" />
+			<cue time="10.5" title="HOT TUB" x="670" y="78" color="0xFFFFFF" duration="4" />
+			<!--<cue time="16.4" title="TOWEL SERVICE" x="28" y="23" color="0xFFFFFF" duration="4" />-->
+			<cue time="21.2" title="EXERCISE EQUIPMENT" x="530" y="365" color="0xFFFFFF" duration="4" />
+			
+		</section>
+		
+		<section loc="outdoor" rotate="true">
+			<title>OUTDOOR</title>
+			<caption>
+					<line1>LITTLE ROCK, AR</line1>
+					<line2>DOWNTOWN</line2>
+			</caption>
+			<caption>
+					<line1>PITTSBURGH, PA</line1>
+					<line2>DOWNTOWN</line2>
+			</caption>
+			
+			<detail>
+				<title>SPACE TO MEET OR RELAX</title>
+				<caption>
+					<line1>JERSEY CITY, NJ</line1>
+					<line2>NEWPORT</line2>
+				</caption>
+				<header>SPACE TO MEET OR RELAX</header>
+				<text>Take your sunglasses to the meeting.  Outdoors you can meet up with colleagues, connect to free WiFi or just collect your thoughts in a relaxing environment.</text>
+			</detail>
+			
+			<detail>
+				<title>FREE WIFI</title>
+				<caption>
+					<line1>COCOA BEACH, FL</line1>
+				</caption>
+				<header>FREE WIFI</header>
+				<text>Staying in touch doesn't have to mean staying indoors.  Take your laptop outside and connect with free wireless Internet access.</text>
+			</detail>
+			
+		</section>
+	
+		<section loc ="tv">
+			<spot_one>
+				<title>Free WiFi</title>
+				<path>./flv/spot_one.flv</path>
+			</spot_one>
+			<spot_two>
+				<title><![CDATA[24/7 Market]]></title>
+				<path>./flv/spot_one.flv</path>
+			</spot_two>
+		</section>
+		
+		<section loc="ammenities">
+			<subsection>
+				<title>LOBBY</title>
+				<detail><![CDATA[Casual Meeting/Workspace]]></detail>
+				<detail>Free WiFi</detail>
+				<detail>Breakfast Area</detail>
+				<detail><![CDATA[Easy Check-in/Checkout]]></detail>
+				<detail><![CDATA[Complimentary Coffee/Tea]]></detail>
+			</subsection>
+			<subsection>
+				<title>OUTDOOR</title>
+				<detail>Free WiFi</detail>
+				<detail>Space to Meet or Relax</detail>
+			</subsection>
+			<subsection>
+				<title><![CDATA[24/7 MARKET]]></title>
+				<detail>Always Open</detail>
+				<detail>Everything You Need</detail>
+			</subsection>
+			<subsection>
+				<title>BUSINESS LIBRARY</title>
+				<detail>Relaxed Workspace</detail>
+				<detail>Free WiFi and High-Speed Internet Access</detail>
+				<detail>Desktop Workstations</detail>
+				<detail>Fax and Print</detail>
+			</subsection>
+			<subsection>
+				<title>GUEST ROOM</title>
+				<detail>Plush Bedding</detail>
+				<detail>Smartly Designed</detail>
+				<detail>Separate Seating Area</detail>
+				<detail>Flexible Workspace</detail>
+				<detail>Free High-Speed Internet</detail>
+			</subsection>
+			<subsection>
+				<title><![CDATA[FITNESS/POOL]]></title>
+				<detail>Temperature-Controlled Pool</detail>
+				<detail>Hot Tub</detail>
+				<detail>Exercise Equipment</detail>
+				<detail>Towel Service</detail>
+			</subsection>
+		</section>
+		
+		<section loc="dropdown">
+			<title>FIND A COURTYARD</title>
+			<text1>Enter your city and state below to start a reservation at Marriott.com</text1>
+			<field1>CITY</field1>
+			<field2>STATE (U.S. ONLY)</field2>
+			<field3>UNITED STATES</field3>
+			<text2>Room designs and features will vary.</text2>
+			<button>FIND</button>
+			<button>CLOSE</button>
+			<text3>To make reservations by phone, call 1-800-HOTELS-1 in the USA and Canada.</text3>
+		</section>
+		
+		<legal>
+		</legal>
+		
+	</locations>
+	
+	
+</courtyard>
