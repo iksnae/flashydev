@@ -1,1 +1,0 @@
-/** * @author k */class com.continuityny.courtyard.views.CYSideNav extends MovieClip {	public function CYSideNav() {		init();	}	private function init(){			}}
