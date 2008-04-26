@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<AS2Classpath>
-<AS2Classpath generateProblems="true" type="source" useAsSharedCode="false">core</AS2Classpath>
-<AS2Classpath generateProblems="true" type="source" useAsSharedCode="false">mx</AS2Classpath>
-<AS2Classpath generateProblems="true" type="source" useAsSharedCode="false">_src</AS2Classpath>
-</AS2Classpath>
