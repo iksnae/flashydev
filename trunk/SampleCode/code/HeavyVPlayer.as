@@ -15,6 +15,14 @@ package {
 	import flash.events.IOErrorEvent;
 	import flash.events.NetStatusEvent;
 
+	/**
+	 *this is a video player that's drawn and created completely from code.
+	 * it's designed to be configures on runtime, with flashvars passed in
+	 * on EMBED code.
+	 * an example of final product ca be seen here: http://iksnae.com/new_controller/
+	 * @author iksnae
+	 * 
+	 */
 	public class HeavyVPlayer extends Sprite
 	{
 		public var videoView:VideoView;
