@@ -17,7 +17,7 @@ package {
 
 	/**
 	 *this is a video player that's drawn and created completely from code.
-	 * it's designed to be configures on runtime, with flashvars passed in
+	 * it's designed to be configured on runtime, with flashvars passed in
 	 * on EMBED code.
 	 * an example of final product ca be seen here: http://iksnae.com/new_controller/
 	 * @author iksnae
